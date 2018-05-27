@@ -5,5 +5,7 @@ int main() {
 
   kiln.init();
   kiln.run();
+
+  SDL_Delay(3000);
   kiln.cleanup();
 }
