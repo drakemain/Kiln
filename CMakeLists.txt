@@ -1,0 +1,19 @@
+cmake_minimum_required(VERSION 3.0)
+
+if (NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Debug)
+endif()
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++17 -Wall -Wextra -Werror")
+
+project(Kiln)
+
+INCLUDE_DIRECTORIES(".")
+file(GLOB_RECURSE SOURCES kiln/source/*.cc)
+add_executable(${PROJECT_NAME} kiln/main.cc ${SOURCES})
+
+INCLUDE(FindPkgConfig)
+
+PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
+
+INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS})
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARIES})

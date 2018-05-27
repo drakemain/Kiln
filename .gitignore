@@ -1,0 +1,9 @@
+# Generated build files
+cmake_install.cmake
+CMakeCache.txt
+Makefile
+CMakeFiles/*
+Kiln
+
+# editor files
+.vscode/*
