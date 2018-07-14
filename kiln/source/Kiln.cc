@@ -1,25 +1,61 @@
 #include "kiln/headers/Kiln.h"
 #include <iostream>
+#include "kiln/headers/Sprite.h"
 
 bool Kiln::init() {
   std::cout << "INIT" << std::endl;
-  bool success = true;
 
-  this->window = SDL_CreateWindow("Kiln", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->WIDTH, this->HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
-
-  if (this->window == NULL) {
-    success = false;
+  if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
+    std::cout << "Failed to init SDL:\n\t" << SDL_GetError() << std::endl;
+    return false;
   }
 
-  return success;
+  int imgFlags = IMG_INIT_JPG|IMG_INIT_PNG;
+
+  if ((IMG_Init(imgFlags) & imgFlags) != imgFlags) {
+    std::cout << "Failed to init SDL_Image:\n\t" << IMG_GetError() << "\n\t" << SDL_GetError() << std::endl;
+    return false;
+  }
+
+  if (!this->windowManager.init()) {
+    return false;
+  }
+
+  return true;
 }
 
 void Kiln::run() {
-  std::cout << "This is the Kiln run method." << std::endl;
+  std::cout << "RUN" << std::endl;
+
+  Sprite sprite;
+  if(!sprite.loadImage("kiln/assets/img/sprite-test.jpg")) {
+    this->isRunning = false;
+  }
+
+  while(isRunning) {
+    if (this->inputManager.poll()) {
+      this->eventHandler(this->inputManager.getEvent());
+    }
+
+    SDL_RenderClear(this->getBaseRenderer());
+    SDL_RenderCopy(this->getBaseRenderer(), sprite.getTexture(), NULL, sprite.getContainer());
+    SDL_RenderPresent(this->getBaseRenderer());
+  }
 }
 
 void Kiln::cleanup() {
-  std::cout << "This is the Kiln cleanup method." << std::endl;
+  std::cout << "CLEANUP" << std::endl;
 
-  SDL_DestroyWindow(this->window);
+  this->windowManager.cleanup();
+
+  IMG_Quit();
+  SDL_Quit();
+}
+
+/* Helper Functions */
+void Kiln::eventHandler(SDL_Event* event) {
+  switch(event->type) {
+    case SDL_QUIT:
+    this->isRunning = false; break;
+  }
 }

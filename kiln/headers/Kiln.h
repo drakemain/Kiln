@@ -1,14 +1,24 @@
 #pragma once
 #include <SDL.h>
+#include <SDL_image.h>
+#include "Base.h"
+#include "WindowManager.h"
+#include "InputManager.h"
 
-class Kiln {
+class Kiln : public Base {
 public:
   bool init();
   void run();
   void cleanup();
 
 private:
-  SDL_Window* window;
-  const int WIDTH = 640;
-  const int HEIGHT = 480;
+  /* Helper Functions */
+  void eventHandler(SDL_Event* event);
+
+  /* Private Members */
+  WindowManager windowManager;
+  InputManager inputManager;
+  
+  // TODO: State Manager
+  bool isRunning = true;
 };

@@ -1,0 +1,613 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"in",
+				"init\tbool init()"
+			],
+			[
+				"HEADER",
+				"HEADER_BOILERPLATE"
+			],
+			[
+				"sco",
+				"score"
+			],
+			[
+				"for",
+				"forEach"
+			],
+			[
+				"inlin",
+				"inline-block"
+			],
+			[
+				"shift",
+				"shiftDelay"
+			],
+			[
+				"rotate",
+				"rotatedShape"
+			],
+			[
+				"scored",
+				"scoreDisplay"
+			],
+			[
+				"game",
+				"gameState"
+			],
+			[
+				"score",
+				"scoreElement"
+			],
+			[
+				"gel",
+				"getElementById"
+			],
+			[
+				"ins",
+				"insertActiveShape"
+			],
+			[
+				"rot",
+				"rotateActiveShape"
+			],
+			[
+				"new",
+				"newCoords"
+			],
+			[
+				"curr",
+				"currentCoords"
+			],
+			[
+				"line",
+				"lineCheck"
+			],
+			[
+				"lin",
+				"getCompleteLineRows"
+			],
+			[
+				"checkfo",
+				"checkRowForLine"
+			],
+			[
+				"row",
+				"rowIndex"
+			],
+			[
+				"column",
+				"columnIndex"
+			],
+			[
+				"col",
+				"column"
+			],
+			[
+				"collis",
+				"collisionCheck"
+			],
+			[
+				"coll",
+				"collisionCheck"
+			],
+			[
+				"shadow",
+				"text-shadow"
+			],
+			[
+				"te",
+				"text-decoration"
+			],
+			[
+				"backgroun",
+				"background-color"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"cli",
+				"clickedStar"
+			],
+			[
+				"getl",
+				"getElementsByTagName"
+			],
+			[
+				"get",
+				"getElementById"
+			],
+			[
+				"sig",
+				"sigPath"
+			],
+			[
+				"text",
+				"textarea\tTag"
+			],
+			[
+				"setSte",
+				"setSteamCacheExpireTime"
+			],
+			[
+				"STE",
+				"STEAM_CACHE_EXPIRE_seconds"
+			],
+			[
+				"upd",
+				"updateSteamProfile"
+			],
+			[
+				"getCa",
+				"getCacheFile"
+			],
+			[
+				"Us",
+				"userInfo"
+			],
+			[
+				"Buil",
+				"buildSteamCache"
+			],
+			[
+				"fet",
+				"fetchedCache"
+			],
+			[
+				"fetch",
+				"fetchCacheFile"
+			],
+			[
+				"local",
+				"localSteamCache"
+			],
+			[
+				"getCach",
+				"getCacheFile"
+			],
+			[
+				"steamC",
+				"refreshedSteamCache"
+			],
+			[
+				"expire",
+				"expireThreshhold"
+			],
+			[
+				"getCac",
+				"getCacheFile"
+			],
+			[
+				"Chec",
+				"checkForValidID"
+			],
+			[
+				"Che",
+				"checkForValidID"
+			],
+			[
+				"chec",
+				"checkFileExists"
+			],
+			[
+				"steam",
+				"steam-id-form"
+			],
+			[
+				"che",
+				"checkForValidID"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "#include \"headers/Kiln.h\"\n\nint main() {\n  Kiln kiln;\n\n  kiln.init();\n  kiln.run();\n\n  SDL_Delay(3000);\n  kiln.cleanup();\n}",
+			"file": "kiln/main.cc",
+			"file_size": 124,
+			"file_write_time": 131718912523435835,
+			"settings":
+			{
+				"buffer_size": 122,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Package Control Messages\n========================\n\nEasyClangComplete\n-----------------\n\n  A plugin for easy to use clang-based completions::\n  \n      ╔═╗┌─┐┌─┐┬ ┬  ╔═╗┬  ┌─┐┌┐┌┌─┐  ╔═╗┌─┐┌┬┐┌─┐┬  ┌─┐┌┬┐┌─┐\n      ║╣ ├─┤└─┐└┬┘  ║  │  ├─┤││││ ┬  ║  │ ││││├─┘│  ├┤  │ ├┤\n      ╚═╝┴ ┴└─┘ ┴   ╚═╝┴─┘┴ ┴┘└┘└─┘  ╚═╝└─┘┴ ┴┴  ┴─┘└─┘ ┴ └─┘\n  \n  Let't get started!\n  ==================\n  \n  You're just two simple steps away!\n  \n  1. Install clang\n  ----------------\n  \n  - **Ubuntu**        : ``sudo apt-get install clang``\n  - **OSX**           : ships `clang` by default. You are all set!\n  - **Windows**       : install the latest release from clang website.\n  - **Other Systems** : use your package manager or install from clang website.\n  - clang website: http://llvm.org/releases/download.html\n  \n  2. Configure your includes\n  --------------------------\n  \n  Using CMake?\n  ~~~~~~~~~~~~\n  \n  Plugin will run cmake on a proper ``CMakeLists.txt`` in your project folder and\n  will use information from it to complete your code out of the box.\n  \n  Have a compilation database?\n  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n  \n  Plugin will search for a compilation database ``compile_commands.json`` in the\n  project folder and will load it to complete your code. If you want to specify a\n  custom path to a comilation database you can do it in settings::\n  \n      \"flags_sources\": [\n          {\"file\": \"compile_commands.json\", \"search_in\": \"<YOUR_PATH>\"},\n      ]\n  \n  None of the above?\n  ~~~~~~~~~~~~~~~~~~\n  \n  You will need a little bit of manual setup for now. Clang will automatically\n  search for headers in the folder that contains the file you are working on and\n  its parent. If you have a more sophisticated project you will need to help clang\n  just a little bit. There are three ways to do it.\n  \n  Pick **ANY** of the following:\n  \n  - Set include dirs in ``\"common_flags\"`` setting in ``User Settings``.\n  - Override ``\"common_flags\"`` setting in your project file, i.e. one that has\n    extension: ``*.sublime-project``. Just define the same setting in project\n    specific settings with either one of two prefixes: ``\"ecc_\"`` or\n    ``\"easy_clang_complete_\"`` to override a corresponding setting in your user\n    settings. See the project file in this repo for a working example. Minimal\n    example for clarity::\n  \n      {\n        \"settings\":\n        {\n          \"ecc_common_flags\": [\"-Isrc\", \"-I/usr/include\"],\n          \"easy_clang_complete_verbose\": true\n        }\n      }\n  \n  - It is recommended to use one of the above, but if you already have a file with\n    flags, you can add ``.clang_complete`` file to the root of your project\n    folder. This file adds additional flags to the ones defined with in\n    ``\"common_flags\"``. Example::\n  \n      -Isrc\n      -I/usr/include\n  \n  That's it! You're ready to use the plugin!\n  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n  \n  More info here\n  ~~~~~~~~~~~~~~\n  \n  Get more info in a readme:\n  https://github.com/niosus/EasyClangComplete/blob/master/README.md\n  \n  Please see the default settings ``EasyClangComplete.sublime-settings``\n  shipped with the plugin for explanations and sane default values.\n  \n  Thanks!\n  =======\n  \n  💜 this plugin? Consider buying me a 🍵\n  https://github.com/niosus/EasyClangComplete#support-it\n",
+			"settings":
+			{
+				"buffer_size": 3276,
+				"line_ending": "Unix",
+				"name": "Package Control Messages",
+				"read_only": true,
+				"scratch": true
+			}
+		},
+		{
+			"file": "kiln.sublime-project",
+			"settings":
+			{
+				"buffer_size": 546,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 708.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"material",
+				"Material Theme: Advanced configuration"
+			],
+			[
+				"instal",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"gist",
+				"Gist: Create Private Gist"
+			]
+		],
+		"width": 898.0
+	},
+	"console":
+	{
+		"height": 403.0,
+		"history":
+		[
+			"test",
+			"git",
+			"import urllib.request,os,hashlib; h = 'df21e130d211cfc94d9b0905775a7c0f' + '1e3d39e33b79698005270310898eea76'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/drake/dev/kiln",
+		"/home/drake/dev/kiln/kiln"
+	],
+	"file_history":
+	[
+		"/home/drake/dev/sdl/sdlHelloWorld/helloworld.cc",
+		"/home/drake/dev/sdl/sdlHelloWorld/.gitignore",
+		"/home/drake/dev/sdl/sdlHelloWorld/src/cc/Sprite.cc",
+		"/home/drake/dev/sdl/sdlHelloWorld/src/headers/Sprite.h",
+		"/home/drake/dev/sdl/sdlHelloWorld/utils/makeClass.sh",
+		"/home/drake/dev/sdl/sdlHelloWorld/CMakeLists.txt",
+		"/home/drake/dev/sdl/sdlHelloWorld/src/CMakeLists.txt",
+		"/home/drake/dev/sdl/sdlHelloWorld/CMakeCache.txt",
+		"/home/drake/dev/sdl/sdlHelloWorld/src/cc/new.cc",
+		"/home/drake/dev/sdl/sdlHelloWorld/build.sh",
+		"/home/drake/dev/sdl/sdlHelloWorld/cmake_install.cmake",
+		"/home/drake/.config/sublime-text-3/Packages/ClangAutoComplete/ClangAutoComplete.sublime-settings",
+		"/home/drake/dev/sdl/sdlHelloWorld/ClangAutoComplete.sublime-settings",
+		"/home/drake/.config/sublime-text-3/Packages/User/ClangAutoComplete.sublime-settings",
+		"/home/drake/dev/sdl/sdlHelloWorld/out",
+		"/home/drake/dev/sdl/sdlHelloWorld/build.zsh",
+		"/home/drake/dev/bpe/.git/COMMIT_EDITMSG",
+		"/home/drake/dev/tetris/index.html",
+		"/home/drake/dev/tetris/css/tetris.css",
+		"/home/drake/dev/tetris/tetris.js",
+		"/home/drake/dev/tetris/tetris.css",
+		"/home/drake/dev/tetris/tetris.html",
+		"/home/drake/dev/tetris/js/tetris.js",
+		"/home/drake/dev/amazon-interview-prep/navbar/CSS/navbar.css",
+		"/home/drake/dev/amazon-interview-prep/navbar/index.html",
+		"/home/drake/dev/amazon-interview-prep/navbar/dropdown.html",
+		"/home/drake/dev/amazon-interview-prep/navbar/CSS/dropdown.css",
+		"/home/drake/dev/amazon-interview-prep/navbar/navbar.html",
+		"/home/drake/dev/amazon-interview-prep/rating-widget/CSS/rating-widget-css.css",
+		"/home/drake/dev/amazon-interview-prep/rating-widget/index.html",
+		"/home/drake/dev/amazon-interview-prep/js-closure/sum.js",
+		"/home/drake/dev/amazon-interview-prep/navbar/JS/navbar.js",
+		"/home/drake/dev/amazon-interview-prep/rating-widget/JS/rating-widget.js",
+		"/home/drake/dev/amazon-interview-prep/rating-widget/CSS/rating-widget.css",
+		"/home/drake/dev/amazon-interview-prep/rating-widget/CSS\n/rating-widget.css",
+		"/home/drake/dev/amazon-interview-prep/product-id-widget/widget.html",
+		"/home/drake/dev/steamsig/src/render.js",
+		"/home/drake/dev/steamsig/config/.env",
+		"/home/drake/dev/steamsig/src/initialize.js",
+		"/home/drake/dev/steamsig/src/steam.js",
+		"/home/drake/dev/steamsig/src/validate.js",
+		"/home/drake/dev/steamsig/.tern-project",
+		"/home/drake/.config/sublime-text-3/Packages/SublimeCodeIntel/SublimeCodeIntel.sublime-settings",
+		"/home/drake/.config/sublime-text-3/Packages/User/SublimeCodeIntel.sublime-settings",
+		"/home/drake/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/drake/dev/steamsig/test/steam.js",
+		"/home/drake/.config/sublime-text-3/Packages/User/Gist.sublime-settings",
+		"/home/drake/dev/steamsig/assets/JSON/attributes.JSON",
+		"/home/drake/dev/steamsig/assets/JSON/elements.json",
+		"/home/drake/dev/steamsig/package.json",
+		"/home/drake/dev/steamsig/app.js",
+		"/home/drake/dev/steamsig/src/parser.js",
+		"/home/drake/dev/steamsig/utils/clear-steam-cache.sh",
+		"/home/drake/dev/steamsig/assets/profiles/76561198007943939/steam.JSON",
+		"/home/drake/dev/steamsig/views/form.handlebars",
+		"/home/drake/dev/steamsig/test.js",
+		"/home/drake/.config/sublime-text-3/Packages/User/SublimeLinter.sublime-settings",
+		"/home/drake/dev/steamsig/.eslintrc.json",
+		"/home/drake/dev/steamsig/test/testClass.js",
+		"/home/drake/dev/steamsig/assets/profiles/76561197964880220/steam.JSON",
+		"/home/drake/dev/steamsig/assets/profiles/76561197964880220/canvas.JSON",
+		"/home/drake/dev/steamsig/assets/profiles/76561197964880220/old.JSON",
+		"/home/drake/dev/steamsig/assets/profiles/76561197991558078",
+		"/home/drake/dev/steamsig/assets/profiles/76561197964880220/new.JSON",
+		"/home/drake/dev/steamsig/assets/profiles/76561197991558078/canvas.JSON",
+		"/home/drake/dev/steamsig/76561197991558078",
+		"/home/drake/dev/steamsig/assets/profiles/76561197991558078/steam.JSON",
+		"/home/drake/dev/steamsig/views/layouts/main.handlebars",
+		"/home/drake/dev/steamsig/src/error.js",
+		"/home/drake/dev/steamsig/views/error.handlebars",
+		"/home/drake/dev/steamsig/assets/profiles/76561197964880220/userData.JSON",
+		"/etc/acpi/handler.sh",
+		"/etc/acpi/events/anything",
+		"/home/drake/dev/steamsig/src/steamsig.sublime-project",
+		"/home/drake/dev/steamsig/.git/COMMIT_EDITMSG",
+		"/home/drake/dev/steamsig/src/json-format.js",
+		"/home/drake/dev/steamsig/test/parser.js"
+	],
+	"find":
+	{
+		"height": 59.0
+	},
+	"find_in_files":
+	{
+		"height": 170.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "kiln/main.cc",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 122,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								120,
+								120
+							]
+						],
+						"settings":
+						{
+							"SL.28.region_keys":
+							[
+							],
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/C++/C++.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3276,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3276,
+								3276
+							]
+						],
+						"settings":
+						{
+							"auto_indent": false,
+							"git_gutter_is_enabled": false,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_width": 2,
+							"word_wrap": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 378.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "kiln.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 546,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								338,
+								338
+							]
+						],
+						"settings":
+						{
+							"SL.29.region_keys":
+							[
+							],
+							"auto_complete": true,
+							"git_gutter_is_enabled": true,
+							"syntax": "Packages/zzz A File Icon zzz/aliases/JSON (Sublime).sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 59.0
+	},
+	"input":
+	{
+		"height": 138.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.SublimeLinter Messages":
+	{
+		"height": 268.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "kiln.sublime-project",
+	"replace":
+	{
+		"height": 110.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 1000.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/dev/steamapi/steamwrap.sublime-project"
+			]
+		],
+		"width": 760.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 343.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

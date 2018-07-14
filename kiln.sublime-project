@@ -1,0 +1,25 @@
+{
+	"folders":
+	[
+		{
+			"path": "."
+		}
+	],
+  "settings":
+  {
+    // use "ecc_<setting>" or "easy_clang_complete_<setting>" to override
+    // any "<setting>" from the plugin preferences project-wide.
+
+    // override "use_libclang" setting in this project.
+    "ecc_use_libclang": true,
+    // override "verbose" setting in this project.
+    "easy_clang_complete_verbose": true,
+    // override "flags_sources" setting in this project.
+    "ecc_flags_sources": [
+      // cmake entry
+      {
+        "file": "CMakeLists.txt"
+      }
+    ]
+  }
+}

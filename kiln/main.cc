@@ -2,10 +2,10 @@
 
 int main() {
   Kiln kiln;
+  
+  if (kiln.init()) {
+    kiln.run();
+  }
 
-  kiln.init();
-  kiln.run();
-
-  SDL_Delay(3000);
   kiln.cleanup();
 }
