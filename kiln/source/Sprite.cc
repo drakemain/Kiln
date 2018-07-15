@@ -5,7 +5,7 @@ Sprite::~Sprite() {
   SDL_DestroyTexture(this->texture);
 }
 
-bool Sprite::loadImage(std::string imgPath) {
+bool Sprite::load(std::string imgPath) {
   SDL_Surface* surface = IMG_Load(imgPath.c_str());
 
   if (surface == NULL) {

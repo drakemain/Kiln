@@ -1,6 +1,5 @@
 #include "kiln/headers/Kiln.h"
 #include <iostream>
-#include "kiln/headers/Sprite.h"
 
 bool Kiln::init() {
   std::cout << "INIT" << std::endl;
@@ -27,19 +26,14 @@ bool Kiln::init() {
 void Kiln::run() {
   std::cout << "RUN" << std::endl;
 
-  Sprite sprite;
-  if(!sprite.loadImage("kiln/assets/img/sprite-test.jpg")) {
-    this->isRunning = false;
-  }
-
   while(isRunning) {
     if (this->inputManager.poll()) {
       this->eventHandler(this->inputManager.getEvent());
     }
 
-    SDL_RenderClear(this->getBaseRenderer());
-    SDL_RenderCopy(this->getBaseRenderer(), sprite.getTexture(), NULL, sprite.getContainer());
-    SDL_RenderPresent(this->getBaseRenderer());
+    // SDL_RenderClear(this->getBaseRenderer());
+    // SDL_RenderCopy(this->getBaseRenderer(), sprite->getTexture(), NULL, sprite->getContainer());
+    // SDL_RenderPresent(this->getBaseRenderer());
   }
 }
 

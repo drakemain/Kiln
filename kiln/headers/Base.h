@@ -10,6 +10,7 @@ protected:
 
 private:
   static SDL_Renderer* renderer;
+  // static AssetManager* assetManager;
 };
 
 

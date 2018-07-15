@@ -7,7 +7,7 @@
 class Sprite : public Base {
 public:
   ~Sprite();
-  bool loadImage(std::string imgPath);
+  bool load(std::string imgPath);
 
   int getWidth() const;
   int getHeight() const;
