@@ -4,6 +4,7 @@
 #include "Base.h"
 #include "WindowManager.h"
 #include "InputManager.h"
+#include "AssetManager.h"
 
 class Kiln : public Base {
 public:
@@ -18,6 +19,7 @@ private:
   /* Private Members */
   WindowManager windowManager;
   InputManager inputManager;
+  AssetManager assetManager;
   
   // TODO: State Manager
   bool isRunning = true;

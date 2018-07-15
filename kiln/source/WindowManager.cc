@@ -4,7 +4,6 @@
 SDL_Window* WindowManager::window = nullptr;
 
 bool WindowManager::init() {
-  std::cout << "Window Manager" << std::endl;
   this->window = SDL_CreateWindow("Kiln", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->WIDTH, this->HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
 
   if (this->window == NULL) {
@@ -20,6 +19,8 @@ bool WindowManager::init() {
   }
 
   this->setFrameLimit(this->FRAME_LIMIT);
+
+  std::cout << "\tWindow Manager ready!" << std::endl;
 
   return true;
 }
