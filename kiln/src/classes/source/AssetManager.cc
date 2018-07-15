@@ -1,4 +1,4 @@
-#include "kiln/headers/AssetManager.h"
+#include "../headers/AssetManager.h"
 #include <iostream>
 
 AssetManager::AssetManager() {

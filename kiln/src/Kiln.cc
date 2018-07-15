@@ -1,4 +1,4 @@
-#include "kiln/headers/Kiln.h"
+#include "Kiln.h"
 #include <iostream>
 
 bool Kiln::init() {

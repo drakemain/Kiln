@@ -1,4 +1,4 @@
-#include "kiln/headers/Texture.h"
+#include "../headers/Texture.h"
 #include <iostream>
 
 Texture::~Texture() {

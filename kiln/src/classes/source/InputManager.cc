@@ -1,4 +1,4 @@
-#include "kiln/headers/InputManager.h"
+#include "../headers/InputManager.h"
 
 bool InputManager::poll() {
   if (SDL_PollEvent(&this->eventBuffer) == 0) {

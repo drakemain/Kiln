@@ -1,4 +1,4 @@
-#include "headers/Kiln.h"
+#include "src/Kiln.h"
 
 int main() {
   Kiln kiln;

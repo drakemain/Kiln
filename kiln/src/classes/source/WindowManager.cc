@@ -1,4 +1,4 @@
-#include "kiln/headers/WindowManager.h"
+#include "../headers/WindowManager.h"
 #include <iostream>
 
 SDL_Window* WindowManager::window = nullptr;

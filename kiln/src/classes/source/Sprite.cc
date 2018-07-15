@@ -1,4 +1,4 @@
-#include "kiln/headers/Sprite.h"
+#include "../headers/Sprite.h"
 #include <iostream>
 
 void Sprite::fromTexture(Texture* texture) {
