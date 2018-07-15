@@ -6,10 +6,10 @@ AssetManager::AssetManager() {
 }
 
 AssetManager::~AssetManager() {
-  std::map<std::string, Sprite*>::iterator spriteItr;
+  std::map<std::string, Texture*>::iterator spriteItr;
   std::map<std::string, TTF_Font*>::iterator fontItr;
 
-  for (spriteItr = this->SpriteMap.begin(); spriteItr != this->SpriteMap.end(); ++spriteItr) {
+  for (spriteItr = this->TextureMap.begin(); spriteItr != this->TextureMap.end(); ++spriteItr) {
     delete spriteItr->second;
   }
 
@@ -41,24 +41,28 @@ bool AssetManager::init() {
   return true;
 }
 
-Sprite* AssetManager::loadSprite(std::string path, std::string name) {
-  Sprite* sprite = new Sprite();
-  bool success = sprite->load(path);
+Texture* AssetManager::loadTexture(std::string path, std::string name) {
+  Texture* texture = new Texture();
+  bool success = texture->create(path);
 
   if (success) {
-    return this->SpriteMap[name] = sprite;
+    std::cout << "Loaded texture: " << name << std::endl;
+    this->TextureMap[name] = texture;
+    return texture;
   }
   
+  std::cerr << "Failed to create texture!\n\t" << SDL_GetError() << std::endl;
   return nullptr;
 }
 
-Sprite* AssetManager::fetchSprite(std::string name) {
-  return this->SpriteMap[name];
+Texture* AssetManager::fetchTexture(std::string name) {
+  std::cout << "Loaded textures: " << (int)this->TextureMap.size() << std::endl;
+  return this->TextureMap[name];
 }
 
 void AssetManager::unloadSprite(std::string name) {
-  delete this->SpriteMap[name];
-  this->SpriteMap.erase(name);
+  delete this->TextureMap[name];
+  this->TextureMap.erase(name);
 }
 
 TTF_Font* AssetManager::loadFont(std::string path, std::string name) {

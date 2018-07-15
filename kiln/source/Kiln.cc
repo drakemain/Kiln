@@ -20,19 +20,28 @@ bool Kiln::init() {
   return true;
 }
 
+void Kiln::loadAssets() {
+  this->assetManager.loadTexture("kiln/assets/img/sprite-test.jpg", "SpriteTest");
+  this->assetManager.loadTexture("kiln/assets/img/sprite-test2.jpg", "SpriteTest2");
+}
+
 void Kiln::run() {
   std::cout << "RUN" << std::endl;
 
-  TTF_Font* font = this->assetManager.loadFont("kiln/assets/font/RobotoMono-Regular.ttf", "Roboto");
+  Sprite sprite;
+  sprite.fromTexture(this->assetManager.fetchTexture("SpriteTest"));
+  Sprite sprite2;
+  sprite2.fromTexture(this->assetManager.fetchTexture("SpriteTest"));
 
-  if (!font) {
-    this->isRunning = false;
-  }
+  sprite.setWidth(320);
+  sprite2.setWidth(320);
+  sprite2.setPosition(320, 0);
 
-  SDL_Surface* textSurface = TTF_RenderText_Solid(font, "Test Text", SDL_Color{0, 0, 0, 0xFF});
-  SDL_Texture* textTexture = SDL_CreateTextureFromSurface(this->getBaseRenderer(), textSurface);
+  // TTF_Font* font = this->assetManager.loadFont("kiln/assets/font/RobotoMono-Regular.ttf", "Roboto");
 
-  SDL_FreeSurface(textSurface);
+  // if (!font) {
+  //   this->isRunning = false;
+  // }
 
   while(isRunning) {
     if (this->inputManager.poll()) {
@@ -41,7 +50,9 @@ void Kiln::run() {
 
     SDL_SetRenderDrawColor(this->getBaseRenderer(), 0x0, 0x88, 0xFF, 0xFF);
     SDL_RenderClear(this->getBaseRenderer());
-    SDL_RenderCopy(this->getBaseRenderer(), textTexture, NULL, NULL);
+    sprite.render();
+    sprite2.render();
+    // SDL_RenderCopy(this->getBaseRenderer(), textTexture, NULL, NULL);
     SDL_RenderPresent(this->getBaseRenderer());
   }
 }

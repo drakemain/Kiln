@@ -3,24 +3,20 @@
 #include <SDL_image.h>
 #include <string>
 #include "Base.h"
+#include "Texture.h"
 
 class Sprite : public Base {
 public:
-  ~Sprite();
-  bool load(std::string imgPath);
-
-  int getWidth() const;
-  int getHeight() const;
-  Coordinate getPosition() const;
+  void fromTexture(Texture* texture);
+  bool fromText(const std::string text, const std::string fontName);
 
   void setWidth(int width);
   void setHeight(int height);
   void setPosition(int x, int y);
 
-  SDL_Texture* getTexture() const;
-  SDL_Rect* getContainer();
+  void render() const;
 
 private:
-  SDL_Texture* texture;
-  SDL_Rect container;
+  Coordinate position;
+  Texture* texture;
 };
