@@ -12,10 +12,10 @@ public:
 private:
   void setFrameLimit(float frameLimit);
 
-  static SDL_Window* window;
+  SDL_Window* window;
 
-  uint WIDTH = 640;
-  uint HEIGHT = 480;
+  unsigned int WIDTH = 640;
+  unsigned int HEIGHT = 480;
 
   float FRAME_LIMIT = 60.f;
   float MIN_FRAME_TIME;

@@ -24,6 +24,8 @@ AssetManager::~AssetManager() {
 }
 
 bool AssetManager::init() {
+  std::cout << "\tSetting up asset manager." << std::endl;
+
   int imgFlags = IMG_INIT_JPG|IMG_INIT_PNG;
 
   if ((IMG_Init(imgFlags) & imgFlags) != imgFlags) {

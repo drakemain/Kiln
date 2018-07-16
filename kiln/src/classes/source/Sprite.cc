@@ -3,7 +3,9 @@
 
 void Sprite::fromTexture(Texture* texture) {
   if (texture) {
+    std::cout << "ASSIGN" << std::endl;
     this->texture = texture;
+    std::cout << "ASSIGNED" << std::endl;
   } else {
     std::cerr << "Bad texture!" << std::endl;
   }

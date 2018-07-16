@@ -1,5 +1,8 @@
 #include "Kiln.h"
+#include "States/headers/InitState.h"
 #include <iostream>
+
+Kiln::Kiln() {}
 
 bool Kiln::init() {
   std::cout << "INIT" << std::endl;
@@ -9,58 +12,54 @@ bool Kiln::init() {
     return false;
   }
 
-  if (!this->assetManager.init()) {
+  if (!this->coreManagement.assetManager.init()) {
     return false;
   }
 
-  if (!this->windowManager.init()) {
+  if (!this->coreManagement.windowManager.init()) {
     return false;
   }
 
+  this->coreManagement.state.pushForce(std::unique_ptr<State>(new InitState(this->coreManagement)));
+  
   return true;
 }
 
 void Kiln::loadAssets() {
-  this->assetManager.loadTexture("kiln/assets/img/sprite-test.jpg", "SpriteTest");
-  this->assetManager.loadTexture("kiln/assets/img/sprite-test2.jpg", "SpriteTest2");
+  
 }
 
 void Kiln::run() {
   std::cout << "RUN" << std::endl;
 
-  Sprite sprite;
-  sprite.fromTexture(this->assetManager.fetchTexture("SpriteTest"));
-  Sprite sprite2;
-  sprite2.fromTexture(this->assetManager.fetchTexture("SpriteTest"));
+  if (this->coreManagement.state.empty()) {
+    std::cout << "Empty state!" << std::endl;
+  }
 
-  sprite.setWidth(320);
-  sprite2.setWidth(320);
-  sprite2.setPosition(320, 0);
+  Uint32 runTime;
+  unsigned int lastTime = 0;
+  float deltaTime = 0;
 
-  // TTF_Font* font = this->assetManager.loadFont("kiln/assets/font/RobotoMono-Regular.ttf", "Roboto");
+  while(isRunning && !this->coreManagement.state.empty()) {
+    runTime = SDL_GetTicks();
+    deltaTime = runTime - lastTime;
+    lastTime = runTime;
 
-  // if (!font) {
-  //   this->isRunning = false;
-  // }
+    this->coreManagement.state.update();
+    this->coreManagement.state.getActiveState()->tick(deltaTime);
 
-  while(isRunning) {
-    if (this->inputManager.poll()) {
-      this->eventHandler(this->inputManager.getEvent());
+    if (this->coreManagement.inputManager.poll()) {
+      this->eventHandler(this->coreManagement.inputManager.getEvent());
     }
+    
 
-    SDL_SetRenderDrawColor(this->getBaseRenderer(), 0x0, 0x88, 0xFF, 0xFF);
-    SDL_RenderClear(this->getBaseRenderer());
-    sprite.render();
-    sprite2.render();
-    // SDL_RenderCopy(this->getBaseRenderer(), textTexture, NULL, NULL);
-    SDL_RenderPresent(this->getBaseRenderer());
   }
 }
 
 void Kiln::cleanup() {
   std::cout << "CLEANUP" << std::endl;
 
-  this->windowManager.cleanup();
+  this->coreManagement.windowManager.cleanup();
 
   SDL_Quit();
 }
@@ -69,6 +68,7 @@ void Kiln::cleanup() {
 void Kiln::eventHandler(SDL_Event* event) {
   switch(event->type) {
     case SDL_QUIT:
+    std::cout << "QUIT EVENT" << std::endl;
     this->isRunning = false; break;
   }
 }

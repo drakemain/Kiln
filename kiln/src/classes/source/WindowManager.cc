@@ -1,9 +1,9 @@
 #include "../headers/WindowManager.h"
 #include <iostream>
 
-SDL_Window* WindowManager::window = nullptr;
-
 bool WindowManager::init() {
+  std::cout << "\tSetting up window manager." << std::endl;
+
   this->window = SDL_CreateWindow("Kiln", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->WIDTH, this->HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
 
   if (this->window == NULL) {
@@ -17,7 +17,7 @@ bool WindowManager::init() {
     std::cerr << "Failed to init renderer: " << SDL_GetError() << std::endl;
     return false;
   }
-
+  
   this->setFrameLimit(this->FRAME_LIMIT);
 
   std::cout << "\tWindow Manager ready!" << std::endl;
