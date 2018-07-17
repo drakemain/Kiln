@@ -8,7 +8,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --std=c++17 -Wall -Wextra -Werror")
 project(Kiln)
 
 INCLUDE_DIRECTORIES(".")
-file(GLOB_RECURSE SOURCES kiln/src/*.cc)
+file(GLOB_RECURSE SOURCES kiln/*.cc)
 add_executable(${PROJECT_NAME} kiln/main.cc ${SOURCES})
 
 INCLUDE(FindPkgConfig)

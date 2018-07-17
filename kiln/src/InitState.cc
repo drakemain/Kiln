@@ -1,4 +1,4 @@
-#include "../headers/InitState.h"
+#include "./InitState.h"
 #include <iostream>
 
 InitState::InitState(CoreManagement& coreManagement)

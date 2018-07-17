@@ -1,5 +1,5 @@
 #include "Kiln.h"
-#include "States/headers/InitState.h"
+#include "kiln/src/InitState.h"
 #include <iostream>
 
 Kiln::Kiln() {}

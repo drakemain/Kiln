@@ -1,6 +1,6 @@
-#include "State.h"
-#include "kiln/src/Kiln.h"
-#include "kiln/src/classes/headers/Sprite.h"
+#include "kiln/engine/States/headers/State.h"
+#include "kiln/engine/Kiln.h"
+#include "kiln/engine/classes/headers/Sprite.h"
 
 class InitState : public State, public Base {
 public:
