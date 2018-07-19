@@ -17,6 +17,8 @@ public:
   void setWidth(int width);
   void setHeight(int height);
 
+  static Texture* placeholder;
+
 private:
   SDL_Texture* texture;
   int width;

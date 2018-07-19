@@ -12,11 +12,11 @@ bool Kiln::init() {
     return false;
   }
 
-  if (!this->coreManagement.assetManager.init()) {
+  if (!this->coreManagement.windowManager.init()) {
     return false;
   }
 
-  if (!this->coreManagement.windowManager.init()) {
+  if (!this->coreManagement.assetManager.init(this->coreManagement.windowManager.getRenderer())) {
     return false;
   }
 

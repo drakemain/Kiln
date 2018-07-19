@@ -11,10 +11,12 @@ public:
   AssetManager();
   ~AssetManager();
 
-  bool init();
+  bool init(SDL_Renderer* renderer);
 
-  // load an image as a sprite and instert it into the sprite map
+  // load an image as a Texture and instert it into the sprite map
   Texture* loadTexture(std::string path, std::string name, SDL_Renderer* renderer);
+  // load a texture that won't be managed by the asset manager
+  Texture* loadTexture(std::string path, SDL_Renderer* renderer);
   // fetch a texture by name from the map
   Texture* fetchTexture(std::string name);
   // destructs the texture and removes it from the map

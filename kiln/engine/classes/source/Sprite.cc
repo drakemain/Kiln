@@ -17,24 +17,6 @@ Dim Sprite::getDimensions() const {
   return this->dimensions;
 }
 
-// void Sprite::fromTexture(Texture* texture) {
-//   if (texture) {
-//     std::cout << "ASSIGN" << std::endl;
-//     this->texture = texture;
-//     std::cout << "ASSIGNED" << std::endl;
-//   } else {
-//     std::cerr << "Bad texture!" << std::endl;
-//   }
-// }
-
-// void Sprite::fromText(std::string text, TTF_Font* font, SDL_Renderer* renderer) {
-//   SDL_Surface* surface = TTF_RenderText_Solid(font, text.c_str(), SDL_Color{0x88, 0x88, 0x88, 0xFF});
-//   this->texture = new Texture();
-//   this->texture->create(surface, renderer);
-
-//   SDL_FreeSurface(surface);
-// }
-
 void Sprite::setWidth(unsigned int width) {
   this->dimensions.w = width;
 }
