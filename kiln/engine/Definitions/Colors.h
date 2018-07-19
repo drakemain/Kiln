@@ -1,0 +1,7 @@
+#pragma once
+#include <SDL.h>
+
+namespace KILN_COLOR {
+  const SDL_Color WHITE{0xFF, 0xFF, 0xFF, 0xFF};
+  const SDL_Color MEDIUM_GREY{0x88, 0x88, 0x88, 0x88};
+}
