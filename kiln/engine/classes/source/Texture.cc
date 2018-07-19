@@ -28,6 +28,19 @@ bool Texture::create(std::string filePath, SDL_Renderer* renderer) {
   return true;
 }
 
+bool Texture::create(SDL_Surface* surface, SDL_Renderer* renderer) {
+  this->texture = SDL_CreateTextureFromSurface(renderer, surface);
+
+  if (this->texture == NULL) {
+    return false;
+  }
+
+  this->width = surface->w;
+  this->height = surface->h;
+
+  return true;
+}
+
 int Texture::getWidth() const {
   return this->width;
 }

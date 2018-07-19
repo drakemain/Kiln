@@ -7,7 +7,9 @@ InitState::InitState(CoreManagement& coreManagement)
 void InitState::init() {
   SDL_Renderer* renderer = this->coreManagement.windowManager.getRenderer();
   Texture* testTexture = this->coreManagement.assetManager.loadTexture("kiln/assets/img/sprite-test.jpg", "SpriteTest", renderer);
-  this->coreManagement.assetManager.loadTexture("kiln/assets/img/sprite-test2.jpg", "SpriteTest2", renderer);
+  TTF_Font* font = this->coreManagement.assetManager.loadFont("kiln/assets/font/RobotoMono-Regular.ttf", "Roboto");
+
+  this->testText.fromText("Init State", font, renderer);
 
   std::cout << "INIT STATE INIT" << std::endl;
 
@@ -39,5 +41,6 @@ void InitState::render() {
   SDL_Renderer* renderer = this->coreManagement.windowManager.getRenderer();
   SDL_RenderClear(renderer);
   this->testSprite.render(renderer);
+  this->testText.render(renderer);
   SDL_RenderPresent(renderer);
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
+#include <SDL_ttf.h>
 #include <string>
 #include "Texture.h"
 
@@ -11,8 +12,10 @@ struct Coordinate {
 
 class Sprite {
 public:
+  ~Sprite();
+
   void fromTexture(Texture* texture);
-  bool fromText(const std::string text, const std::string fontName);
+  void fromText(std::string text, TTF_Font* font, SDL_Renderer* renderer);
 
   void setWidth(int width);
   void setHeight(int height);

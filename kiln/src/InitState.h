@@ -22,4 +22,5 @@ private:
   float uptime;
   CoreManagement& coreManagement;
   Sprite testSprite;
+  Sprite testText;
 };

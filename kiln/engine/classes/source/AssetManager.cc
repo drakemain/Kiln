@@ -75,6 +75,7 @@ TTF_Font* AssetManager::loadFont(std::string path, std::string name) {
     return nullptr;
   }
 
+  std::cout << "Loaded font: " << name << std::endl;
   this->FontMap[name] = font;
 
   return font;

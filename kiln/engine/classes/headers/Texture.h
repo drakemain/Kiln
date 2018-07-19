@@ -8,6 +8,7 @@ public:
   ~Texture();
 
   bool create(std::string filePath, SDL_Renderer* renderer);
+  bool create(SDL_Surface* surface, SDL_Renderer* renderer);
 
   int getWidth() const;
   int getHeight() const;
