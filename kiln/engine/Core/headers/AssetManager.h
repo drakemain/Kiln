@@ -24,6 +24,12 @@ public:
 
   // load a font from a file and store it in the font map
   TTF_Font* loadFont(std::string path, std::string name);
+  // load a font that won't be managed by the asset manager
+  TTF_Font* loadFont(std::string path);
+  // // fetch a font from the font map
+  // TTF_Font* fetchFont(std::string name);
+  // // destruct and remove a font
+  // void unloadFont(std::string name);
 
 private:
   std::map<std::string, Texture*> TextureMap;

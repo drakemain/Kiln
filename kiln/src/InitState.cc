@@ -12,9 +12,6 @@ InitState::~InitState() {
 void InitState::init() {
   SDL_Renderer* renderer = this->coreManagement.windowManager.getRenderer();
   Texture* testTexture = this->coreManagement.assetManager.loadTexture("kiln/assets/img/sprite-test.jpg", "SpriteTest", renderer);
-  TTF_Font* font = this->coreManagement.assetManager.loadFont("kiln/assets/font/RobotoMono-Regular.ttf", "Roboto");
-
-  testText = new Text("Init Text", font, KILN_COLOR::MEDIUM_GREY, renderer);
 
   std::cout << "INIT STATE INIT" << std::endl;
 
@@ -31,7 +28,6 @@ void InitState::init() {
 
 void InitState::cleanup() {
   delete this->testSprite;
-  delete this->testText;
 }
 
 void InitState::pause() {}
@@ -47,8 +43,5 @@ void InitState::tick(float deltaTime) {
 
 void InitState::render() {
   SDL_Renderer* renderer = this->coreManagement.windowManager.getRenderer();
-  SDL_RenderClear(renderer);
   this->testSprite->render(renderer);
-  this->testText->render(renderer);
-  SDL_RenderPresent(renderer);
 }

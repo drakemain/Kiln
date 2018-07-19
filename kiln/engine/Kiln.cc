@@ -1,5 +1,6 @@
 #include "Kiln.h"
 #include "kiln/src/InitState.h"
+#include "Definitions/Colors.h"
 #include <iostream>
 
 Kiln::Kiln() {}
@@ -21,43 +22,52 @@ bool Kiln::init() {
   }
 
   this->coreManagement.state.pushForce(std::unique_ptr<State>(new InitState(this->coreManagement)));
+
+  TTF_Font* fpsFont = this->coreManagement.assetManager.loadFont("kiln/assets/font/RobotoMono-Regular.ttf", "StatsFont");
+  this->stats = new Stats(10, true, fpsFont, this->coreManagement.windowManager.getRenderer());
   
   return true;
-}
-
-void Kiln::loadAssets() {
-  
 }
 
 void Kiln::run() {
   std::cout << "RUN" << std::endl;
 
-  if (this->coreManagement.state.empty()) {
-    std::cout << "Empty state!" << std::endl;
-  }
-
-  Uint32 runTime;
-  unsigned int lastTime = 0;
+  const unsigned int frameLimit = 60;
+  const float minFrameTime = 1000.f / frameLimit;
+  unsigned int frameTime = 0;
+  Uint32 tickStartTime;
+  
   float deltaTime = 0;
 
   while(isRunning && !this->coreManagement.state.empty()) {
-    runTime = SDL_GetTicks();
-    deltaTime = runTime - lastTime;
-    lastTime = runTime;
+    tickStartTime = SDL_GetTicks();
 
     this->coreManagement.state.update();
-    this->coreManagement.state.getActiveState()->tick(deltaTime);
-
-    if (this->coreManagement.inputManager.poll()) {
-      this->eventHandler(this->coreManagement.inputManager.getEvent());
-    }
     
+    while(this->coreManagement.inputManager.poll()) {
+      this->checkQuit(this->coreManagement.inputManager.getEvent());
+    }    
 
+    this->tick(deltaTime);
+
+    this->render();
+
+    frameTime = SDL_GetTicks() - tickStartTime;
+    
+    if (frameTime < minFrameTime) {
+      // TODO: Don't use delay to limit fps
+      SDL_Delay(minFrameTime - frameTime);
+      frameTime = SDL_GetTicks() - tickStartTime;
+    }
+
+    this->stats->incrementFrameCount();
   }
 }
 
 void Kiln::cleanup() {
   std::cout << "CLEANUP" << std::endl;
+
+  delete this->stats;
 
   this->coreManagement.windowManager.cleanup();
 
@@ -65,10 +75,27 @@ void Kiln::cleanup() {
 }
 
 /* Helper Functions */
-void Kiln::eventHandler(SDL_Event* event) {
-  switch(event->type) {
-    case SDL_QUIT:
-    std::cout << "QUIT EVENT" << std::endl;
-    this->isRunning = false; break;
+void Kiln::checkQuit(SDL_Event* event) {
+  if (event) {
+    if (event->type == SDL_QUIT) {
+      std::cout << "QUIT EVENT" << std::endl;
+      this->isRunning = false;
+    }
   }
+}
+
+void Kiln::tick(float deltaTime) {
+  // TODO: check tick rate
+  this->coreManagement.state.getActiveState()->tick(deltaTime);
+}
+
+void Kiln::render() {
+  SDL_Renderer* renderer = this->coreManagement.windowManager.getRenderer();
+  SDL_RenderClear(renderer);
+  
+  this->coreManagement.state.getActiveState()->render();
+  this->stats->getText()->render(renderer);
+  
+  SDL_RenderPresent(this->coreManagement.windowManager.getRenderer());
+  
 }

@@ -107,3 +107,16 @@ TTF_Font* AssetManager::loadFont(std::string path, std::string name) {
 
   return font;
 }
+
+TTF_Font* AssetManager::loadFont(std::string path) {
+  TTF_Font* font = TTF_OpenFont(path.c_str(), 28);
+
+  if (font == NULL) {
+    std::cerr << "\tFailed to load font: " << ".\n\t\t" << TTF_GetError() << std::endl;
+    return nullptr;
+  }
+
+  std::cout << "\tLoaded an unmanaged font." << std::endl;
+
+  return font;
+}

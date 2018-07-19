@@ -24,5 +24,4 @@ private:
   float uptime;
   CoreManagement& coreManagement;
   Sprite* testSprite;
-  Text* testText;
 };
