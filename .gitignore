@@ -8,3 +8,4 @@ Kiln
 
 # editor files
 .vscode/*
+*.sublime-*
