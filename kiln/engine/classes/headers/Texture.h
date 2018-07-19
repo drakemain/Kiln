@@ -1,14 +1,13 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
-#include "Base.h"
 #include <string>
 
-class Texture : public Base {
+class Texture {
 public:
   ~Texture();
 
-  bool create(std::string filePath);
+  bool create(std::string filePath, SDL_Renderer* renderer);
 
   int getWidth() const;
   int getHeight() const;

@@ -11,9 +11,9 @@ bool WindowManager::init() {
     return false;
   }
 
-  this->setBaseRenderer(SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED));
+  this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED);
 
-  if (this->getBaseRenderer() == NULL) {
+  if (this->renderer == NULL) {
     std::cerr << "Failed to init renderer: " << SDL_GetError() << std::endl;
     return false;
   }
@@ -26,12 +26,16 @@ bool WindowManager::init() {
 }
 
 void WindowManager::cleanup() {
-  Base::destroyBaseRenderer();
+  SDL_DestroyRenderer(this->renderer);
   SDL_DestroyWindow(this->window);
 }
 
 SDL_Window* WindowManager::getWindow() const {
   return this->window;
+}
+
+SDL_Renderer* WindowManager::getRenderer() const {
+  return this->renderer;
 }
 
 void WindowManager::setFrameLimit(float frameLimit) {

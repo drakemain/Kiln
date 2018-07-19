@@ -24,7 +24,7 @@ void Sprite::setPosition(int x, int y) {
   this->position.y = y;
 }
 
-void Sprite::render() const {
+void Sprite::render(SDL_Renderer* renderer) const {
   SDL_Rect container;
   container.w = this->texture->getWidth();
   container.h = this->texture->getHeight();
@@ -32,7 +32,7 @@ void Sprite::render() const {
   container.y = this->position.y;
 
   SDL_RenderCopy(
-    this->getBaseRenderer(),
+    renderer,
     this->texture->getTexture(),
     NULL,
     &container  

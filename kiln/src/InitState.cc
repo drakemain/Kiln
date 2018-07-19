@@ -1,12 +1,13 @@
-#include "./InitState.h"
+#include "InitState.h"
 #include <iostream>
 
 InitState::InitState(CoreManagement& coreManagement)
 : coreManagement(coreManagement) {}
 
 void InitState::init() {
-  Texture* testTexture = this->coreManagement.assetManager.loadTexture("kiln/assets/img/sprite-test.jpg", "SpriteTest");
-  this->coreManagement.assetManager.loadTexture("kiln/assets/img/sprite-test2.jpg", "SpriteTest2");
+  SDL_Renderer* renderer = this->coreManagement.windowManager.getRenderer();
+  Texture* testTexture = this->coreManagement.assetManager.loadTexture("kiln/assets/img/sprite-test.jpg", "SpriteTest", renderer);
+  this->coreManagement.assetManager.loadTexture("kiln/assets/img/sprite-test2.jpg", "SpriteTest2", renderer);
 
   std::cout << "INIT STATE INIT" << std::endl;
 
@@ -35,7 +36,8 @@ void InitState::tick(float deltaTime) {
 }
 
 void InitState::render() {
-  SDL_RenderClear(this->getBaseRenderer());
-  this->testSprite.render();
-  SDL_RenderPresent(this->getBaseRenderer());
+  SDL_Renderer* renderer = this->coreManagement.windowManager.getRenderer();
+  SDL_RenderClear(renderer);
+  this->testSprite.render(renderer);
+  SDL_RenderPresent(renderer);
 }

@@ -1,18 +1,19 @@
 #pragma once
 #include <SDL.h>
-#include "Base.h"
 
-class WindowManager : public Base {
+class WindowManager {
 public:
   bool init();
   void cleanup();
 
   SDL_Window* getWindow() const;
+  SDL_Renderer* getRenderer() const;
 
 private:
   void setFrameLimit(float frameLimit);
 
   SDL_Window* window;
+  SDL_Renderer* renderer;
 
   unsigned int WIDTH = 640;
   unsigned int HEIGHT = 480;

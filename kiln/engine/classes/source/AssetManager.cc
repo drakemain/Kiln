@@ -43,9 +43,9 @@ bool AssetManager::init() {
   return true;
 }
 
-Texture* AssetManager::loadTexture(std::string path, std::string name) {
+Texture* AssetManager::loadTexture(std::string path, std::string name, SDL_Renderer* renderer) {
   Texture* texture = new Texture();
-  bool success = texture->create(path);
+  bool success = texture->create(path, renderer);
 
   if (success) {
     std::cout << "Loaded texture: " << name << std::endl;

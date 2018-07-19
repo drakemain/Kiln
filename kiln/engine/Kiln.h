@@ -1,7 +1,6 @@
 #pragma once
 #include <SDL.h>
 #include <SDL_image.h>
-#include "classes/headers/Base.h"
 #include "classes/headers/Sprite.h"
 #include "classes/headers/WindowManager.h"
 #include "classes/headers/InputManager.h"
@@ -15,7 +14,7 @@ struct CoreManagement {
   AssetManager assetManager;
 };
 
-class Kiln : public Base {
+class Kiln {
 public:
   Kiln();
 

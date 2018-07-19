@@ -2,10 +2,14 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <string>
-#include "Base.h"
 #include "Texture.h"
 
-class Sprite : public Base {
+struct Coordinate {
+  int x;
+  int y;
+};
+
+class Sprite {
 public:
   void fromTexture(Texture* texture);
   bool fromText(const std::string text, const std::string fontName);
@@ -14,7 +18,7 @@ public:
   void setHeight(int height);
   void setPosition(int x, int y);
 
-  void render() const;
+  void render(SDL_Renderer* renderer) const;
 
 private:
   Coordinate position;

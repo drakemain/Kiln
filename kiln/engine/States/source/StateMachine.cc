@@ -26,7 +26,7 @@ void StateMachine::pushForce(std::unique_ptr<State> state) {
 }
 
 void StateMachine::popState() {
-  std::cout << "POPING STATE" << std::endl;
+  std::cout << "POPPING STATE" << std::endl;
   this->isRemoving = true;
 }
 

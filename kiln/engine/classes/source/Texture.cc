@@ -5,7 +5,7 @@ Texture::~Texture() {
   SDL_DestroyTexture(this->texture);
 }
 
-bool Texture::create(std::string filePath) {
+bool Texture::create(std::string filePath, SDL_Renderer* renderer) {
   SDL_Surface* surface = IMG_Load(filePath.c_str());
 
   if (surface == NULL) {
@@ -13,7 +13,7 @@ bool Texture::create(std::string filePath) {
     return false;
   }
 
-  this->texture = SDL_CreateTextureFromSurface(this->getBaseRenderer(), surface);
+  this->texture = SDL_CreateTextureFromSurface(renderer, surface);
 
   if (this->texture == NULL) {
     std::cerr << "Failed to convert img to texture\n\t" << SDL_GetError() << std::endl;
