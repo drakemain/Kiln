@@ -33,7 +33,9 @@ void StateMachine::popState() {
 void StateMachine::update() {
   if (this->isRemoving && !this->stateStack.empty()) {
     std::cout << "Removing state." << std::endl;
-    this->stateStack.pop();
+    if (this->stateStack.top()) {
+      this->stateStack.pop();
+    }
 
     if (!this->stateStack.empty()) {
       this->stateStack.top()->resume();

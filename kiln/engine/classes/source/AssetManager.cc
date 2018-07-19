@@ -62,7 +62,7 @@ Texture* AssetManager::fetchTexture(std::string name) {
   return this->TextureMap[name];
 }
 
-void AssetManager::unloadSprite(std::string name) {
+void AssetManager::unloadTexture(std::string name) {
   delete this->TextureMap[name];
   this->TextureMap.erase(name);
 }
