@@ -19,7 +19,7 @@ void InitState::init() {
 
   this->testSprite = new Sprite(testTexture);
   this->testText = new Text("Init State Text!", testFont, KILN_COLOR::MEDIUM_GREY, renderer);
-  this->testText->setPosition(0, this->testText->getDimensions().h);
+  this->testText->setWorldPosition(0, this->testText->getDimensions().h);
   this->sound = testSound;
   
   std::cout << "INIT STATE INIT COMPLETE" << std::endl;

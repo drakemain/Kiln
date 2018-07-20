@@ -9,9 +9,7 @@ Sprite::Sprite(Texture* texture) {
 
 Sprite::Sprite() {}
 
-Coordinate Sprite::getPosition() const {
-  return this->position;
-}
+Sprite::~Sprite() {}
 
 Dim Sprite::getDimensions() const {
   return this->dimensions;
@@ -25,17 +23,12 @@ void Sprite::setHeight(unsigned int height) {
   this->dimensions.h = height;
 }
 
-void Sprite::setPosition(int x, int y) {
-  this->position.x = x;
-  this->position.y = y;
-}
-
 void Sprite::render(SDL_Renderer* renderer) const {
   SDL_Rect container;
   container.w = this->dimensions.w;
   container.h = this->dimensions.h;
-  container.x = this->position.x;
-  container.y = this->position.y;
+  container.x = this->getWorldPosition().x;
+  container.y = this->getWorldPosition().y;
 
   SDL_RenderCopy(
     renderer,
