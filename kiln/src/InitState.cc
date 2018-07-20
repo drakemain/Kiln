@@ -12,22 +12,24 @@ InitState::~InitState() {
 void InitState::init() {
   SDL_Renderer* renderer = this->coreManagement.windowManager.getRenderer();
   Texture* testTexture = this->coreManagement.assetManager.loadTexture("kiln/assets/img/sprite-test.jpg", "SpriteTest", renderer);
+  TTF_Font* testFont = this->coreManagement.assetManager.loadFont("kiln/assets/font/RobotoMono-Regular.ttf", "Roboto");
+  Mix_Chunk* testSound = this->coreManagement.assetManager.loadSound("kiln/assets/audio/sounds/win98.wav", "Win98");
 
   std::cout << "INIT STATE INIT" << std::endl;
 
-  if (testTexture) {
-    std::cout << "Loading sprite." << std::endl;
-    this->testSprite = new Sprite(testTexture);
-    std::cout << "Sprite loaded." << std::endl;
-  } else {
-    std::cout << "Fetched bad texture!" << std::endl;
-  }
+  this->testSprite = new Sprite(testTexture);
+  this->testText = new Text("Init State Text!", testFont, KILN_COLOR::MEDIUM_GREY, renderer);
+  this->testText->setPosition(0, this->testText->getDimensions().h);
+  this->sound = testSound;
   
   std::cout << "INIT STATE INIT COMPLETE" << std::endl;
+
+  Mix_PlayChannel(-1, this->sound, 0);
 }
 
 void InitState::cleanup() {
   delete this->testSprite;
+  delete this->testText;
 }
 
 void InitState::pause() {}
@@ -44,4 +46,5 @@ void InitState::tick(float deltaTime) {
 void InitState::render() {
   SDL_Renderer* renderer = this->coreManagement.windowManager.getRenderer();
   this->testSprite->render(renderer);
+  this->testText->render(renderer);
 }

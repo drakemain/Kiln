@@ -8,7 +8,7 @@ AssetManager::AssetManager() {
 }
 
 AssetManager::~AssetManager() {
-  std::cout << "Cleaning up managed assets...";
+  std::cout << "Cleaning up managed assets..." << std::endl;
 
   std::map<std::string, Texture*>::iterator textureItr;
   std::map<std::string, TTF_Font*>::iterator fontItr;
@@ -17,18 +17,22 @@ AssetManager::~AssetManager() {
 
   for (textureItr = this->TextureMap.begin(); textureItr != this->TextureMap.end(); ++textureItr) {
     delete textureItr->second;
+    std::cout << "\tTEXTURE: " << textureItr->first << std::endl;
   }
 
   for (fontItr = this->FontMap.begin(); fontItr != this->FontMap.end(); ++fontItr) {
     TTF_CloseFont(fontItr->second);
+    std::cout << "\tFONT: " << fontItr->first << std::endl;
   }
 
   for (musicItr = this->MusicMap.begin(); musicItr != this->MusicMap.end(); ++musicItr) {
     Mix_FreeMusic(musicItr->second);
+    std::cout << "\tCleaned up MUSIC: " << musicItr->first << std::endl;
   }
 
   for (soundIter = this->SoundMap.begin(); soundIter != this->SoundMap.end(); ++soundIter) {
     Mix_FreeChunk(soundIter->second);
+    std::cout << "\tSOUND: " << soundIter->first << std::endl;
   }
 
   IMG_Quit();

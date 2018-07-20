@@ -24,4 +24,6 @@ private:
   float uptime;
   CoreManagement& coreManagement;
   Sprite* testSprite;
+  Text* testText;
+  Mix_Chunk* sound;
 };
