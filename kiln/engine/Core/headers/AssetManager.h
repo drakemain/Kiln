@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include "kiln/engine/classes/headers/Texture.h"
 #include <string>
 #include <map>
@@ -26,12 +27,24 @@ public:
   TTF_Font* loadFont(std::string path, std::string name);
   // load a font that won't be managed by the asset manager
   TTF_Font* loadFont(std::string path);
-  // // fetch a font from the font map
-  // TTF_Font* fetchFont(std::string name);
-  // // destruct and remove a font
-  // void unloadFont(std::string name);
+  // fetch a font from the font map
+  TTF_Font* fetchFont(std::string name);
+  // destruct and remove a font
+  void unloadFont(std::string name);
+
+  Mix_Music* loadMusic(std::string path, std::string name);
+  Mix_Music* loadMusic(std::string path);
+  Mix_Music* fetchMusic(std::string name);
+  void unloadMusic(std::string name);
+
+  Mix_Chunk* loadSound(std::string path, std::string name);
+  Mix_Chunk* loadSound(std::string path);
+  Mix_Chunk* fetchSound(std::string name);
+  void unloadSound(std::string name);
 
 private:
   std::map<std::string, Texture*> TextureMap;
   std::map<std::string, TTF_Font*> FontMap;
+  std::map<std::string, Mix_Music*> MusicMap;
+  std::map<std::string, Mix_Chunk*> SoundMap;
 };

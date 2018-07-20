@@ -1,6 +1,5 @@
 #pragma once
 #include <SDL.h>
-#include <SDL_image.h>
 #include "classes/headers/Sprite.h"
 #include "Core/headers/WindowManager.h"
 #include "Core/headers/InputManager.h"
