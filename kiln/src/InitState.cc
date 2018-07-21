@@ -1,5 +1,6 @@
 #include "InitState.h"
 #include "kiln/engine/Definitions/Colors.h"
+#include "kiln/engine/Classes/Menu/headers/Menu.h"
 #include <iostream>
 
 InitState::InitState(CoreManagement& coreManagement)
@@ -28,8 +29,12 @@ void InitState::init() {
 }
 
 void InitState::cleanup() {
+  std::cout << "Cleanup INIT" << std::endl;
+
   delete this->testSprite;
   delete this->testText;
+
+  this->coreManagement.assetManager.unloadSound("Win98");
 }
 
 void InitState::pause() {}
@@ -39,7 +44,12 @@ void InitState::resume() {}
 void InitState::handleEvents() {}
 
 void InitState::tick(float deltaTime) {
-  this->uptime += deltaTime;
+  this->runTime += deltaTime;
+
+  if (this->runTime > 7000) {
+    this->coreManagement.state.replaceState(std::unique_ptr<State>(new Menu(this->coreManagement)));
+  }
+
   this->render();
 }
 

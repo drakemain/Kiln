@@ -15,8 +15,6 @@ void StateMachine::pushState(std::unique_ptr<State> state) {
 }
 
 void StateMachine::pushForce(std::unique_ptr<State> state) {
-  std::cout << "Force push state!" << std::endl;
-
   if (!this->empty()) {
     this->stateStack.top()->pause();
   }
@@ -25,17 +23,29 @@ void StateMachine::pushForce(std::unique_ptr<State> state) {
   this->stateStack.top()->init();
 }
 
+void StateMachine::replaceState(std::unique_ptr<State> state) {
+  this->isRemoving = true;
+  this->isAdding = true;
+
+  this->stateBuffer = std::move(state);
+}
+
 void StateMachine::popState() {
-  std::cout << "POPPING STATE" << std::endl;
   this->isRemoving = true;
 }
 
 void StateMachine::update() {
-  if (this->isRemoving && !this->stateStack.empty()) {
+  if (this->isRemoving) {
     std::cout << "Removing state." << std::endl;
-    if (this->stateStack.top()) {
-      this->stateStack.pop();
-    }
+  }
+  if (this->stateStack.empty()) {
+    std::cout << "Not empty." << std::endl;
+  }
+
+  if (this->isRemoving && !this->stateStack.empty()) {
+    std::cout << "REM" << std::endl;
+    this->stateStack.top()->cleanup();
+    this->stateStack.pop();
 
     if (!this->stateStack.empty()) {
       this->stateStack.top()->resume();
@@ -46,20 +56,16 @@ void StateMachine::update() {
 
   if (this->isAdding && this->stateBuffer != nullptr) {
     this->isAdding = false;
-    std::cout << "Adding state." << std::endl;
 
     if (!this->empty()) {
       this->stateStack.top()->pause();
-      std::cout << "Paused previous state." << std::endl;
     }
 
     this->stateStack.push(std::move(this->stateBuffer));
 
-    std::cout << "Moved from buffer." << std::endl;
     if (!this->empty()) {
       this->stateStack.top()->init();
     }
-    std::cout << "Operation complete." << std::endl;
   }
 }
 

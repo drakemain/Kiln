@@ -2,8 +2,8 @@
 
 #include "kiln/engine/States/headers/State.h"
 #include "kiln/engine/Kiln.h"
-#include "kiln/engine/classes/headers/Sprite.h"
-#include "kiln/engine/classes/headers/Text.h"
+#include "kiln/engine/Classes/headers/Sprite.h"
+#include "kiln/engine/Classes/headers/Text.h"
 
 class InitState : public State {
 public:
@@ -21,9 +21,11 @@ public:
   void render() override;
 
 private:
-  float uptime;
   CoreManagement& coreManagement;
   Sprite* testSprite;
   Text* testText;
   Mix_Chunk* sound;
+
+  Uint32 startTime;
+  float runTime = 0.f;
 };

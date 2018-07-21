@@ -189,6 +189,7 @@ Mix_Music* AssetManager::fetchMusic(std::string name) {
 
 void AssetManager::unloadMusic(std::string name) {
   Mix_FreeMusic(this->MusicMap[name]);
+  this->MusicMap.erase(name);
 }
 
 
@@ -225,4 +226,5 @@ Mix_Chunk* AssetManager::fetchSound(std::string name) {
 
 void AssetManager::unloadSound(std::string name) {
   Mix_FreeChunk(this->SoundMap[name]);
+  this->SoundMap.erase(name);
 }

@@ -3,7 +3,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
-#include "kiln/engine/classes/headers/Texture.h"
+#include "kiln/engine/Classes/headers/Texture.h"
 #include <string>
 #include <map>
 

@@ -1,11 +1,11 @@
 #pragma once
 #include <SDL.h>
-#include "classes/headers/Sprite.h"
+#include "Classes/headers/Sprite.h"
 #include "Core/headers/WindowManager.h"
 #include "Core/headers/InputManager.h"
 #include "Core/headers/AssetManager.h"
 #include "States/headers/StateMachine.h"
-#include "kiln/engine/classes/headers/Text.h"
+#include "kiln/engine/Classes/headers/Text.h"
 #include "Core/headers/Stats.h"
 
 struct CoreManagement {

@@ -6,18 +6,15 @@ Sprite::Sprite(Texture* texture) {
   this->dimensions.w = texture->getWidth();
   this->dimensions.h = texture->getHeight();
 
-  this->movement = new MovementComponent(this);
-  std::cout << "SPRITE CONST" << std::endl;
+  // this->movement = new MovementComponent(this);
 }
 
 Sprite::Sprite() {
-  std::cout << "SPRITE CONST (DEF)" << std::endl;
-  this->movement = new MovementComponent(this);
+  // this->movement = new MovementComponent(this);
 }
 
 Sprite::~Sprite() {
-  std::cout << "SPRITE DEST" << std::endl;
-  delete this->movement;
+  // delete this->movement;
 }
 
 Dim Sprite::getDimensions() const {
@@ -49,6 +46,6 @@ void Sprite::render(SDL_Renderer* renderer) const {
 
 void Sprite::tick(float deltaTime) {
   std::cout << "Sprite tick! " << deltaTime;
-  this->movement->tick(deltaTime);
+  // this->movement->tick(deltaTime);
   std::cout << std::endl;
 }

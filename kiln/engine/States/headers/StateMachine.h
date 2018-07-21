@@ -10,6 +10,7 @@ public:
 
   void pushState(std::unique_ptr<State> state);
   void pushForce(std::unique_ptr<State> state);
+  void replaceState(std::unique_ptr<State> state);
   void popState();
 
   void update();
@@ -24,5 +25,4 @@ private:
 
   bool isRemoving = false;
   bool isAdding = false;
-  // bool isReplacing;
 };

@@ -1,6 +1,6 @@
 #pragma once
 #include <SDL.h>
-#include "kiln/engine/classes/headers/Text.h"
+#include "kiln/engine/Classes/headers/Text.h"
 
 class Stats {
 public:
