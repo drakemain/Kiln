@@ -9,12 +9,14 @@ struct Coordinate {
 // a position within the game
 class Entity {
 public:
+  Entity();
   virtual ~Entity();
 
   Coordinate getWorldPosition() const;
   void setWorldPosition(int x, int y);
+  void setWorldPosition(Coordinate position);
 
-  // virtual void tick(float deltaTime);
+  virtual void tick(float deltaTime) = 0;
 private:
   Coordinate worldPosition;
 };

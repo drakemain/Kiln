@@ -14,7 +14,6 @@ Text::~Text() {
 
 void Text::draw(SDL_Renderer* renderer) {
   this->clear();
-
   SDL_Surface* surface = TTF_RenderText_Solid(this->font, this->text.c_str(), this->color);
 
   if (!surface) {
@@ -52,6 +51,9 @@ bool Text::checkWasModified() const {
 }
 
 void Text::clear() {
-  SDL_DestroyTexture(this->texture);
+  if (this->texture) {
+    SDL_DestroyTexture(this->texture);
+  }
+
   this->texture = nullptr;
 }
