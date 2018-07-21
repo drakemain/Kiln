@@ -36,11 +36,13 @@ void Kiln::run() {
   const float minFrameTime = 1000.f / frameLimit;
   unsigned int frameTime = 0;
   Uint32 tickStartTime;
+  Uint32 lastTickStartTime = 0;
   
   float deltaTime = 0;
 
   while(isRunning && !this->coreManagement.state.empty()) {
     tickStartTime = SDL_GetTicks();
+    deltaTime = tickStartTime - lastTickStartTime;
 
     this->coreManagement.state.update();
     
@@ -61,6 +63,8 @@ void Kiln::run() {
     }
 
     this->stats->incrementFrameCount();
+
+    lastTickStartTime = tickStartTime;
   }
 }
 
@@ -96,6 +100,6 @@ void Kiln::render() {
   this->coreManagement.state.getActiveState()->render();
   this->stats->getText()->render(renderer);
   
-  SDL_RenderPresent(this->coreManagement.windowManager.getRenderer());
+  SDL_RenderPresent(renderer);
   
 }
