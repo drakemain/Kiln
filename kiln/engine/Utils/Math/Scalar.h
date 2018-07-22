@@ -19,5 +19,16 @@ namespace KMath {
         destA, destB
       ));
     }
+
+    template<class T>
+    inline T clamp(T min, T max, T val) {
+      if (val < min) {
+        val = min;
+      } else if (val > max) {
+        val = max;
+      }
+
+      return val;
+    }
   };
 };
