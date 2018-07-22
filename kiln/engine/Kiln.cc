@@ -47,7 +47,10 @@ void Kiln::run() {
     this->coreManagement.state.update();
     
     while(this->coreManagement.inputManager.poll()) {
-      this->checkQuit(this->coreManagement.inputManager.getEvent());
+      SDL_Event* polledEvent = this->coreManagement.inputManager.getEvent();
+      
+      this->checkQuit(polledEvent);
+      this->coreManagement.state.getActiveState()->handleEvent(polledEvent);
     }    
 
     this->tick(deltaTime);

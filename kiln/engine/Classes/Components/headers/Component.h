@@ -1,3 +1,4 @@
+#pragma once
 #include "kiln/engine/Classes/headers/Entity.h"
 
 class Component {

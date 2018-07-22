@@ -38,6 +38,10 @@ SDL_Renderer* WindowManager::getRenderer() const {
   return this->renderer;
 }
 
+Dim WindowManager::getResolution() const {
+  return {this->WIDTH, this->HEIGHT};
+}
+
 void WindowManager::setFrameLimit(float frameLimit) {
   this->FRAME_LIMIT = frameLimit;
   this->MIN_FRAME_TIME = 1000.f / frameLimit;

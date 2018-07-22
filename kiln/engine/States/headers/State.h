@@ -9,7 +9,7 @@ public:
   virtual void pause() = 0;
   virtual void resume() = 0;
   
-  virtual void handleEvents() = 0;
+  virtual void handleEvent(SDL_Event* event) = 0;
   virtual void tick(float deltaTime) = 0;
   virtual void render() = 0;
 };

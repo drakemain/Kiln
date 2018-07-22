@@ -41,7 +41,11 @@ void InitState::pause() {}
 
 void InitState::resume() {}
 
-void InitState::handleEvents() {}
+void InitState::handleEvent(SDL_Event* event) {
+  if (event) {
+    std::cout << "INIT EVENT!" << std::endl;
+  }
+}
 
 void InitState::tick(float deltaTime) {
   this->runTime += deltaTime;

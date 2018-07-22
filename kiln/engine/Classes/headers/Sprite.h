@@ -6,11 +6,7 @@
 #include "Texture.h"
 #include "Entity.h"
 #include "../Components/headers/MovementComponent.h"
-
-struct Dim {
-  unsigned int w = 0;
-  unsigned int h = 0;
-};
+#include "kiln/engine/Utils/headers/Dim.h"
 
 class Sprite : public Entity {
 public:
@@ -26,6 +22,8 @@ public:
   void render(SDL_Renderer* renderer) const;
 
   void tick(float deltaTime);
+
+  void centerInWindow(unsigned int xBound, unsigned int yBound) override;
 
 private:
   Dim dimensions;

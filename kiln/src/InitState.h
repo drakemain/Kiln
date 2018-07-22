@@ -16,7 +16,7 @@ public:
   void pause() override;
   void resume() override;
 
-  void handleEvents() override;
+  void handleEvent(SDL_Event* event) override;
   void tick(float deltaTime) override;
   void render() override;
 

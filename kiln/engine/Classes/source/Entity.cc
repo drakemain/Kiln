@@ -15,3 +15,7 @@ void Entity::setWorldPosition(int x, int y) {
 void Entity::setWorldPosition(Coordinate position) {
   this->worldPosition = position;
 }
+
+void Entity::centerInWindow(unsigned int xBoundary, unsigned int yBoundary) {
+  this->setWorldPosition(xBoundary / 2, yBoundary / 2);
+}

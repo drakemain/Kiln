@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include "kiln/engine/Utils/headers/Dim.h"
 
 class WindowManager {
 public:
@@ -8,6 +9,7 @@ public:
 
   SDL_Window* getWindow() const;
   SDL_Renderer* getRenderer() const;
+  Dim getResolution() const;
 
 private:
   void setFrameLimit(float frameLimit);

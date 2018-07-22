@@ -49,3 +49,14 @@ void Sprite::tick(float deltaTime) {
   // this->movement->tick(deltaTime);
   std::cout << std::endl;
 }
+
+void Sprite::centerInWindow(unsigned int xBound, unsigned int yBound) {
+  Coordinate windowCenter;
+  windowCenter.x = xBound / 2;
+  windowCenter.y = yBound / 2;
+
+  this->setWorldPosition(
+    windowCenter.x - (this->dimensions.w / 2),
+    windowCenter.y - (this->dimensions.h / 2)
+  );
+}

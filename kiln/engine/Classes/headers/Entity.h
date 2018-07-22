@@ -1,9 +1,5 @@
 #pragma once
-
-struct Coordinate {
-  int x = 0;
-  int y = 0;
-};
+#include "kiln/engine/Utils/headers/Coordinate.h"
 
 // Entities are objects that have
 // a position within the game
@@ -15,6 +11,8 @@ public:
   Coordinate getWorldPosition() const;
   void setWorldPosition(int x, int y);
   void setWorldPosition(Coordinate position);
+
+  virtual void centerInWindow(unsigned int xBoundary, unsigned int yBoundary);
 
   virtual void tick(float deltaTime) = 0;
 private:
