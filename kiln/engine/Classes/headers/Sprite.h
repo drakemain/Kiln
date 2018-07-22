@@ -5,7 +5,7 @@
 #include <string>
 #include "Texture.h"
 #include "Entity.h"
-#include "MovementComponent.h"
+#include "../Components/headers/MovementComponent.h"
 
 struct Dim {
   unsigned int w = 0;
@@ -16,7 +16,7 @@ class Sprite : public Entity {
 public:
   Sprite(Texture* texture);
   Sprite();
-  virtual ~Sprite();
+  ~Sprite();
 
   Dim getDimensions() const;
 

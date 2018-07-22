@@ -1,4 +1,4 @@
-#include "Entity.h"
+#include "kiln/engine/Classes/headers/Entity.h"
 
 class Component {
 public:
