@@ -13,7 +13,7 @@ void Button::render(SDL_Renderer* renderer) {
   Sprite::render(renderer);
 }
 
-bool Button::wasClicked(Coordinate clickPos) {
+bool Button::wasClicked(ICoordinate clickPos) {
   Dim dimensions = this->getDimensions();
   return this->click.wasClicked(clickPos, dimensions.w, dimensions.h);
 } 

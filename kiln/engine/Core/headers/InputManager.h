@@ -10,15 +10,15 @@ public:
   // TODO: Stop using pointer to member
   SDL_Event* getEvent();
 
-  Coordinate getCursorPosition() const;
-  Coordinate getCursorClickedPosition() const;
+  ICoordinate getCursorPosition() const;
+  ICoordinate getCursorClickedPosition() const;
 
 
 private:
   void updateCursorPosition(SDL_Event* event);
   void updateCursorClickedPosition(SDL_Event* event);
   
-  Coordinate cursorPosition;
-  Coordinate clickPosition;
+  ICoordinate cursorPosition;
+  ICoordinate clickPosition;
   SDL_Event eventBuffer;
 };

@@ -5,14 +5,13 @@
 #include <string>
 #include "Texture.h"
 #include "Entity.h"
-#include "../Components/headers/MovementComponent.h"
 #include "kiln/engine/Utils/headers/Dim.h"
 
 class Sprite : public Entity {
 public:
   Sprite(Texture* texture);
   Sprite();
-  ~Sprite();
+  // ~Sprite();
 
   Dim getDimensions() const;
 
@@ -20,8 +19,6 @@ public:
   void setHeight(unsigned int height);
 
   void render(SDL_Renderer* renderer) const;
-
-  void tick(float deltaTime);
 
   void centerInWindow(unsigned int xBound, unsigned int yBound) override;
 

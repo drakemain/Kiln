@@ -5,5 +5,5 @@ class ClickComponent : public Component {
 public:
   ClickComponent(Entity* owner);
 
-  bool wasClicked(Coordinate mouseLocation, unsigned int boundingWidth, unsigned int boundingHeight);
+  bool wasClicked(ICoordinate mouseLocation, unsigned int boundingWidth, unsigned int boundingHeight);
 };

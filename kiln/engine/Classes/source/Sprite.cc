@@ -5,17 +5,11 @@ Sprite::Sprite(Texture* texture) {
   this->texture = texture->getTexture();
   this->dimensions.w = texture->getWidth();
   this->dimensions.h = texture->getHeight();
-
-  // this->movement = new MovementComponent(this);
 }
 
-Sprite::Sprite() {
-  // this->movement = new MovementComponent(this);
-}
+Sprite::Sprite() {}
 
-Sprite::~Sprite() {
-  // delete this->movement;
-}
+// Sprite::~Sprite() {}
 
 Dim Sprite::getDimensions() const {
   return this->dimensions;
@@ -44,14 +38,8 @@ void Sprite::render(SDL_Renderer* renderer) const {
   );
 }
 
-void Sprite::tick(float deltaTime) {
-  std::cout << "Sprite tick! " << deltaTime;
-  // this->movement->tick(deltaTime);
-  std::cout << std::endl;
-}
-
 void Sprite::centerInWindow(unsigned int xBound, unsigned int yBound) {
-  Coordinate windowCenter;
+  FCoordinate windowCenter;
   windowCenter.x = xBound / 2;
   windowCenter.y = yBound / 2;
 

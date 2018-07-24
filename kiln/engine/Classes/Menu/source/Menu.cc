@@ -38,7 +38,7 @@ void Menu::handleEvent(SDL_Event* event) {
   if (event) {
     if (event->type == SDL_MOUSEBUTTONDOWN) {
       if (event->button.button == SDL_BUTTON_LEFT) {
-        Coordinate clickPos = this->core.inputManager.getCursorClickedPosition();
+        ICoordinate clickPos = this->core.inputManager.getCursorClickedPosition();
 
         for (Button* button : this->buttons) {
           if (button->wasClicked(clickPos)) {

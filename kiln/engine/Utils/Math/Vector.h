@@ -28,5 +28,8 @@ namespace KMath {
     bool operator==(const Vector& vec) const { return (this->x == vec.x) && (this->y == vec.y); };
     bool operator!=(const Vector& vec) const { return (this->x != vec.x) || (this->y != vec.y); };
     bool equals(const Vector& vec, float tolerance) { return (std::abs(this->x - vec.x) <= tolerance) && (std::abs(this->y - vec.y) <= tolerance); }
+
+    bool isZero() { return (this->x == 0.f) && (this->y == 0.f); }
+    bool isZero(float tolerance) { return (std::abs(this->x) <= tolerance) && (std::abs(this->y) <= tolerance); }
   };
 };

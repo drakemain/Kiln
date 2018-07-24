@@ -15,11 +15,11 @@ SDL_Event* InputManager::getEvent() {
   return &this->eventBuffer;
 }
 
-Coordinate InputManager::getCursorPosition() const {
+ICoordinate InputManager::getCursorPosition() const {
   return this->cursorPosition;
 }
 
-Coordinate InputManager::getCursorClickedPosition() const {
+ICoordinate InputManager::getCursorClickedPosition() const {
   return this->clickPosition;
 }
 

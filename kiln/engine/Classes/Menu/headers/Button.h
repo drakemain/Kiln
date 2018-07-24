@@ -9,7 +9,7 @@ public:
 
   void render(SDL_Renderer* renderer);
 
-  bool wasClicked(Coordinate clickPos);
+  bool wasClicked(ICoordinate clickPos);
 
 private:
   ClickComponent click;
