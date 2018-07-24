@@ -10,6 +10,8 @@ public:
   void setVelocity(Velocity velocity);
   void setVelocity(float x, float y);
 
+  Velocity getVelocity() const;
+
   void tick(float deltaTime);
 private:
   void updatePosition(float deltaTime);

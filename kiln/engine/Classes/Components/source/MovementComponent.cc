@@ -13,6 +13,10 @@ void MovementComponent::setVelocity(float x, float y) {
   this->velocity.y = y;
 }
 
+Velocity MovementComponent::getVelocity() const {
+  return this->velocity;
+}
+
 void MovementComponent::tick(float deltaTime) {
   if (!this->velocity.isZero(.01f)) {
     this->updatePosition(deltaTime);
