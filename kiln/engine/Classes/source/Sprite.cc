@@ -9,10 +9,12 @@ Sprite::Sprite(Texture* texture) {
 
 Sprite::Sprite() {}
 
-// Sprite::~Sprite() {}
-
 Dim Sprite::getDimensions() const {
   return this->dimensions;
+}
+
+float Sprite::getRotationDegrees() const {
+  return this->rotationDegrees;
 }
 
 void Sprite::setWidth(unsigned int width) {
@@ -23,6 +25,10 @@ void Sprite::setHeight(unsigned int height) {
   this->dimensions.h = height;
 }
 
+void Sprite::setRotation(float degrees) {
+  this->rotationDegrees = degrees;
+}
+
 void Sprite::render(SDL_Renderer* renderer) const {
   SDL_Rect container;
   container.w = this->dimensions.w;
@@ -30,11 +36,14 @@ void Sprite::render(SDL_Renderer* renderer) const {
   container.x = this->getWorldPosition().x;
   container.y = this->getWorldPosition().y;
 
-  SDL_RenderCopy(
+  SDL_RenderCopyEx(
     renderer,
     this->texture,
     NULL,
-    &container  
+    &container,
+    this->rotationDegrees,
+    NULL,
+    SDL_FLIP_NONE  
   );
 }
 

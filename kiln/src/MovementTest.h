@@ -6,6 +6,7 @@ public:
   MovableSprite(Texture* texture): Sprite(texture), movement(this) {}
 
   void setVelocity(float x, float y) {this->movement.setVelocity(x, y);}
+  Velocity getVelocity() const { return movement.getVelocity();}
 
   void tick(float deltaTime) {this->movement.tick(deltaTime);}
 

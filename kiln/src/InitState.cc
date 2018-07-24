@@ -27,7 +27,7 @@ void InitState::init() {
   this->movableSprite->setWidth(100);
   this->movableSprite->setHeight(100);
   this->movableSprite->setWorldPosition(640 - 100, 0);
-  this->movableSprite->setVelocity(-77.f, 54.f);
+  this->movableSprite->setVelocity(-77.f, 10.f);
   
   std::cout << "INIT STATE INIT COMPLETE" << std::endl;
 
@@ -68,15 +68,20 @@ void InitState::tick(float deltaTime) {
   std::cout << "X: " << oldPos.x << " Y: " << oldPos.y << " rt:" << (7000 - this->runTime) << std::endl;
   this->movableSprite->tick(deltaTime);
 
+  this->movableSprite->setRotation(this->movableSprite->getRotationDegrees() + (0.051f * deltaTime));
+
   FCoordinate newPos = this->movableSprite->getWorldPosition();
-  vSum += std::abs(oldPos.x - newPos.x) / (deltaTime/1000.f);
+  vxSum += std::abs(oldPos.x - newPos.x) / (deltaTime/1000.f);
+  vySum += std::abs(oldPos.y - newPos.y) / (deltaTime/1000.f);
   ++vSamples;
 
   if (vSamples >= 10) {
-    v = vSum / vSamples;
+    vx = vxSum / vSamples;
+    vy = vySum / vSamples;
     vSamples = 0;
-    vSum = 0;
-    std::cout << "\t\tV: " << v << std::endl;
+    vxSum = 0;
+    vySum = 0;
+    std::cout << "\t\tVx: " << vx << " Vy: " << vy << " V: " << this->movableSprite->getVelocity().magnitude() << std::endl;
   }
   //
 

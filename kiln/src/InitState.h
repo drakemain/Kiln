@@ -29,9 +29,11 @@ private:
   Mix_Chunk* sound;
 
   int vSamples = 0;
-  float vSum = 0;
-  float v = 0;
+  float vxSum = 0;
+  float vx = 0;
+  float vySum = 0;
+  float vy = 0;
 
-  Uint32 startTime;
+  Uint32 startTime = 0;
   float runTime = 0.f;
 };
