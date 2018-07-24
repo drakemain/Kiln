@@ -65,10 +65,9 @@ void InitState::tick(float deltaTime) {
   // movetest
   FCoordinate oldPos = this->movableSprite->getWorldPosition();
 
-  std::cout << "X: " << oldPos.x << " Y: " << oldPos.y << " rt:" << (7000 - this->runTime) << std::endl;
   this->movableSprite->tick(deltaTime);
 
-  this->movableSprite->setRotation(this->movableSprite->getRotationDegrees() + (0.051f * deltaTime));
+  this->movableSprite->setRotation(this->movableSprite->getRotationDegrees() + (0.051f * deltaTime * 2));
 
   FCoordinate newPos = this->movableSprite->getWorldPosition();
   vxSum += std::abs(oldPos.x - newPos.x) / (deltaTime/1000.f);
@@ -81,7 +80,8 @@ void InitState::tick(float deltaTime) {
     vSamples = 0;
     vxSum = 0;
     vySum = 0;
-    std::cout << "\t\tVx: " << vx << " Vy: " << vy << " V: " << this->movableSprite->getVelocity().magnitude() << std::endl;
+    testText->setText("Vx: " + std::to_string(vx) + " Vy: " + std::to_string(vy) + " V: " + std::to_string(this->movableSprite->getVelocity().magnitude()));
+    testText->draw(this->coreManagement.windowManager.getRenderer());
   }
   //
 
