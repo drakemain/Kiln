@@ -26,7 +26,18 @@ void Sprite::setHeight(unsigned int height) {
 }
 
 void Sprite::setRotation(float degrees) {
-  this->rotationDegrees = degrees;
+  // keep the new rotation between [0, 360).
+  
+  if (degrees >= 360.f) {
+    degrees = degrees - 360.f;
+    this->setRotation(degrees);
+  } else if (degrees < 0.f) {
+    degrees = 360.f + degrees;
+    this->setRotation(degrees);
+  } else {
+    this->rotationDegrees = degrees;
+  }
+  
 }
 
 void Sprite::render(SDL_Renderer* renderer) const {
