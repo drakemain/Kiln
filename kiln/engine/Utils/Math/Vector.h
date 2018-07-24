@@ -31,5 +31,7 @@ namespace KMath {
 
     bool isZero() { return (this->x == 0.f) && (this->y == 0.f); }
     bool isZero(float tolerance) { return (std::abs(this->x) <= tolerance) && (std::abs(this->y) <= tolerance); }
+
+    float magnitude() { return std::sqrt(this->x*this->x + this->y*this->y); }
   };
 };
