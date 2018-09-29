@@ -1,5 +1,5 @@
 #include "Kiln.h"
-#include "kiln/src/InitState.h"
+#include "kiln/test/InitState.h"
 #include "Definitions/Colors.h"
 #include <iostream>
 

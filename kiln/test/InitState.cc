@@ -27,7 +27,7 @@ void InitState::init() {
   this->movableSprite->setWidth(100);
   this->movableSprite->setHeight(100);
   this->movableSprite->setWorldPosition(640 - 100, 0);
-  this->movableSprite->setVelocity(-77.f, 10.f);
+  this->movableSprite->setVelocity(-77.f, 54.f);
   
   std::cout << "INIT STATE INIT COMPLETE" << std::endl;
 
@@ -50,8 +50,8 @@ void InitState::pause() {}
 void InitState::resume() {}
 
 void InitState::handleEvent(SDL_Event* event) {
-  if (event) {
-    std::cout << "INIT EVENT!" << std::endl;
+  if (event->type == SDL_KEYDOWN) {
+    std::cout << "KEYPRESS EVENT!" << std::endl;
   }
 }
 
