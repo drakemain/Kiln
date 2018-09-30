@@ -1,15 +1,13 @@
 #pragma once
 #include <SDL.h>
-#include "Classes/headers/Sprite.h"
+#include "Modules/KilnModule.h"
 #include "Core/headers/WindowManager.h"
 #include "Core/headers/InputManager.h"
 #include "Core/headers/AssetManager.h"
-#include "States/headers/StateMachine.h"
 #include "kiln/engine/Classes/headers/Text.h"
 #include "Core/headers/Stats.h"
 
 struct CoreManagement {
-  StateMachine state;
   WindowManager windowManager;
   InputManager inputManager;
   AssetManager assetManager;
@@ -18,10 +16,13 @@ struct CoreManagement {
 class Kiln {
 public:
   Kiln();
-
-  bool init();
-  void run();
+  // ~Kiln();
+  
+  bool init(KilnModule& module);
+  void run(KilnModule& module);
   void cleanup();
+
+  CoreManagement* getManagement() {return &this->coreManagement;}
 
 private:
   /* Helper Functions */

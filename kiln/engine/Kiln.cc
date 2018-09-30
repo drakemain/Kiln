@@ -5,7 +5,7 @@
 
 Kiln::Kiln() {}
 
-bool Kiln::init() {
+bool Kiln::init(KilnModule& module) {
   std::cout << "INIT" << std::endl;
 
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -21,15 +21,20 @@ bool Kiln::init() {
     return false;
   }
 
-  this->coreManagement.state.pushForce(std::unique_ptr<State>(new InitState(this->coreManagement)));
-
   TTF_Font* fpsFont = this->coreManagement.assetManager.loadFont("kiln/assets/font/RobotoMono-Regular.ttf", "StatsFont");
   this->stats = new Stats(10, true, fpsFont, this->coreManagement.windowManager.getRenderer());
-  
+
+  module.bind(&this->coreManagement.assetManager);
+  module.bind(&this->coreManagement.windowManager);
+
+  if (!module.init()) {
+    return false;
+  }
+
   return true;
 }
 
-void Kiln::run() {
+void Kiln::run(KilnModule& module) {
   std::cout << "RUN" << std::endl;
 
   const unsigned int frameLimit = 60;
@@ -40,22 +45,31 @@ void Kiln::run() {
   
   float deltaTime = 0;
 
-  while(isRunning && !this->coreManagement.state.empty()) {
+  module.start();
+
+  while(isRunning) {
     tickStartTime = SDL_GetTicks();
     deltaTime = tickStartTime - lastTickStartTime;
-
-    this->coreManagement.state.update();
     
     while(this->coreManagement.inputManager.poll()) {
       SDL_Event* polledEvent = this->coreManagement.inputManager.getEvent();
       
       this->checkQuit(polledEvent);
-      this->coreManagement.state.getActiveState()->handleEvent(polledEvent);
-    }    
 
-    this->tick(deltaTime);
+      module.handleEvent(polledEvent);
+    }
 
-    this->render();
+    module.tick(deltaTime);
+
+    SDL_Renderer* renderer = this->coreManagement.windowManager.getRenderer();
+    SDL_RenderClear(renderer);
+
+    module.render();
+    this->stats->getText()->render(renderer);
+    
+    SDL_RenderPresent(renderer);
+
+    // this->render();
 
     frameTime = SDL_GetTicks() - tickStartTime;
     
@@ -91,18 +105,11 @@ void Kiln::checkQuit(SDL_Event* event) {
   }
 }
 
-void Kiln::tick(float deltaTime) {
-  // TODO: check tick rate
-  this->coreManagement.state.getActiveState()->tick(deltaTime);
-}
-
 void Kiln::render() {
   SDL_Renderer* renderer = this->coreManagement.windowManager.getRenderer();
   SDL_RenderClear(renderer);
-  
-  this->coreManagement.state.getActiveState()->render();
+
   this->stats->getText()->render(renderer);
   
   SDL_RenderPresent(renderer);
-  
 }

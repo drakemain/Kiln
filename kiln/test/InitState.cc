@@ -58,9 +58,9 @@ void InitState::handleEvent(SDL_Event* event) {
 void InitState::tick(float deltaTime) {
   this->runTime += deltaTime;
 
-  if (this->runTime > 7000) {
-    this->coreManagement.state.replaceState(std::unique_ptr<State>(new Menu(this->coreManagement)));
-  }
+  // if (this->runTime > 7000) {
+  //   this->coreManagement.state.replaceState(std::unique_ptr<State>(new Menu(this->coreManagement)));
+  // }
 
   // movetest
   FCoordinate oldPos = this->movableSprite->getWorldPosition();

@@ -63,6 +63,7 @@ bool AssetManager::init(SDL_Renderer* renderer) {
   }
 
   Texture::placeholder = this->loadTexture("kiln/assets/img/placeholder-texture.jpg", renderer);
+  std::cout << "\t\t |_> Placeholder Texture" << std::endl;
 
   std::cout << "\tAsset Manager ready!" << std::endl;
 
