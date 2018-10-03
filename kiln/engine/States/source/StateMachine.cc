@@ -1,9 +1,7 @@
 #include "../headers/StateMachine.h"
 #include <iostream>
 
-StateMachine::StateMachine() {
-  std::cout << "STATE MACHINE CONST" << std::endl;
-}
+StateMachine::StateMachine() {}
 
 StateMachine::~StateMachine() {
 
@@ -19,14 +17,10 @@ void StateMachine::pushState(std::unique_ptr<State> state) {
 void StateMachine::pushForce(std::unique_ptr<State> state) {
   if (!this->empty()) {
     std::cout << "REE?" << std::endl;
-    // this->stateStack.top()->pause();
   }
 
-  std::cout << "TEST" << std::endl;
   this->stateStack.push(std::move(state));
-  std::cout << "TEST" << std::endl;
   this->stateStack.top()->init();
-  std::cout << "TEST" << std::endl;
 }
 
 void StateMachine::replaceState(std::unique_ptr<State> state) {

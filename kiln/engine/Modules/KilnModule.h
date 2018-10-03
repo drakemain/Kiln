@@ -20,10 +20,9 @@ public:
         return true;
     }
 
-    virtual void start() = 0;
-
-    virtual void handleEvent(SDL_Event* event) = 0;
-    virtual void tick(float deltaTime) = 0;
+    virtual void start() {}
+    virtual void handleEvent(SDL_Event* event) {}
+    virtual void tick(float deltaTime) {}
     virtual void render() {
         this->subState.getActiveState()->render();
     }

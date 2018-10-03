@@ -11,6 +11,8 @@ public:
   SDL_Renderer* getRenderer() const;
   Dim getResolution() const;
 
+  void setResolution(const Dim newRes);
+
 private:
   void setFrameLimit(float frameLimit);
 

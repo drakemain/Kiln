@@ -42,6 +42,17 @@ Dim WindowManager::getResolution() const {
   return {this->WIDTH, this->HEIGHT};
 }
 
+void WindowManager::setResolution(const Dim newRes) {
+  this->WIDTH = newRes.w;
+  this->HEIGHT = newRes.h;
+
+  if (this->window) {
+    SDL_SetWindowSize(this->window, this->WIDTH, this->HEIGHT);
+  } else {
+    std::cout << "Attempted to set resolution while there is no window!" << std::endl;
+  }
+}
+
 void WindowManager::setFrameLimit(float frameLimit) {
   this->FRAME_LIMIT = frameLimit;
   this->MIN_FRAME_TIME = 1000.f / frameLimit;
