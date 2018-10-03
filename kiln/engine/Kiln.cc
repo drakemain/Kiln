@@ -46,7 +46,8 @@ void Kiln::run(KilnModule& module) {
 
   module.start();
 
-  while(isRunning) {
+  while(isRunning && module.hasSub()) {
+    // std::cout << "ENGINE TICK " << module.hasSub() << std::endl;
     tickStartTime = SDL_GetTicks();
     deltaTime = tickStartTime - lastTickStartTime;
     
@@ -75,6 +76,8 @@ void Kiln::run(KilnModule& module) {
       SDL_Delay(minFrameTime - frameTime);
       frameTime = SDL_GetTicks() - tickStartTime;
     }
+
+    module.updateSubState();
 
     this->stats->incrementFrameCount();
 

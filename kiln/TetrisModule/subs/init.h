@@ -5,17 +5,26 @@
 
 class InitSub : public ModuleSub {
 public:
-    InitSub(class KilnModule* mod) :ModuleSub(mod) { 
-        this->module->createSprite("kiln/assets/img/button-bg.png", "btn");
-    }
-    void init() override {}
+  InitSub(class KilnModule* mod) :ModuleSub(mod) { 
+    this->module->createSprite("kiln/assets/img/button-bg.png", "btn");
+  }
+  void init() override {}
 
-    void cleanup() override {}
-    void pause() override {}
-    void resume() override {}
-    void handleEvent(SDL_Event* event) override {}
-    void tick(float deltaTime) override {}
-    void render() override {
-        this->module->fetchSprite("btn")->render(this->module->window->getRenderer());
+  void cleanup() override {}
+  void pause() override {}
+  void resume() override {}
+  void handleEvent(SDL_Event* event) override {}
+  void tick(float deltaTime) override {
+    this->runtime += deltaTime;
+
+    if (this->runtime > 3000) {
+      this->module->subState.popState();
     }
+  }
+  void render() override {
+    this->module->fetchSprite("btn")->render(this->module->window->getRenderer());
+  }
+
+private:
+  float runtime = 0;
 };

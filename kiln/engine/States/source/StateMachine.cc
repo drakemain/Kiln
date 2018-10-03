@@ -16,7 +16,7 @@ void StateMachine::pushState(std::unique_ptr<State> state) {
 
 void StateMachine::pushForce(std::unique_ptr<State> state) {
   if (!this->empty()) {
-    std::cout << "REE?" << std::endl;
+    this->stateStack.top()->pause();
   }
 
   this->stateStack.push(std::move(state));

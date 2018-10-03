@@ -9,40 +9,49 @@
 
 class KilnModule {
 public:
-    KilnModule() {}
-    ~KilnModule() {
-        for (std::pair<std::string, Sprite*> sprite : this->spriteMap) {
-            delete sprite.second;
-        }
+  KilnModule() {}
+  ~KilnModule() {
+    for (std::pair<std::string, Sprite*> sprite : this->spriteMap) {
+      delete sprite.second;
     }
+  }
 
-    virtual bool init() {
-        return true;
-    }
+  virtual bool init() {
+    return true;
+  }
 
-    virtual void start() {}
-    virtual void handleEvent(SDL_Event* event) {}
-    virtual void tick(float deltaTime) {}
-    virtual void render() {
-        this->subState.getActiveState()->render();
-    }
+  virtual void start() {}
+  virtual void handleEvent(SDL_Event* event) {
+    this->subState.getActiveState()->handleEvent(event);
+  }
+  virtual void tick(float deltaTime) {
+    std::cout << "Module Tick" << std::endl;
+    this->subState.getActiveState()->tick(deltaTime);
+  }
+  virtual void render() {
+    this->subState.getActiveState()->render();
+  }
 
-    void bind(AssetManager* assets) { this->assets = assets; }
-    void bind(WindowManager* window) { this->window = window; }
+  void bind(AssetManager* assets) { this->assets = assets; }
+  void bind(WindowManager* window) { this->window = window; }
 
-    Sprite* createSprite(std::string path, std::string name) {
-        Texture* texture = this->assets->loadTexture(path, name, this->window->getRenderer());
-        Sprite* newSprite = new Sprite(texture);
-        this->spriteMap[name] = newSprite;
-        return newSprite;
-    }
+  Sprite* createSprite(std::string path, std::string name) {
+    Texture* texture = this->assets->loadTexture(path, name, this->window->getRenderer());
+    Sprite* newSprite = new Sprite(texture);
+    this->spriteMap[name] = newSprite;
+    return newSprite;
+  }
 
-    Sprite* fetchSprite(std::string name) {
-        return this->spriteMap[name];
-    }
+  Sprite* fetchSprite(std::string name) {
+    return this->spriteMap[name];
+  }
 
-    AssetManager* assets;
-    WindowManager* window;
-    std::unordered_map<std::string, Sprite*> spriteMap;
-    StateMachine subState;
+  void updateSubState() { this->subState.update(); }
+
+  bool hasSub() { return !this->subState.empty(); }
+
+  AssetManager* assets;
+  WindowManager* window;
+  std::unordered_map<std::string, Sprite*> spriteMap;
+  StateMachine subState;
 };
