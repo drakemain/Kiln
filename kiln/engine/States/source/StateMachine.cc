@@ -2,7 +2,7 @@
 #include <iostream>
 
 StateMachine::StateMachine() {
-
+  std::cout << "STATE MACHINE CONST" << std::endl;
 }
 
 StateMachine::~StateMachine() {
@@ -11,16 +11,22 @@ StateMachine::~StateMachine() {
 
 void StateMachine::pushState(std::unique_ptr<State> state) {
   this->isAdding = true;
+  std::cout << "PUSH STATE" << std::endl;
   this->stateBuffer = std::move(state);
+  std::cout << "PUSH STATE" << std::endl;
 }
 
 void StateMachine::pushForce(std::unique_ptr<State> state) {
   if (!this->empty()) {
-    this->stateStack.top()->pause();
+    std::cout << "REE?" << std::endl;
+    // this->stateStack.top()->pause();
   }
 
+  std::cout << "TEST" << std::endl;
   this->stateStack.push(std::move(state));
+  std::cout << "TEST" << std::endl;
   this->stateStack.top()->init();
+  std::cout << "TEST" << std::endl;
 }
 
 void StateMachine::replaceState(std::unique_ptr<State> state) {

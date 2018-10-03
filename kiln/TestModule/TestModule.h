@@ -7,11 +7,7 @@ public:
     Test() {}
     virtual bool init() override;
     virtual void start() override;
-    virtual void cleanup() override {};
     virtual void handleEvent(SDL_Event* event) override;
     virtual void tick(float deltaTime) override {};
     virtual void render() override;
-
-private:
-    Sprite* sprite;
 };

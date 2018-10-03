@@ -26,7 +26,7 @@ public:
 
 private:
   /* Helper Functions */
-  void checkQuit(SDL_Event* event);
+  void checkEngineEvent(SDL_Event* event);
   void tick(float deltaTime);
   void render();
 

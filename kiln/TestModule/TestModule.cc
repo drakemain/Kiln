@@ -1,4 +1,4 @@
-#include "test.h"
+#include "TestModule.h"
 #include <iostream>
 
 bool Test::init() {

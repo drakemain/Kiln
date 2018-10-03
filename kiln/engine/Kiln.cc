@@ -1,5 +1,4 @@
 #include "Kiln.h"
-#include "kiln/test/InitState.h"
 #include "Definitions/Colors.h"
 #include <iostream>
 
@@ -53,9 +52,7 @@ void Kiln::run(KilnModule& module) {
     
     while(this->coreManagement.inputManager.poll()) {
       SDL_Event* polledEvent = this->coreManagement.inputManager.getEvent();
-      
-      this->checkQuit(polledEvent);
-
+      this->checkEngineEvent(polledEvent);
       module.handleEvent(polledEvent);
     }
 
@@ -96,7 +93,7 @@ void Kiln::cleanup() {
 }
 
 /* Helper Functions */
-void Kiln::checkQuit(SDL_Event* event) {
+void Kiln::checkEngineEvent(SDL_Event* event) {
   if (event) {
     if (event->type == SDL_QUIT) {
       std::cout << "QUIT EVENT" << std::endl;
