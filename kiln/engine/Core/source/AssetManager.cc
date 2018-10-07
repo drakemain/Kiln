@@ -84,6 +84,7 @@ Texture* AssetManager::loadTexture(std::string path, std::string name, SDL_Rende
   std::cerr << "\tFailed to create texture!\n\t\t" << SDL_GetError() << std::endl;
   
   if (Texture::placeholder) {
+    this->TextureMap[name] = Texture::placeholder;
     return Texture::placeholder;
   } else {
     return nullptr;
