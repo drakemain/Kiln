@@ -11,5 +11,5 @@ public:
   
   virtual void handleEvent(SDL_Event* event) = 0;
   virtual void tick(float deltaTime) = 0;
-  virtual void render() = 0;
+  virtual void render(SDL_Renderer* renderer) = 0;
 };

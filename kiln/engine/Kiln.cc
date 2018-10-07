@@ -23,8 +23,7 @@ bool Kiln::init(KilnModule& module) {
   TTF_Font* fpsFont = this->coreManagement.assetManager.loadFont("kiln/assets/font/RobotoMono-Regular.ttf", "StatsFont");
   this->stats = new Stats(10, true, fpsFont, this->coreManagement.windowManager.getRenderer());
 
-  module.bind(&this->coreManagement.assetManager);
-  module.bind(&this->coreManagement.windowManager);
+  module.bind(this);
 
   if (!module.init()) {
     return false;

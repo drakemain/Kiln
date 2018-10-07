@@ -1,13 +1,13 @@
 #include "TetrisModule.h"
-#include "subs/init.h"
+#include "subs/headers/init.h"
 
 bool TetrisModule::init() {
   KilnModule::init();
 
   std::cout << "Kiln loaded Tetris!" << std::endl;
 
-  this->subState.pushForce(std::unique_ptr<State>(new InitSub(this)));
-  this->subState.getActiveState()->resume();
+  this->loadSub(new InitSub(this));
+  
   return true;
 }
 
