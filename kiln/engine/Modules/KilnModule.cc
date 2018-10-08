@@ -29,6 +29,14 @@ void KilnModule::render() {
   this->subState.getActiveState()->render(renderer);
 }
 
+void KilnModule::updateSubState() {
+  this->subState.update(); 
+}
+
+bool KilnModule::hasSub() {
+  return !this->subState.empty();
+}
+
 void KilnModule::bind(Kiln* engine) { 
   this->engine = engine; 
 }
@@ -45,12 +53,13 @@ Sprite* KilnModule::fetchSprite(std::string name) {
   return this->spriteMap[name];
 }
 
-void KilnModule::updateSubState() {
-  this->subState.update(); 
+Texture* KilnModule::fetchTexture(std::string name) {
+  return this->engine->getManagement()->assetManager.fetchTexture(name);
 }
 
-bool KilnModule::hasSub() {
-  return !this->subState.empty();
+void KilnModule::playSound(std::string soundName, int loops) {
+  Mix_Chunk* sound = this->engine->getManagement()->assetManager.fetchSound(soundName);
+  Mix_PlayChannel(-1, sound, loops);
 }
 
 void KilnModule::loadSub(ModuleSub* sub) {

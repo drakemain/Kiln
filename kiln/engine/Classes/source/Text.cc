@@ -9,18 +9,17 @@ Text::Text(std::string text, TTF_Font* font, SDL_Color color, SDL_Renderer* rend
 }
 
 Text::~Text() {
-  SDL_DestroyTexture(this->texture);
+  SDL_DestroyTexture(this->getTexture());
 }
 
 void Text::draw(SDL_Renderer* renderer) {
   this->clear();
   SDL_Surface* surface = TTF_RenderText_Solid(this->font, this->text.c_str(), this->color);
-
   if (!surface) {
     // TODO: handle missing texture
     std::cerr << "Failed to render text!\n\t" << TTF_GetError() << std::endl;
   } else {
-    this->texture = SDL_CreateTextureFromSurface(renderer, surface);
+    this->setTexture(SDL_CreateTextureFromSurface(renderer, surface));
     this->setWidth(surface->w);
     this->setHeight(surface->h);
   }
@@ -48,12 +47,4 @@ void Text::setColor(SDL_Color color) {
 
 bool Text::checkWasModified() const {
   return this->wasModified;
-}
-
-void Text::clear() {
-  if (this->texture) {
-    SDL_DestroyTexture(this->texture);
-  }
-
-  this->texture = nullptr;
 }

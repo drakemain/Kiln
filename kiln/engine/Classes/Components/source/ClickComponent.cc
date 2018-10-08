@@ -1,4 +1,5 @@
 #include "../headers/ClickComponent.h"
+#include <iostream>
 
 ClickComponent::ClickComponent(Entity* owner)
 : Component(owner) {

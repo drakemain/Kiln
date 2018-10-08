@@ -1,16 +1,19 @@
 #pragma once
 #include "kiln/engine/Classes/headers/Sprite.h"
-#include "kiln/engine/Classes/Components/headers/ClickComponent.h"
+#include <functional>
 
 class Button : public Sprite {
 public:
   Button(Texture* texture);
   Button(Dim dimensions);
+  ~Button();
 
   void render(SDL_Renderer* renderer);
+  void ifClicked(ICoordinate clickPos);
 
-  bool wasClicked(ICoordinate clickPos);
+  void bindAction(std::function<void()> func);
 
 private:
-  ClickComponent click;
+  class ClickComponent* click;
+  class UIComponent* UI;
 };

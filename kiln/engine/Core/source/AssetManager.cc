@@ -110,9 +110,15 @@ Texture* AssetManager::loadTexture(std::string path, SDL_Renderer* renderer) {
 }
 
 Texture* AssetManager::fetchTexture(std::string name) {
-  // TODO: handle key DNE
+  auto itr = this->TextureMap.find(name);
   std::cout << "\tLoaded textures: " << (int)this->TextureMap.size() << std::endl;
-  return this->TextureMap[name];
+
+  if (itr == this->TextureMap.end()) {
+    std::cout << "\tFailed to fetch texture: " << name << std::endl;
+    return Texture::placeholder;
+  } else {
+    return this->TextureMap[name];
+  }
 }
 
 void AssetManager::unloadTexture(std::string name) {

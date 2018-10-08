@@ -17,7 +17,7 @@ void Sprite::centerInWindow(unsigned int xBound, unsigned int yBound) {
   );
 }
 
-void Sprite::render(SDL_Renderer* renderer) const {
+void Sprite::render(SDL_Renderer* renderer) {
   SDL_Rect container;
   container.w = this->getDimensions().w;
   container.h = this->getDimensions().h;
@@ -26,7 +26,7 @@ void Sprite::render(SDL_Renderer* renderer) const {
 
   SDL_RenderCopyEx(
     renderer,
-    this->texture,
+    this->getTexture(),
     NULL,
     &container,
     this->getRotationDegrees(),

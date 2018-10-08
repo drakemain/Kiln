@@ -9,23 +9,26 @@ public:
   KilnModule();
   ~KilnModule();
 
+  /* Kiln Interface */
   virtual bool init();
-
   virtual void start();
   virtual void handleEvent(SDL_Event* event);
   virtual void tick(float deltaTime);
   virtual void render();
-
-  void bind(class Kiln* engine);
-
-  Sprite* createSprite(std::string textureName);
-
-  Sprite* fetchSprite(std::string name);
-
   void updateSubState();
-
   bool hasSub();
 
+  /* Get reference to engine instance */
+  void bind(class Kiln* engine);
+
+  /* Assets Interface */
+  Sprite* createSprite(std::string textureName);
+  Sprite* fetchSprite(std::string name);
+  Texture* fetchTexture(std::string name);
+  void playSound(std::string soundName, int loops);
+  void playMusic(std::string musicName);
+
+  /* Submodule methods */
   void loadSub(class ModuleSub* sub);
   void replaceCurrentSub(class ModuleSub* sub);
   void unloadSub();

@@ -62,5 +62,10 @@ void Texture::setHeight(int height) {
 }
 
 SDL_Texture* Texture::getTexture() const {
+  if (!this->texture) {
+    std::cout << "MISSING TEXTURE! Using placeholder." << std::endl;
+    return Texture::placeholder->getTexture();
+  }
+
   return this->texture;
 }

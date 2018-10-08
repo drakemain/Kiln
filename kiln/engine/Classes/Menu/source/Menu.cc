@@ -35,20 +35,20 @@ void Menu::pause() {}
 void Menu::resume() {}
 
 void Menu::handleEvent(SDL_Event* event) {
-  if (event) {
-    if (event->type == SDL_MOUSEBUTTONDOWN) {
-      if (event->button.button == SDL_BUTTON_LEFT) {
-        ICoordinate clickPos = this->core.inputManager.getCursorClickedPosition();
+  // if (event) {
+  //   if (event->type == SDL_MOUSEBUTTONDOWN) {
+  //     if (event->button.button == SDL_BUTTON_LEFT) {
+  //       ICoordinate clickPos = this->core.inputManager.getCursorClickedPosition();
 
-        for (Button* button : this->buttons) {
-          if (button->wasClicked(clickPos)) {
-            std::cout << "BUTTON CLICK" << std::endl;
-            break;
-          }
-        }
-      }
-    }
-  }
+  //       for (Button* button : this->buttons) {
+  //         // if (button->wasClicked(clickPos)) {
+  //         //   std::cout << "BUTTON CLICK" << std::endl;
+  //         //   break;
+  //         // }
+  //       }
+  //     }
+  //   }
+  // }
 }
 
 void Menu::tick(float deltaTime) {

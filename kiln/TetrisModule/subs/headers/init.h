@@ -17,4 +17,6 @@ public:
 
 private:
   float runtime = 0;
+
+  class Button* button;
 };

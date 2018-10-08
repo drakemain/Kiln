@@ -10,5 +10,5 @@ public:
 
   void centerInWindow(unsigned int xBound, unsigned int yBound) override;
 
-  void render(SDL_Renderer* renderer) const;
+  void render(SDL_Renderer* renderer) override;
 };
