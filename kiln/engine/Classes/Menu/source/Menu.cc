@@ -1,62 +1,48 @@
 #include "../headers/Menu.h"
 #include "kiln/engine/Definitions/Colors.h"
+#include "kiln/engine/Modules/KilnModule.h"
+#include "kiln/engine/Classes/Menu/headers/Button.h"
 #include <iostream>
 
-Menu::Menu(CoreManagement& core)
-: core(core) {}
+Menu::Menu(KilnModule* module)
+: ModuleSub(module) {}
 
-void Menu::init() {
-  SDL_Renderer* renderer = this->core.windowManager.getRenderer();
-  Dim windowSize = this->core.windowManager.getResolution();
-  
-  Texture* spriteTexture = this->core.assetManager.loadTexture("kiln/assets/img/sprite-test2.jpg", "SpriteTexture", renderer);
-  Texture* buttonTexture = this->core.assetManager.loadTexture("kiln/assets/img/button-bg.png", "ButtonTexture", renderer);
+// void Menu::cleanup() {
+//   // for (Sprite* elem : this->staticElements) {
+//   //   delete elem;
+//   // }
 
-  this->staticElements.push_back(new Sprite(spriteTexture));
-  this->buttons.push_back(new Button(buttonTexture));
+//   // for (Button* button : this->buttons) {
+//   //   delete button;
+//   // }
 
-  this->buttons[0]->centerInWindow(windowSize.w, windowSize.h);
-}
+//   // this->core.assetManager.unloadTexture("SpriteTexture");
+//   // this->core.assetManager.unloadTexture("ButtonTexture");
+// }
 
-void Menu::cleanup() {
-  for (Sprite* elem : this->staticElements) {
-    delete elem;
-  }
-
-  for (Button* button : this->buttons) {
-    delete button;
-  }
-
-  this->core.assetManager.unloadTexture("SpriteTexture");
-  this->core.assetManager.unloadTexture("ButtonTexture");
-}
-
-void Menu::pause() {}
-void Menu::resume() {}
+// void Menu::pause() {}
+// void Menu::resume() {}
 
 void Menu::handleEvent(SDL_Event* event) {
-  // if (event) {
-  //   if (event->type == SDL_MOUSEBUTTONDOWN) {
-  //     if (event->button.button == SDL_BUTTON_LEFT) {
-  //       ICoordinate clickPos = this->core.inputManager.getCursorClickedPosition();
+  if (event) {
+    if (event->type == SDL_MOUSEBUTTONDOWN) {
+      if (event->button.button == SDL_BUTTON_LEFT) {
+        ICoordinate clickPos;
+        SDL_GetMouseState(&clickPos.x, &clickPos.y);
 
-  //       for (Button* button : this->buttons) {
-  //         // if (button->wasClicked(clickPos)) {
-  //         //   std::cout << "BUTTON CLICK" << std::endl;
-  //         //   break;
-  //         // }
-  //       }
-  //     }
-  //   }
-  // }
+        for (Button* button : this->buttons) {
+          button->ifClicked(clickPos);
+        }
+      }
+    }
+  }
 }
 
 void Menu::tick(float deltaTime) {
   this->runTime += deltaTime;
 }
 
-void Menu::render() {
-  SDL_Renderer* renderer = this->core.windowManager.getRenderer();
+void Menu::render(SDL_Renderer* renderer) {
   SDL_SetRenderDrawColor(renderer, 0xA9, 0xA9, 0xA9, 0xFF);
 
   for (Sprite* elem : this->staticElements) {
@@ -66,4 +52,30 @@ void Menu::render() {
   for (Button* button : this->buttons) {
     button->render(renderer);
   }
+}
+
+void Menu::createButton(Texture* texture, std::string text, TTF_Font* font, SDL_Color color, SDL_Renderer* renderer) {
+  Button* button = new Button(texture, text, font, color, renderer);
+
+  this->buttons.push_back(button);
+}
+
+void Menu::createButton(Texture* texture) {
+  Button* button = new Button(texture);
+
+  this->buttons.push_back(button);
+}
+
+void Menu::createButton(Button* button) {
+  this->buttons.push_back(button);
+}
+
+void Menu::createStatic(Sprite* sprite) {
+  this->staticElements.push_back(sprite);
+}
+
+void Menu::createStatic(Texture* texture) {
+  Sprite* sprite = new Sprite(texture);
+
+  this->staticElements.push_back(sprite);
 }
