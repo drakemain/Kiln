@@ -3,6 +3,7 @@
 #include <iostream>
 #include "kiln/engine/States/headers/StateMachine.h"
 #include "kiln/engine/Classes/headers/Sprite.h"
+#include "SDL_ttf.h"
 
 class KilnModule {
 public:
@@ -25,8 +26,10 @@ public:
   Sprite* createSprite(std::string textureName);
   Sprite* fetchSprite(std::string name);
   Texture* fetchTexture(std::string name);
+  TTF_Font* fetchFont(std::string name);
   void playSound(std::string soundName, int loops);
   void playMusic(std::string musicName);
+  SDL_Renderer* getRenderer();
 
   /* Submodule methods */
   void loadSub(class ModuleSub* sub);

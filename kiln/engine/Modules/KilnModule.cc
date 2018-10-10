@@ -57,9 +57,17 @@ Texture* KilnModule::fetchTexture(std::string name) {
   return this->engine->getManagement()->assetManager.fetchTexture(name);
 }
 
+TTF_Font* KilnModule::fetchFont(std::string name) {
+  return this->engine->getManagement()->assetManager.fetchFont(name);
+}
+
 void KilnModule::playSound(std::string soundName, int loops) {
   Mix_Chunk* sound = this->engine->getManagement()->assetManager.fetchSound(soundName);
   Mix_PlayChannel(-1, sound, loops);
+}
+
+SDL_Renderer* KilnModule::getRenderer() {
+  return this->engine->getManagement()->windowManager.getRenderer();
 }
 
 void KilnModule::loadSub(ModuleSub* sub) {

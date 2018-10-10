@@ -5,10 +5,10 @@ Component::Component(Entity* owner)
 
 }
 
-Entity* Component::getOwner() const {
-  return this->owner;
-}
-
 Component::Component() {}
 
 Component::~Component() {}
+
+Entity* Component::getOwner() const {
+  return this->owner;
+}

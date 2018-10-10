@@ -1,19 +1,15 @@
 #pragma once
-#include "Sprite.h"
+#include "TextBase.h"
+#include "Entity.h"
 #include <SDL_ttf.h>
 #include <string>
 
-class Text : public Sprite {
+class Text : public Entity, public TextBase {
 public:
   Text(std::string text, TTF_Font* font, SDL_Color color, SDL_Renderer* renderer);
   ~Text();
-
-  void draw(SDL_Renderer* renderer);
-  void setText(std::string text);
-  void setFont(TTF_Font* font);
-  void setColor(SDL_Color color);
-
-  bool checkWasModified() const;
+  
+  void render(SDL_Renderer* renderer);
 
 private:
   std::string text;

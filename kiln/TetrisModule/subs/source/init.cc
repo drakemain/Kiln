@@ -1,5 +1,6 @@
 #include "../headers/init.h"
 #include "kiln/engine/Classes/Menu/headers/Button.h"
+#include "kiln/engine/Definitions/Colors.h"
 
 InitSub::InitSub(class KilnModule* mod) : ModuleSub(mod) {
   std::cout << "Loaded init sub" << std::endl;
@@ -7,18 +8,25 @@ InitSub::InitSub(class KilnModule* mod) : ModuleSub(mod) {
   this->assetDependencies.textures = {
     {"kiln/assets/img/button-bg.png", "btn"}
   };
+
   this->assetDependencies.sounds = {
     {"kiln/assets/audio/sounds/win98.wav", "win98"}
   };
 }
 
 void InitSub::init() {
-  // this->module->playSound("win98", 1);
+  this->module->playSound("win98", 0);
+  TTF_Font* buttonFont = this->module->fetchFont("StatsFont");
+  Texture* buttonTexture = this->module->fetchTexture("btn");
+  SDL_Renderer* renderer = this->module->getRenderer();
 
-  this->button = new Button(this->module->fetchTexture("btn"));
-  this->button->setScale(.25);
+  this->button = new Button(buttonTexture, "Button", buttonFont, KILN_COLOR::ORANGE, renderer);
+  
+  std::cout << "Setting Button Position" << std::endl;
+  this->button->setWorldPosition(50.f, 50.f);
+  this->button->setScale(.5);
 
-  this->button->bindAction([](){std::cout << "LAMBDA CLICK!" << std::endl;});
+  this->button->bindAction([this](){this->module->unloadSub();});
 }
 
 void InitSub::cleanup() {}
@@ -30,6 +38,7 @@ void InitSub::handleEvent(SDL_Event* event) {
       ICoordinate coord;
       SDL_GetMouseState(&coord.x, &coord.y);
       this->button->ifClicked(coord);
+      this->button->setWorldPosition((float)coord.x, (float)coord.y);
     }
   }
 }
