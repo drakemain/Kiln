@@ -1,6 +1,7 @@
 #include "../headers/init.h"
 #include "kiln/engine/Classes/Menu/headers/Button.h"
 #include "kiln/engine/Definitions/Colors.h"
+#include "kiln/TetrisModule/subs/headers/mainmenu.h"
 
 InitSub::InitSub(class KilnModule* mod) : ModuleSub(mod) {
   std::cout << "Loaded init sub" << std::endl;
@@ -26,7 +27,7 @@ void InitSub::init() {
   this->button->setWorldPosition(50.f, 50.f);
   this->button->setScale(.5);
 
-  this->button->bindAction([this](){this->module->unloadSub();});
+  this->button->bindAction([this](){this->module->loadSub(new MainMenu(this->module));});
 }
 
 void InitSub::cleanup() {}

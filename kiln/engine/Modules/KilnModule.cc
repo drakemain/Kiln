@@ -21,10 +21,16 @@ void KilnModule::handleEvent(SDL_Event* event) {
 }
 
 void KilnModule::tick(float deltaTime) {
+  if (this->unwindStack) {
+    this->unloadSub();
+  }
+
   this->subState.getActiveState()->tick(deltaTime);
 }
 
 void KilnModule::render() {
+  if (this->unwindStack) {return;}
+
   SDL_Renderer* renderer = this->engine->getManagement()->windowManager.getRenderer();
   this->subState.getActiveState()->render(renderer);
 }
@@ -82,6 +88,10 @@ void KilnModule::loadSub(ModuleSub* sub) {
 
 void KilnModule::unloadSub() {
   this->subState.popState();
+}
+
+void KilnModule::quit() {
+  this->unwindStack = true;
 }
 
 void KilnModule::replaceCurrentSub(ModuleSub* sub) {

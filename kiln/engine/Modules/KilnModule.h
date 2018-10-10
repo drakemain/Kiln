@@ -35,6 +35,7 @@ public:
   void loadSub(class ModuleSub* sub);
   void replaceCurrentSub(class ModuleSub* sub);
   void unloadSub();
+  void quit();
 
 private:
   void loadSubAssets(class ModuleSub* sub);
@@ -43,4 +44,6 @@ private:
   std::map<std::string, Sprite*> spriteMap;
   StateMachine subState;
   class Kiln* engine;
+
+  bool unwindStack = false;
 };
