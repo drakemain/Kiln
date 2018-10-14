@@ -1,6 +1,9 @@
 # Kiln
 A 2d game engine built on top of SDL2 using C++. (currently a work in progress).
 
+## Broad Overview
+![img](https://i.imgur.com/ZC30mUK.png)
+
 ## Engine Features
 * Asset Manager
   * Load images, music, sound, and fonts.
