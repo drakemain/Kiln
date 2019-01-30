@@ -20,6 +20,9 @@ public:
   void setAnchor(Anchor anchor);
   void reposition();
 
+  void tick(float deltaTime) override {}
+  void start() override {}
+
 private:
   Anchor anchor = Anchor::None;
 };

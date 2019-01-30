@@ -24,8 +24,8 @@ void MovementComponent::tick(float deltaTime) {
 }
 
 void MovementComponent::updatePosition(float deltaTime) {
-  FCoordinate currentPosition = this->getOwner()->getWorldPosition();
-  FCoordinate newPositition;
+  ICoordinate currentPosition = this->getOwner()->getWorldPosition();
+  ICoordinate newPositition;
 
   newPositition.x = (this->velocity.x * (deltaTime/1000.f)) + currentPosition.x;
   newPositition.y = (this->velocity.y * (deltaTime/1000.f)) + currentPosition.y;

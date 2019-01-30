@@ -10,6 +10,9 @@ public:
   Button(Dim dimensions);
   ~Button();
 
+  void tick(float deltaTime) override;
+  void start() override;
+
   class TextComponent* getTextComponent();
 
   void render(SDL_Renderer* renderer);

@@ -1,14 +1,12 @@
 #pragma once
-#include <SDL.h>
-#include "Texture.h"
 #include "kiln/engine/Utils/headers/Dim.h"
 
 class SpriteBase {
 public:
-  SpriteBase(Texture* texture);
+  SpriteBase(class Texture* texture);
   SpriteBase();
 
-  ~SpriteBase();
+  virtual ~SpriteBase();
 
   Dim getDimensions() const;
   float getRotationDegrees() const;
@@ -18,12 +16,13 @@ public:
   void setScale(float scale);
   void setRotation(float degrees);
 
-  virtual void render(SDL_Renderer* renderer) = 0;
-
-  void setTexture(SDL_Texture* texture);
-  SDL_Texture* getTexture();
+  void setTexture(class SDL_Texture* texture);
+  class SDL_Texture* getTexture();
 
   void clear();
+
+protected:
+  void render(class SDL_Renderer* renderer, class ICoordinate position);
 
 private:
   Dim dimensions;

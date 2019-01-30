@@ -1,5 +1,9 @@
-#include "../headers/SpriteBase.h"
+#include "kiln/engine/Classes/Base/headers/SpriteBase.h"
+#include <SDL.h>
+#include "kiln/engine/Classes/headers/Texture.h"
+#include "../../../Utils/headers/Coordinate.h"
 #include <iostream>
+// #include "kiln/engine/Classes/Components/headers/SpriteComponent.h"
 
 SpriteBase::SpriteBase(Texture* texture) {
   this->texture = texture->getTexture();
@@ -49,6 +53,24 @@ void SpriteBase::setRotation(float degrees) {
   } else {
     this->rotationDegrees = degrees;
   }
+}
+
+void SpriteBase::render(SDL_Renderer* renderer, ICoordinate position) {
+  SDL_Rect container;
+  container.w = this->getDimensions().w;
+  container.h = this->getDimensions().h;
+  container.x = position.x;
+  container.y = position.y;
+
+  SDL_RenderCopyEx(
+          renderer,
+          this->getTexture(),
+          NULL,
+          &container,
+          this->getRotationDegrees(),
+          NULL,
+          SDL_FLIP_NONE
+  );
 }
 
 void SpriteBase::setTexture(SDL_Texture* texture) {

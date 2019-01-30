@@ -1,16 +1,14 @@
-#include "kiln/engine/Classes/headers/TextBase.h"
+#include "kiln/engine/Classes/Base/headers/TextBase.h"
 #include <iostream>
 
-TextBase::TextBase(std::string text, TTF_Font* font, SDL_Color color, SDL_Renderer* renderer) {
+TextBase::TextBase(std::string text, TTF_Font* font,  SDL_Color color, SDL_Renderer* renderer) {
   this->text = text;
   this->font = font;
   this->color = color;
   this->draw(renderer);
 }
 
-TextBase::~TextBase() {
-  SDL_DestroyTexture(this->getTexture());
-}
+TextBase::~TextBase() {}
 
 void TextBase::draw(SDL_Renderer* renderer) {
   this->clear();

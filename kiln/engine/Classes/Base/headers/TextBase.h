@@ -1,11 +1,14 @@
 #pragma once
-#include "kiln/engine/Classes/headers/SpriteBase.h"
+
+#include <kiln/engine/Definitions/Colors.h>
+#include <string>
+#include "kiln/engine/Classes/Base/headers/SpriteBase.h"
 #include "SDL_ttf.h"
 
 class TextBase : public SpriteBase {
 public:
   TextBase(std::string text, TTF_Font* font, SDL_Color color, SDL_Renderer* renderer);
-  ~TextBase();
+  virtual ~TextBase();
 
   void draw(SDL_Renderer* renderer);
   void setText(std::string TextBaseBase);

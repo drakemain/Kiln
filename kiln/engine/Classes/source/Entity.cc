@@ -1,11 +1,13 @@
 #include "../headers/Entity.h"
-#include "kiln/engine/Classes/Components/headers/EntityComponent.h"
 #include <iostream>
+#include <kiln/engine/Classes/headers/Entity.h>
+#include "../Components/headers/SpriteComponent.h"
+
 
 Entity::Entity() {}
 Entity::~Entity() {}
 
-FCoordinate Entity::getWorldPosition() const {
+ICoordinate Entity::getWorldPosition() const {
   return this->worldPosition;
 }
 
@@ -16,7 +18,7 @@ void Entity::setWorldPosition(float x, float y) {
   this->updateComponentPositions();
 }
 
-void Entity::setWorldPosition(FCoordinate position) {
+void Entity::setWorldPosition(ICoordinate position) {
   std::cout << "Modifying entity position" << std::endl;
   std::cout << "\t{" << position.x << ", " << position.y << "}" << std::endl;
   
@@ -24,10 +26,10 @@ void Entity::setWorldPosition(FCoordinate position) {
   this->updateComponentPositions();
 }
 
-void Entity::bindComponent(EntityComponent* component) {
+void Entity::bindComponent(Component* component) {
   std::cout << "Binding component" << std::endl;
   
-  for (EntityComponent* comp : this->boundComponents) {
+  for (Component* comp : this->boundComponents) {
     if (component == comp) {
       return;
     }
@@ -36,8 +38,18 @@ void Entity::bindComponent(EntityComponent* component) {
   this->boundComponents.push_back(component);
 }
 
+void Entity::render(SDL_Renderer *renderer) {
+  for (Component* comp : this->boundComponents) {
+    SpriteComponent* sprite = dynamic_cast<SpriteComponent*>(comp);
+
+    if (sprite) {
+      sprite->render(renderer);
+    }
+  }
+}
+
 void Entity::updateComponentPositions() {
-  for (EntityComponent* comp : this->boundComponents) {
+  for (Component* comp : this->boundComponents) {
     std::cout << "\tUpdating component." << std::endl;
     comp->updatePosition();
   }
@@ -46,3 +58,8 @@ void Entity::updateComponentPositions() {
 void Entity::centerInWindow(unsigned int xBoundary, unsigned int yBoundary) {
   this->setWorldPosition(xBoundary / 2, yBoundary / 2);
 }
+
+std::vector<Component*> Entity::getComponents() {
+  return this->boundComponents;
+}
+

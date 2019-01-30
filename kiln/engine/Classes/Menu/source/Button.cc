@@ -19,8 +19,8 @@ Button::Button(Texture* texture, std::string text, TTF_Font* font, SDL_Color col
     this,
     text,
     font,
-    color,
-    renderer
+    renderer,
+    color
   );
   std::cout << "Button const compl" << std::endl;
 }
@@ -36,6 +36,10 @@ Button::~Button() {
   delete this->click;
   delete this->UI;
 }
+
+void Button::tick(float deltaTime) {}
+
+void Button::start() {}
 
 TextComponent* Button::getTextComponent() {
   if (!this->text) {
