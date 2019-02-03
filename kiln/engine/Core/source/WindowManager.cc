@@ -1,4 +1,5 @@
 #include "../headers/WindowManager.h"
+#include <SDL.h>
 #include <iostream>
 
 bool WindowManager::init() {

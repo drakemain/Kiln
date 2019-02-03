@@ -1,20 +1,19 @@
 #pragma once
-#include <SDL.h>
-#include <SDL_image.h>
-#include <string>
+
 #include "kiln/engine/Utils/headers/Dim.h"
+#include <string>
 
 class Texture {
 public:
   Texture();
-  Texture(const Texture& texture);
+  Texture(const class Texture& texture);
   ~Texture();
-  bool create(std::string filePath, SDL_Renderer* renderer);
-  bool create(SDL_Surface* surface, SDL_Renderer* renderer);
+  bool create(std::string filePath, class SDL_Renderer* renderer);
+  bool create(class SDL_Surface* surface, class SDL_Renderer* renderer);
 
   unsigned int getWidth() const;
   unsigned int getHeight() const;
-  SDL_Texture* getTexture() const;
+  class SDL_Texture* getTexture() const;
 
   Texture* copy();
   void destroy();
@@ -25,6 +24,6 @@ public:
   static Texture* placeholder;
 
 private:
-  SDL_Texture* texture;
+  class SDL_Texture* texture;
   Dim dimensions;
 };

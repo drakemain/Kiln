@@ -8,7 +8,7 @@ public:
   bool poll();
 
   // TODO: Stop using pointer to member
-  SDL_Event* getEvent();
+  union SDL_Event* getEvent();
 
   ICoordinate getCursorPosition() const;
   ICoordinate getCursorClickedPosition() const;

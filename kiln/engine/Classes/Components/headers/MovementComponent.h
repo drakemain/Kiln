@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Component.h"
 #include "kiln/engine/Utils/Math/Vector.h"
 

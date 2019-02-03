@@ -1,11 +1,11 @@
 #pragma once
-#include <SDL.h>
-#include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_image.h>
 #include <SDL_mixer.h>
-#include "kiln/engine/Classes/headers/Texture.h"
 #include <string>
 #include <map>
+
+class Texture;
 
 class AssetManager {
 public:
@@ -37,9 +37,9 @@ public:
   Mix_Music* fetchMusic(std::string name);
   void unloadMusic(std::string name);
 
-  Mix_Chunk* loadSound(std::string path, std::string name);
-  Mix_Chunk* loadSound(std::string path);
-  Mix_Chunk* fetchSound(std::string name);
+   Mix_Chunk* loadSound(std::string path, std::string name);
+   Mix_Chunk* loadSound(std::string path);
+   Mix_Chunk* fetchSound(std::string name);
   void unloadSound(std::string name);
 
 private:
