@@ -3,20 +3,25 @@
 #include <string>
 #include <vector>
 
-typedef std::vector<std::pair<std::string, std::string>> AssetList;
+// filename, reference name
+typedef std::pair<std::string, std::string> AssetPair;
 
 struct AssetDependencies {
-  AssetList textures;
-  AssetList fonts;
-  AssetList sounds;
-  AssetList music;
+  std::vector<AssetPair> textures;
+  // AssetPair, font size
+  std::vector<std::pair<AssetPair, int>> fonts;
+  std::vector<AssetPair> sounds;
+  std::vector<AssetPair> music;
 };
 
 class ModuleSub : public State {
 public:
-  ModuleSub(class KilnModule* mod) : module(mod) {}
+  ModuleSub(class KilnModule* mod);
+
+  AssetDependencies getRequiredAssets() const;
+
+protected:
   class KilnModule* module;
-  AssetDependencies getRequiredAssets() const { return this->assetDependencies; }
 
 protected:
   AssetDependencies assetDependencies;

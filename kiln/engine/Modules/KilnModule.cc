@@ -1,13 +1,17 @@
 #include "KilnModule.h"
 #include "ModuleSub.h"
 #include "kiln/engine/Kiln.h"
+#include "kiln/engine/States/headers/StateMachine.h"
+#include "kiln/engine/Core/headers/LayerManager.h"
 
-KilnModule::KilnModule() {}
+KilnModule::KilnModule() {
+  this->layerManager = new LayerManager();
+  this->subState = new StateMachine();
+}
 
 KilnModule::~KilnModule() {
-  for (std::pair<std::string, Sprite*> sprite : this->spriteMap) {
-    delete sprite.second;
-  }
+  delete this->layerManager;
+  delete this->subState;
 }
 
 bool KilnModule::init() {
@@ -17,7 +21,7 @@ bool KilnModule::init() {
 void KilnModule::start() {}
 
 void KilnModule::handleEvent(SDL_Event* event) {
-  this->subState.getActiveState()->handleEvent(event);
+  this->subState->getActiveState()->handleEvent(event);
 }
 
 void KilnModule::tick(float deltaTime) {
@@ -25,38 +29,31 @@ void KilnModule::tick(float deltaTime) {
     this->unloadSub();
   }
 
-  this->subState.getActiveState()->tick(deltaTime);
+  this->subState->getActiveState()->tick(deltaTime);
+  this->layerManager->update();
 }
 
 void KilnModule::render() {
   if (this->unwindStack) {return;}
 
   SDL_Renderer* renderer = this->engine->getManagement()->windowManager.getRenderer();
-  this->subState.getActiveState()->render(renderer);
+  this->subState->getActiveState()->render(renderer);
 }
 
 void KilnModule::updateSubState() {
-  this->subState.update(); 
+  this->subState->update(); 
 }
 
 bool KilnModule::hasSub() {
-  return !this->subState.empty();
+  return !this->subState->empty();
 }
 
 void KilnModule::bind(Kiln* engine) { 
   this->engine = engine; 
 }
 
-Sprite* KilnModule::createSprite(std::string textureName) {
-  AssetManager* assets = &this->engine->getManagement()->assetManager;
-  Texture* texture = assets->fetchTexture(textureName);
-  Sprite* newSprite = new Sprite(texture);
-  this->spriteMap[textureName] = newSprite;
-  return newSprite;
-}
+void KilnModule::bindEntity(Entity* entity) {
 
-Sprite* KilnModule::fetchSprite(std::string name) {
-  return this->spriteMap[name];
 }
 
 Texture* KilnModule::fetchTexture(std::string name) {
@@ -77,17 +74,17 @@ SDL_Renderer* KilnModule::getRenderer() {
 }
 
 void KilnModule::loadSub(ModuleSub* sub) {
-  this->loadSubAssets(sub);
+  this->loadSubAssets(*sub);
 
-  if (this->subState.empty()) {
-    this->subState.pushForce(std::unique_ptr<State>(sub));
+  if (this->subState->empty()) {
+    this->subState->pushForce(std::unique_ptr<State>(sub));
   } else {
-    this->subState.pushState(std::unique_ptr<State>(sub));
+    this->subState->pushState(std::unique_ptr<State>(sub));
   }
 }
 
 void KilnModule::unloadSub() {
-  this->subState.popState();
+  this->subState->popState();
 }
 
 void KilnModule::quit() {
@@ -95,30 +92,31 @@ void KilnModule::quit() {
 }
 
 void KilnModule::replaceCurrentSub(ModuleSub* sub) {
-  this->subState.replaceState(std::unique_ptr<State>(sub));
-}
-
-void KilnModule::loadSubAssets(ModuleSub* sub) {
-  AssetManager* assets = &this->engine->getManagement()->assetManager;
-  SDL_Renderer* renderer = this->engine->getManagement()->windowManager.getRenderer();
-
-  for (auto asset : sub->getRequiredAssets().textures) {
-    assets->loadTexture(asset.first, asset.second, renderer);
-  }
-
-  for (auto asset : sub->getRequiredAssets().fonts) {
-    assets->loadFont(asset.first, asset.second);
-  }
-
-  for (auto asset : sub->getRequiredAssets().sounds) {
-    assets->loadSound(asset.first, asset.second);
-  }
-
-  for (auto asset : sub->getRequiredAssets().music) {
-    assets->loadMusic(asset.first, asset.second);
-  }
+  this->subState->replaceState(std::unique_ptr<State>(sub));
 }
 
 void KilnModule::unloadSubAssets(ModuleSub* sub) {
 
+}
+
+
+void KilnModule::loadSubAssets(ModuleSub& sub) {
+  AssetManager* assets = &this->engine->getManagement()->assetManager;
+  SDL_Renderer* renderer = this->engine->getManagement()->windowManager.getRenderer();
+
+  for (auto texture : sub.getRequiredAssets().textures) {
+    assets->loadTexture(texture.first, texture.second, renderer);
+  }
+
+  for (auto font : sub.getRequiredAssets().fonts) {
+    assets->loadFont(font.first.first, font.second, font.first.second);
+  }
+
+  for (auto sound : sub.getRequiredAssets().sounds) {
+    assets->loadSound(sound.first, sound.second);
+  }
+
+  for (auto music : sub.getRequiredAssets().music) {
+    assets->loadMusic(music.first, music.second);
+  }
 }

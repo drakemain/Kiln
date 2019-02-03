@@ -1,17 +1,14 @@
 #pragma once
-#include <SDL.h>
-#include "kiln/engine/Classes/Base/headers/SpriteBase.h"
+
 #include "Entity.h"
 
-class Sprite : public Entity, public SpriteBase {
+class Sprite : public Entity {
 public:
-  Sprite(Texture* texture);
   Sprite();
+  Sprite(class Texture*);
 
-  virtual void tick(float deltaTime) override {}
-  virtual void start() override {}
+  class SpriteComponent* getComponent();
 
-  void centerInWindow(unsigned int xBound, unsigned int yBound) override;
-
-  void render(SDL_Renderer* renderer) override;
+private:
+  class SpriteComponent* sprite;
 };

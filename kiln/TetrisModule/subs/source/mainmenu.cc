@@ -24,12 +24,9 @@ void MainMenu::init() {
   Button* exitButton = new Button(buttonTexture, "Exit", buttonFont, KILN_COLOR::DARK_GREY, renderer);
   exitButton->centerInWindow(640, 480);
   exitButton->bindAction([this](){this->module->quit();});
-
-  textPosition.x = (exitButton->getDimensions().w / 2) - (exitButton->getTextComponent()->getDimensions().w / 2);
-  textPosition.y = (exitButton->getDimensions().h / 2) - (exitButton->getTextComponent()->getDimensions().h / 2);
   exitButton->getTextComponent()->setRelativePosition(textPosition);
 
-  exitButton->setScale(.75);
+  exitButton->scale(.75);
 
   this->createButton(exitButton);
 }

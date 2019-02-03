@@ -1,8 +1,13 @@
 #include "Kiln.h"
+#include "Modules/KilnModule.h"
+#include "Core/headers/Stats.h"
 #include "Definitions/Colors.h"
 #include <iostream>
+#include <SDL.h>
 
 Kiln::Kiln() {}
+
+Kiln::~Kiln() {}
 
 bool Kiln::init(KilnModule& module) {
   std::cout << "INIT" << std::endl;
@@ -20,7 +25,7 @@ bool Kiln::init(KilnModule& module) {
     return false;
   }
 
-  TTF_Font* fpsFont = this->coreManagement.assetManager.loadFont("kiln/assets/font/RobotoMono-Regular.ttf", "StatsFont");
+  TTF_Font* fpsFont = this->coreManagement.assetManager.loadFont("kiln/assets/font/RobotoMono-Regular.ttf", 32, "StatsFont");
   this->stats = new Stats(10, true, fpsFont, this->coreManagement.windowManager.getRenderer());
   module.bind(this);
   if (!module.init()) {
@@ -44,7 +49,6 @@ void Kiln::run(KilnModule& module) {
   module.start();
 
   while(isRunning && module.hasSub()) {
-    // std::cout << "ENGINE TICK " << module.hasSub() << std::endl;
     tickStartTime = SDL_GetTicks();
     deltaTime = tickStartTime - lastTickStartTime;
     
@@ -55,16 +59,13 @@ void Kiln::run(KilnModule& module) {
     }
 
     module.tick(deltaTime);
+    this->stats->tick(deltaTime);
 
     SDL_Renderer* renderer = this->coreManagement.windowManager.getRenderer();
     SDL_RenderClear(renderer);
 
     module.render();
-    this->stats->getText()->render(renderer);
-    
-    SDL_RenderPresent(renderer);
-
-    // this->render();
+    this->render(renderer);
 
     frameTime = SDL_GetTicks() - tickStartTime;
     
@@ -102,11 +103,8 @@ void Kiln::checkEngineEvent(SDL_Event* event) {
   }
 }
 
-void Kiln::render() {
-  SDL_Renderer* renderer = this->coreManagement.windowManager.getRenderer();
-  SDL_RenderClear(renderer);
-
-  this->stats->getText()->render(renderer);
+void Kiln::render(SDL_Renderer* renderer) {
+  this->stats->render(renderer);
   
   SDL_RenderPresent(renderer);
 }

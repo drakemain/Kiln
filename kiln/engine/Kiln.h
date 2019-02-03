@@ -1,11 +1,8 @@
 #pragma once
-#include <SDL.h>
-#include "Modules/KilnModule.h"
+
 #include "Core/headers/WindowManager.h"
 #include "Core/headers/InputManager.h"
 #include "Core/headers/AssetManager.h"
-#include "kiln/engine/Classes/headers/Text.h"
-#include "Core/headers/Stats.h"
 
 struct CoreManagement {
   WindowManager windowManager;
@@ -16,10 +13,10 @@ struct CoreManagement {
 class Kiln {
 public:
   Kiln();
-  // ~Kiln();
+  ~Kiln();
   
-  bool init(KilnModule& module);
-  void run(KilnModule& module);
+  bool init(class KilnModule& module);
+  void run(class KilnModule& module);
   void cleanup();
 
   CoreManagement* getManagement() {return &this->coreManagement;}
@@ -28,11 +25,11 @@ private:
   /* Helper Functions */
   void checkEngineEvent(SDL_Event* event);
   void tick(float deltaTime);
-  void render();
+  void render(SDL_Renderer* renderer);
 
   CoreManagement coreManagement;
   
   bool isRunning = true;
 
-  Stats* stats;
+  class Stats* stats;
 };

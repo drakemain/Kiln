@@ -1,64 +1,64 @@
 #include "../headers/Texture.h"
 #include <iostream>
 
+Texture::Texture() {}
+
+Texture::Texture(const Texture& other) {
+  this->texture = other.getTexture();
+  this->dimensions.h = other.getHeight();
+  this->dimensions.w = other.getWidth();
+}
+
 Texture::~Texture() {
-  SDL_DestroyTexture(this->texture);
+  this->destroy();
 }
 
 bool Texture::create(std::string filePath, SDL_Renderer* renderer) {
+  bool success = false;
+
   SDL_Surface* surface = IMG_Load(filePath.c_str());
 
   if (surface == NULL) {
     std::cerr << "Failed to create Texture:" << "\n\t" << IMG_GetError() << std::endl;
-    return false;
+  } else {
+    success = this->create(surface, renderer);
+    SDL_FreeSurface(surface);
   }
 
-  this->texture = SDL_CreateTextureFromSurface(renderer, surface);
-
-  if (this->texture == NULL) {
-    std::cerr << "Failed to convert img to texture\n\t" << SDL_GetError() << std::endl;
-    return false;
-  }
-
-  this->width = surface->w;
-  this->height = surface->h;
-
-  SDL_FreeSurface(surface);
-
-  return true;
+  return success;
 }
 
 bool Texture::create(SDL_Surface* surface, SDL_Renderer* renderer) {
-  this->texture = SDL_CreateTextureFromSurface(renderer, surface);
+  if (!surface || !renderer) { return false; }
 
-  if (this->texture == NULL) {
+  SDL_Texture* temp = SDL_CreateTextureFromSurface(renderer, surface);
+
+  if (temp == NULL) {
     return false;
   }
 
-  this->width = surface->w;
-  this->height = surface->h;
+  this->destroy();
+  this->texture = temp;
+  this->dimensions.w = surface->w;
+  this->dimensions.h = surface->h;
 
   return true;
 }
 
-int Texture::getWidth() const {
-  return this->width;
+unsigned int Texture::getWidth() const {
+  return this->dimensions.w;
 }
 
-int Texture::getHeight() const {
-  return this->height;
+unsigned int Texture::getHeight() const {
+  return this->dimensions.h;
 }
 
-void Texture::setWidth(int width) {
-  if (width >= 0) {
-    this->width = width;
-  }
+void Texture::setWidth(unsigned int width) {
+  this->dimensions.w = width;
 }
 
-void Texture::setHeight(int height) {
-  if (height >= 0) {
-    this->height = 0;
-  }
+void Texture::setHeight(unsigned int height) {
+  this->dimensions.h = height;
 }
 
 SDL_Texture* Texture::getTexture() const {
@@ -68,4 +68,16 @@ SDL_Texture* Texture::getTexture() const {
   }
 
   return this->texture;
+}
+
+Texture* Texture::copy() {
+  return new Texture(*this);
+}
+
+void Texture::destroy() {
+  if (this->texture) {
+    SDL_DestroyTexture(this->texture);
+  }
+
+  this->texture = nullptr;
 }

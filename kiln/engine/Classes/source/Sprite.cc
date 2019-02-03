@@ -1,36 +1,14 @@
 #include "../headers/Sprite.h"
-#include <iostream>
+#include "kiln/engine/Classes/Components/headers/SpriteComponent.h"
 
-Sprite::Sprite(Texture* texture)
-: SpriteBase(texture) {}
-
-Sprite::Sprite() {}
-
-void Sprite::centerInWindow(unsigned int xBound, unsigned int yBound) {
-  FCoordinate windowCenter;
-  windowCenter.x = xBound / 2;
-  windowCenter.y = yBound / 2;
-
-  this->setWorldPosition(
-    windowCenter.x - (this->getDimensions().w / 2),
-    windowCenter.y - (this->getDimensions().h / 2)
-  );
+Sprite::Sprite() {
+  this->sprite = new SpriteComponent(this);
 }
 
-void Sprite::render(SDL_Renderer* renderer) {
-  SDL_Rect container;
-  container.w = this->getDimensions().w;
-  container.h = this->getDimensions().h;
-  container.x = this->getWorldPosition().x;
-  container.y = this->getWorldPosition().y;
+Sprite::Sprite(Texture* texture) {
+  this->sprite = new SpriteComponent(this, texture);
+}
 
-  SDL_RenderCopyEx(
-    renderer,
-    this->getTexture(),
-    NULL,
-    &container,
-    this->getRotationDegrees(),
-    NULL,
-    SDL_FLIP_NONE  
-  );
+SpriteComponent* Sprite::getComponent() {
+  return this->sprite;
 }

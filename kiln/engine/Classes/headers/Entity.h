@@ -1,30 +1,34 @@
 #pragma once
 #include "kiln/engine/Utils/headers/Coordinate.h"
 #include <vector>
-#include <SDL_render.h>
+
+struct SDL_Renderer;
 
 // Entities are objects that have
 // a position within the game
 class Entity {
+
 public:
   Entity();
   virtual ~Entity();
 
-  virtual void tick(float deltaTime) = 0;
-  virtual void start() = 0;
+  virtual void tick(float deltaTime);
+  virtual void start();
 
   ICoordinate getWorldPosition() const;
 
   void setWorldPosition(float x, float y);
   void setWorldPosition(ICoordinate position);
 
+  void scale(float);
+
   void bindComponent(class Component* component);
+  void unbindComponent(class Component* component);
 
   virtual void centerInWindow(unsigned int xBoundary, unsigned int yBoundary);
 
   virtual void render(SDL_Renderer* renderer);
 
-protected:
   std::vector<class Component*> getComponents();
 
 private:

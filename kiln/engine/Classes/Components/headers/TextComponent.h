@@ -1,17 +1,31 @@
 #pragma once
 
-#include "kiln/engine/Classes/Base/headers/TextBase.h"
-#include "Component.h"
-// #include <SDL_ttf.h>
-// #include "SpriteComponent.h"
+#include <SDL_ttf.h>
+#include "kiln/engine/Classes/Components/headers/SpriteComponent.h"
 
-class TextComponent : public TextBase, public Component {
+class TextComponent : public SpriteComponent {
 public:
-    TextComponent(Entity* owner, std::string text, TTF_Font* font, SDL_Renderer* renderer, SDL_Color color);
-    virtual ~TextComponent();
+  TextComponent(Entity* owner, std::string text, TTF_Font* font, SDL_Renderer* renderer, SDL_Color color);
+  virtual ~TextComponent();
 
-    void start() override;
-    void tick(float deltaTime) override;
+  void start() override;
+  void tick(float deltaTime) override;
 
-    void render(SDL_Renderer* renderer);
+public:
+  void setText(std::string text);
+  void setFont(TTF_Font* font);
+  void setColor(SDL_Color color);
+
+  bool checkWasModified() const;
+
+  void render(SDL_Renderer*) override;
+private:
+  void draw(SDL_Renderer* renderer);
+  
+  std::string text;
+  TTF_Font* font;
+  SDL_Color color;
+  SDL_Renderer* renderer;
+  
+  bool wasModified = false;
 };

@@ -16,12 +16,9 @@ protected:
   void createButton(class Texture* texture);
   void createButton(class Button* button);
 
-  void createStatic(class Sprite* sprite);
-  void createStatic(class Texture* texture);
-
-  // AssetDependencies assetDependencies;
+  void createStatic(class Entity* sprite);
 private:
-  std::vector<class Sprite*> staticElements;
+  std::vector<class Entity*> staticElements;
   std::vector<class Button*> buttons;
   SDL_Color backgroundColor;
 

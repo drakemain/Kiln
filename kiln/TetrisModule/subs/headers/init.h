@@ -16,7 +16,8 @@ public:
   void render(SDL_Renderer* renderer) override;
 
 private:
-  float runtime = 0;
+  float runtime = 0.f;
 
   class Button* button;
+  // class Sprite* testSprite;
 };

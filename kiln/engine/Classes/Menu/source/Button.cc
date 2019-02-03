@@ -1,20 +1,17 @@
 #include "../headers/Button.h"
 #include "kiln/engine/Classes/Components/headers/ClickComponent.h"
-#include "kiln/engine/Classes/Components/headers/UIComponent.h"
+#include "kiln/engine/Classes/Components/headers/SpriteComponent.h"
 #include "kiln/engine/Classes/Components/headers/TextComponent.h"
 #include <iostream>
 
-Button::Button(Texture* texture)
-: Sprite(texture) {
+Button::Button(class Texture* texture) {
   this->click = new ClickComponent(this);
-  this->UI = new UIComponent(this);
+  this->sprite = new SpriteComponent(this, texture);
 }
 
-Button::Button(Texture* texture, std::string text, TTF_Font* font, SDL_Color color, SDL_Renderer* renderer)
-: Sprite(texture) {
-  std::cout << "Button const" << std::endl;
+Button::Button(class Texture* texture, std::string text, TTF_Font* font, SDL_Color color, SDL_Renderer* renderer) {
   this->click = new ClickComponent(this);
-  this->UI = new UIComponent(this);
+  this->sprite = new SpriteComponent(this, texture);
   this->text = new TextComponent(
     this,
     text,
@@ -22,24 +19,9 @@ Button::Button(Texture* texture, std::string text, TTF_Font* font, SDL_Color col
     renderer,
     color
   );
-  std::cout << "Button const compl" << std::endl;
 }
 
-Button::Button(Dim dimensions) {
-  this->click = new ClickComponent(this);
-  this->UI = new UIComponent(this);
-  this->setWidth(dimensions.w);
-  this->setHeight(dimensions.h);
-}
-
-Button::~Button() {
-  delete this->click;
-  delete this->UI;
-}
-
-void Button::tick(float deltaTime) {}
-
-void Button::start() {}
+Button::~Button() {}
 
 TextComponent* Button::getTextComponent() {
   if (!this->text) {
@@ -49,18 +31,16 @@ TextComponent* Button::getTextComponent() {
   return this->text;
 }
 
-void Button::render(SDL_Renderer* renderer) {
-  Sprite::render(renderer);
-  if (this->text) {
-    this->text->render(renderer);
-  }
-}
+bool Button::checkWasClicked(ICoordinate clickPos) {
+  Dim dimensions = this->sprite->getDimensions();
+  bool result = false;
 
-void Button::ifClicked(ICoordinate clickPos) {
-  Dim dimensions = this->getDimensions();
   if (this->click->wasClicked(clickPos, dimensions.w, dimensions.h)) {
+    result = true;
     this->click->onClick();
   }
+
+  return result;
 }
 
 void Button::bindAction(std::function<void()> func) {

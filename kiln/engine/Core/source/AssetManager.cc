@@ -127,8 +127,8 @@ void AssetManager::unloadTexture(std::string name) {
 }
 
 /* Font */
-TTF_Font* AssetManager::loadFont(std::string path, std::string name) {
-  TTF_Font* font = TTF_OpenFont(path.c_str(), 28);
+TTF_Font* AssetManager::loadFont(std::string path, int size, std::string name) {
+  TTF_Font* font = TTF_OpenFont(path.c_str(), size);
 
   if (font == NULL) {
     std::cerr << "\tFailed to load font: " << name << ".\n\t\t" << TTF_GetError() << std::endl;
@@ -141,8 +141,8 @@ TTF_Font* AssetManager::loadFont(std::string path, std::string name) {
   return font;
 }
 
-TTF_Font* AssetManager::loadFont(std::string path) {
-  TTF_Font* font = TTF_OpenFont(path.c_str(), 28);
+TTF_Font* AssetManager::loadFont(std::string path, int size) {
+  TTF_Font* font = TTF_OpenFont(path.c_str(), size);
 
   if (font == NULL) {
     std::cerr << "\tFailed to load font:" << ".\n\t\t" << TTF_GetError() << std::endl;

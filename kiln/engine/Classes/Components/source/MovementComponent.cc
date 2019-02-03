@@ -1,5 +1,5 @@
 #include "../headers/MovementComponent.h"
-#include <iostream>
+#include "../../headers/Entity.h"
 
 MovementComponent::MovementComponent(Entity* owner)
 : Component(owner) {}
@@ -25,10 +25,10 @@ void MovementComponent::tick(float deltaTime) {
 
 void MovementComponent::updatePosition(float deltaTime) {
   ICoordinate currentPosition = this->getOwner()->getWorldPosition();
-  ICoordinate newPositition;
+  ICoordinate newPosition;
 
-  newPositition.x = (this->velocity.x * (deltaTime/1000.f)) + currentPosition.x;
-  newPositition.y = (this->velocity.y * (deltaTime/1000.f)) + currentPosition.y;
+  newPosition.x = (this->velocity.x * (deltaTime/1000.f)) + currentPosition.x;
+  newPosition.y = (this->velocity.y * (deltaTime/1000.f)) + currentPosition.y;
 
-  this->getOwner()->setWorldPosition(newPositition);
+  this->getOwner()->setWorldPosition(newPosition);
 }

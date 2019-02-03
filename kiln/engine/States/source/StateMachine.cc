@@ -11,7 +11,6 @@ void StateMachine::pushState(std::unique_ptr<State> state) {
   this->isAdding = true;
   std::cout << "PUSH STATE" << std::endl;
   this->stateBuffer = std::move(state);
-  std::cout << "PUSH STATE" << std::endl;
 }
 
 void StateMachine::pushForce(std::unique_ptr<State> state) {
@@ -39,7 +38,7 @@ void StateMachine::update() {
     std::cout << "Removing state." << std::endl;
   }
   if (this->stateStack.empty()) {
-    std::cout << "Not empty." << std::endl;
+    std::cout << "Empty." << std::endl;
   }
 
   if (this->isRemoving && !this->stateStack.empty()) {

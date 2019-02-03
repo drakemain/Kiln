@@ -1,15 +1,19 @@
 #pragma once
 #include <SDL.h>
-#include "kiln/engine/Classes/headers/Text.h"
+#include <SDL_ttf.h>
+#include "kiln/engine/Classes/headers/Entity.h"
 
-class Stats {
+class Stats: public Entity {
 public:
   Stats(unsigned int samples, bool renderText = false, TTF_Font* font = nullptr, SDL_Renderer* renderer = nullptr);
   ~Stats();
 
+  void tick(float deltaTime) override;
+  void start() override;
+
   void incrementFrameCount();
   float getFPS() const;
-  Text* getText() const;
+  class TextComponent* getText() const;
 
 private:
   void update();
@@ -21,6 +25,6 @@ private:
   Uint32 lastUpdateTime = 0;
 
   bool renderText;
-  Text* text = nullptr;
+  class TextComponent* text = nullptr;
   SDL_Renderer* rendererRef;
 };

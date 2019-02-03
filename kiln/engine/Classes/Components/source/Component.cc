@@ -1,8 +1,9 @@
 #include "../headers/Component.h"
+#include "../../headers/Entity.h"
 
-Component::Component(Entity* owner)
-: owner(owner) {
-
+Component::Component(Entity* owner) {
+  owner->bindComponent(this);
+  this->updatePosition();
 }
 
 Component::Component() {}
@@ -11,11 +12,16 @@ Component::~Component() {}
 
 void Component::setRelativePosition(ICoordinate pos) {
   this->relativePosition = pos;
+  this->updatePosition();
 }
 
 void Component::setRelativePosition(int x, int y) {
   this->setRelativePosition({x, y});
 }
+
+// void Component::setRelativePosition(Position position) {
+
+// }
 
 ICoordinate Component::getRelativePosition() const {
   return this->relativePosition;

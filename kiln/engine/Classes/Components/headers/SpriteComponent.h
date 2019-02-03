@@ -1,24 +1,37 @@
+#pragma once
+
 #include "Component.h"
-#include "kiln/engine/Classes/Base/headers/SpriteBase.h"
+#include "kiln/engine/Utils/headers/Dim.h"
 
-class SpriteComponent : public Component, public SpriteBase {
+class SpriteComponent : public Component {
 public:
-    SpriteComponent(Entity* owner, Texture* texture);
+  SpriteComponent(Entity* owner, class Texture* texture);
+  SpriteComponent(Entity* owner);
+  SpriteComponent(class Texture* texture);
 
-    SpriteComponent(Entity* onwer);
+  virtual ~SpriteComponent() {}
 
-    void start() override;
+  virtual void start() override;
+  virtual void tick(float deltaTime) override;
 
-    void tick(float deltaTime) override;
+  void setWidth(unsigned int width);
+  void setHeight(unsigned int height);
+  void setScale(float scale);
+  void setRotation(float degrees);
+  void setTexture(class Texture* texture);
+  void setTexture(struct SDL_Texture* texture);
 
-    void setRelativePosition(int x, int y);
-    void setRelativePosition(ICoordinate position);
+  ICoordinate getWorldPosition() const;
+  Dim getDimensions() const;
+  float getRotationDegrees() const;
+  struct SDL_Texture* getTexture();
 
-    ICoordinate getRelativePosition() const;
-    ICoordinate getWorldPosition() const;
-
-    void render(SDL_Renderer*);
+  virtual void render(struct SDL_Renderer*);
+  virtual void clear();
 
 private:
-    ICoordinate relativePosition;
+  Dim originalDim;
+  Dim renderDim;
+  float rotationDegrees = 0.f;
+  struct SDL_Texture* texture = nullptr;
 };

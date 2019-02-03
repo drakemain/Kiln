@@ -31,7 +31,7 @@ void Menu::handleEvent(SDL_Event* event) {
         SDL_GetMouseState(&clickPos.x, &clickPos.y);
 
         for (Button* button : this->buttons) {
-          button->ifClicked(clickPos);
+          button->checkWasClicked(clickPos);
         }
       }
     }
@@ -45,7 +45,7 @@ void Menu::tick(float deltaTime) {
 void Menu::render(SDL_Renderer* renderer) {
   SDL_SetRenderDrawColor(renderer, 0xA9, 0xA9, 0xA9, 0xFF);
 
-  for (Sprite* elem : this->staticElements) {
+  for (Entity* elem : this->staticElements) {
     elem->render(renderer);
   }
   
@@ -70,12 +70,6 @@ void Menu::createButton(Button* button) {
   this->buttons.push_back(button);
 }
 
-void Menu::createStatic(Sprite* sprite) {
-  this->staticElements.push_back(sprite);
-}
-
-void Menu::createStatic(Texture* texture) {
-  Sprite* sprite = new Sprite(texture);
-
-  this->staticElements.push_back(sprite);
+void Menu::createStatic(Entity* entity) {
+  this->staticElements.push_back(entity);
 }
