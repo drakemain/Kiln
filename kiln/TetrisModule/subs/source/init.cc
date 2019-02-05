@@ -4,12 +4,14 @@
 #include "kiln/engine/Definitions/Colors.h"
 #include "kiln/TetrisModule/subs/headers/mainmenu.h"
 #include "kiln/engine/Classes/headers/Sprite.h"
+#include "kiln/engine/Core/headers/LayerManager.h"
 
 InitSub::InitSub(class KilnModule* mod) : ModuleSub(mod) {
   std::cout << "Loaded init sub" << std::endl;
 
   this->assetDependencies.textures = {
-    {"kiln/assets/img/button-bg.png", "btn"}
+    {"kiln/assets/img/button-bg.png", "btn"},
+    {"kiln/assets/img/sprite-test.jpg", "spr"}
   };
 
   this->assetDependencies.fonts = {
@@ -29,15 +31,27 @@ void InitSub::init() {
 
   Button* button = new Button(buttonTexture, "Button", buttonFont, KILN_COLOR::ORANGE, renderer);
   Sprite* sprite = new Sprite(this->module->fetchTexture("btn"));
+  Sprite* sprite2 = new Sprite(this->module->fetchTexture("spr"));
+  Sprite* sprite3 = new Sprite(this->module->fetchTexture("dne"));
   
   this->registerEntity(button);
   this->registerEntity(sprite);
+  this->registerEntity(sprite2);
+  this->registerEntity(sprite3);
 
-  sprite->scale(.3);
-  sprite->setWorldPosition({50, 50});
+  this->getLayerManager()->moveToNewTop(sprite);
+  this->getLayerManager()->moveToNewTop(button);
+  this->getLayerManager()->moveToTop(sprite3);
+  this->getLayerManager()->moveToBottom(button);
+  // sprite->scale(.4);
+  sprite->setWorldPosition({25, 25});
+
+  sprite2->setWorldPosition({100, 100});
+
+  sprite3->scale(.2);
   
   std::cout << "Setting Button Position" << std::endl;
-  button->setWorldPosition(50.f, 50.f);
+  button->setWorldPosition(0.f, 150.f);
   button->scale(.5);
 
   button->bindAction([this](){this->module->loadSub(new MainMenu(this->module));});

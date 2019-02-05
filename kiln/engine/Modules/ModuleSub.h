@@ -31,6 +31,8 @@ protected:
   void adjustEntityLayer(class Entity*, int layer);
   void registerEntity(class Entity* entity);
 
+  class LayerManager* getLayerManager();
+
   class KilnModule* module;
   AssetDependencies assetDependencies;
 
