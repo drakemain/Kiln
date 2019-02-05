@@ -84,6 +84,12 @@ void KilnModule::loadSub(ModuleSub* sub) {
 }
 
 void KilnModule::unloadSub() {
+  // ModuleSub* sub = dynamic_cast<ModuleSub*>(this->subState->getActiveState().get());
+
+  // if (sub) {
+  //   this->unloadSubAssets(sub);
+  // }
+
   this->subState->popState();
 }
 
@@ -94,11 +100,6 @@ void KilnModule::quit() {
 void KilnModule::replaceCurrentSub(ModuleSub* sub) {
   this->subState->replaceState(std::unique_ptr<State>(sub));
 }
-
-void KilnModule::unloadSubAssets(ModuleSub* sub) {
-
-}
-
 
 void KilnModule::loadSubAssets(ModuleSub& sub) {
   AssetManager* assets = &this->engine->getManagement()->assetManager;
@@ -120,3 +121,10 @@ void KilnModule::loadSubAssets(ModuleSub& sub) {
     assets->loadMusic(music.first, music.second);
   }
 }
+
+
+// TODO: This needs to ensure assets that are required by other states
+// in the state machine are not unloaded
+// void KilnModule::unloadSubAssets(ModuleSub* sub) {
+//   AssetDependencies assets = sub->getRequiredAssets();
+// }

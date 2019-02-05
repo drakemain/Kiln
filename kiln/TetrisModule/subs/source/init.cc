@@ -27,18 +27,22 @@ void InitSub::init() {
   Texture* buttonTexture = this->module->fetchTexture("btn");
   SDL_Renderer* renderer = this->module->getRenderer();
 
-  this->button = new Button(buttonTexture, "Button", buttonFont, KILN_COLOR::ORANGE, renderer);
-  // this->button->getTextComponent()->setRelativePosition(Position::TopRight);
+  Button* button = new Button(buttonTexture, "Button", buttonFont, KILN_COLOR::ORANGE, renderer);
+  Sprite* sprite = new Sprite(this->module->fetchTexture("btn"));
+  
+  this->registerEntity(button);
+  this->registerEntity(sprite);
 
-  // this->testSprite = new Sprite(buttonTexture);
+  sprite->scale(.3);
+  sprite->setWorldPosition({50, 50});
   
   std::cout << "Setting Button Position" << std::endl;
-  this->button->setWorldPosition(50.f, 50.f);
-  this->button->scale(.5);
+  button->setWorldPosition(50.f, 50.f);
+  button->scale(.5);
 
-  this->button->bindAction([this](){this->module->loadSub(new MainMenu(this->module));});
+  button->bindAction([this](){this->module->loadSub(new MainMenu(this->module));});
 
-  this->button->start();
+  button->start();
 }
 
 void InitSub::cleanup() {}
@@ -49,22 +53,21 @@ void InitSub::handleEvent(SDL_Event* event) {
     if (event->button.clicks == SDL_BUTTON_LEFT) {
       ICoordinate coord;
       SDL_GetMouseState(&coord.x, &coord.y);
-      this->button->checkWasClicked(coord);
-      this->button->setWorldPosition((float)coord.x, (float)coord.y);
+      // this->button->checkWasClicked(coord);
+      // this->button->setWorldPosition((float)coord.x, (float)coord.y);
     }
   }
 }
 
 void InitSub::tick(float deltaTime) {
+  ModuleSub::tick(deltaTime);
   this->runtime += deltaTime;
-
-  this->button->tick(deltaTime);
   // if (this->runtime > 3000) {
   //   this->module->unloadSub();
   // }
 }
 
 void InitSub::render(SDL_Renderer* renderer) {
-  this->button->render(renderer);
+  ModuleSub::render(renderer);
   // this->testSprite->render(renderer);
 }

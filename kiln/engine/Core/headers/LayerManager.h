@@ -21,7 +21,7 @@ private:
   void removeFromLayer(class Entity*);
 
   std::vector<std::unique_ptr<std::vector<class Entity*>>> layers;
-  std::unordered_map<class Entity*, size_t> entityMap;
+  std::unique_ptr<std::unordered_map<class Entity*, size_t>> entityMap;
   std::queue<std::pair<class Entity*, size_t>> requestedUpdates;
 
   size_t maxLayers = 10;

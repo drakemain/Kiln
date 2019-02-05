@@ -15,14 +15,26 @@ struct AssetDependencies {
 };
 
 class ModuleSub : public State {
+  friend class KilnModule;
 public:
   ModuleSub(class KilnModule* mod);
 
+protected:
+  virtual void render(class SDL_Renderer* renderer) override;
+  virtual void tick(float deltaTime) override;
+
+public:
   AssetDependencies getRequiredAssets() const;
 
 protected:
-  class KilnModule* module;
+  void setEntityLayer(class Entity*, size_t layer);
+  void adjustEntityLayer(class Entity*, int layer);
+  void registerEntity(class Entity* entity);
 
-protected:
+  class KilnModule* module;
   AssetDependencies assetDependencies;
+
+private:
+  std::vector<class Entity*> entities;
+  class LayerManager* layers;
 };

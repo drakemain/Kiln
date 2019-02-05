@@ -1,17 +1,26 @@
 #include "../headers/LayerManager.h"
 
-LayerManager::LayerManager() {}
+LayerManager::LayerManager() {
+  std::unordered_map<Entity*, size_t> map = std::unordered_map<Entity*, size_t>();
+  this->entityMap = std::make_unique<std::unordered_map<Entity*, size_t>>(map);
+}
 
 void LayerManager::add(class Entity* entity, size_t layer = 0) {
-  if (this->entityMap.find(entity) != this->entityMap.end()) {
-    this->requestedUpdates.push({entity, layer});
+  if (!entity) { return; }
+
+  if (!this->entityMap->empty()) {
+    if (this->entityMap->find(entity) != this->entityMap->end()) {
+      this->requestedUpdates.push({entity, layer});
+    }
   }
+
+  printf("Entity %p was added to layer %d of %p.\n", entity, (int)layer, this);
 }
 
 void LayerManager::remove(class Entity* entity) {
-  if (this->entityMap.find(entity) != this->entityMap.end()) {
+  if (this->entityMap->find(entity) != this->entityMap->end()) {
     this->removeFromLayer(entity);
-    this->entityMap.erase(entity);
+    this->entityMap->erase(entity);
   }
 }
 
@@ -39,15 +48,15 @@ void LayerManager::createLayer() {
 void LayerManager::insertToLayer(Entity* entity, size_t layer) {
   size_t _layer = layer%this->getLayerCount();
   this->layers[_layer]->push_back(entity);
-  this->entityMap[entity] = _layer;
+  this->entityMap->at(entity) = _layer;
 }
 
 void LayerManager::removeFromLayer(Entity* entity) {
-  if (this->entityMap.find(entity) == this->entityMap.end()) {
+  if (this->entityMap->find(entity) == this->entityMap->end()) {
     return;
   }
 
-  int currentLayer = entityMap[entity];
+  int currentLayer = this->entityMap->at(entity);
   auto it = this->layers[currentLayer]->begin();
 
   while (it < this->layers[currentLayer]->end()) {

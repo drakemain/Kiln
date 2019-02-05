@@ -9,6 +9,4 @@ public:
   virtual void handleEvent(SDL_Event* event) override;
   virtual void tick(float deltaTime) override;
   virtual void render() override;
-
-
 };

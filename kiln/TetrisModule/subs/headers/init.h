@@ -17,7 +17,4 @@ public:
 
 private:
   float runtime = 0.f;
-
-  class Button* button;
-  // class Sprite* testSprite;
 };
