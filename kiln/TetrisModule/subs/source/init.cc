@@ -3,7 +3,7 @@
 #include "kiln/engine/Classes/Components/headers/TextComponent.h"
 #include "kiln/engine/Definitions/Colors.h"
 #include "kiln/TetrisModule/subs/headers/mainmenu.h"
-#include "kiln/engine/Classes/headers/Sprite.h"
+#include "kiln/engine/Classes/Entity/headers/Sprite.h"
 #include "kiln/engine/Core/headers/LayerManager.h"
 
 InitSub::InitSub(class KilnModule* mod) : ModuleSub(mod) {

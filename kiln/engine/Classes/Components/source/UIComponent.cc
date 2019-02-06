@@ -1,5 +1,5 @@
 #include "kiln/engine/Classes/Components/headers/UIComponent.h"
-#include "kiln/engine/Classes/headers/Entity.h"
+#include "kiln/engine/Classes/Entity/headers/Entity.h"
 
 UIComponent::UIComponent(Entity* owner) : Component(owner) {}
 

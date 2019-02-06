@@ -2,7 +2,7 @@
 #include <SDL.h>
 #include <string>
 #include "kiln/engine/Classes/Components/headers/TextComponent.h"
-#include "kiln/engine/Classes/headers/Entity.h"
+#include "kiln/engine/Classes/Entity/headers/Entity.h"
 #include "kiln/engine/Definitions/Colors.h"
 
 TextComponent::TextComponent(Entity* owner, std::string text, TTF_Font* font, SDL_Renderer* renderer, SDL_Color color = KILN_COLOR::DARK_GREY)

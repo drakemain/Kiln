@@ -1,5 +1,5 @@
 #include "ModuleSub.h"
-#include "kiln/engine/Classes/headers/Entity.h"
+#include "kiln/engine/Classes/Entity/headers/Entity.h"
 #include "kiln/engine/Classes/Components/headers/SpriteComponent.h"
 #include "kiln/engine/Core/headers/LayerManager.h"
 

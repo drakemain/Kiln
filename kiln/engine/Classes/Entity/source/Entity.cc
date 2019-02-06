@@ -1,6 +1,7 @@
 #include "../headers/Entity.h"
-#include "kiln/engine/Classes/headers/Entity.h"
-#include "../Components/headers/SpriteComponent.h"
+#include "../headers/Entity.h"
+#include "../../Components/headers/Component.h"
+#include "../../Components/headers/SpriteComponent.h"
 
 Entity::Entity() {}
 

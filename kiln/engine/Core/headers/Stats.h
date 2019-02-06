@@ -1,7 +1,7 @@
 #pragma once
 
 #include <SDL_ttf.h>
-#include "kiln/engine/Classes/headers/Entity.h"
+#include "kiln/engine/Classes/Entity/headers/Entity.h"
 
 class Stats: public Entity {
 public:

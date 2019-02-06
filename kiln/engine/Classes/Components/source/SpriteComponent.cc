@@ -1,6 +1,6 @@
 #include "../headers/SpriteComponent.h"
-#include "../../headers/Entity.h"
-#include "kiln/engine/Classes/headers/Texture.h"
+#include "kiln/engine/Classes/Entity/headers/Entity.h"
+#include "kiln/engine/Core/headers/Texture.h"
 #include <SDL.h>
 
 SpriteComponent::SpriteComponent(Entity* owner, Texture* texture)

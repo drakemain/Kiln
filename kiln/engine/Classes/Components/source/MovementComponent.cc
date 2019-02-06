@@ -1,5 +1,5 @@
 #include "../headers/MovementComponent.h"
-#include "../../headers/Entity.h"
+#include "kiln/engine/Classes/Entity/headers/Entity.h"
 
 MovementComponent::MovementComponent(Entity* owner)
 : Component(owner) {}

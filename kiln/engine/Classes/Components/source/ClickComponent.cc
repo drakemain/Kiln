@@ -1,5 +1,5 @@
 #include "../headers/ClickComponent.h"
-#include "../../headers/Entity.h"
+#include "kiln/engine/Classes/Entity/headers/Entity.h"
 #include <iostream>
 
 ClickComponent::ClickComponent(Entity* owner)

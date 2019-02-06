@@ -1,5 +1,5 @@
 #pragma once
-#include "kiln/engine/Classes/headers/Entity.h"
+#include "kiln/engine/Classes/Entity/headers/Entity.h"
 #include "SDL_ttf.h"
 #include <functional>
 

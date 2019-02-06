@@ -1,5 +1,5 @@
 #include "../headers/Component.h"
-#include "../../headers/Entity.h"
+#include "kiln/engine/Classes/Entity/headers/Entity.h"
 
 Component::Component(Entity* owner) {
   owner->bindComponent(this);

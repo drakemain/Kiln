@@ -1,5 +1,5 @@
 #include "../headers/AssetManager.h"
-#include "kiln/engine/Classes/headers/Texture.h"
+#include "kiln/engine/Core/headers/Texture.h"
 #include <iostream>
 
 Texture* Texture::placeholder = nullptr;
