@@ -15,7 +15,7 @@ void TetrisModule::start() {
   KilnModule::start();
 }
 
-void TetrisModule::handleEvent(SDL_Event* event) {
+void TetrisModule::handleEvent(const SDL_Event* event) {
   KilnModule::handleEvent(event);
 }
 

@@ -1,5 +1,5 @@
 #include "engine/Kiln.h"
-#include "TetrisModule/TetrisModule.h"
+#include "kiln/TetrisModule/TetrisModule.h"
 
 int main() {
   Kiln kiln;

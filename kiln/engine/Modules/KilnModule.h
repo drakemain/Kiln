@@ -10,7 +10,7 @@ public:
   /* Kiln Interface */
   virtual bool init();
   virtual void start();
-  virtual void handleEvent(SDL_Event* event);
+  virtual void handleEvent(const SDL_Event* event);
   virtual void tick(float deltaTime);
   virtual void render();
   void updateSubState();
@@ -22,6 +22,7 @@ public:
   /* Assets Interface */
   void bindEntity(class Entity* entity);
   void bindEventComponent(class EventComponent* component);
+  void bindInput(Uint8, void(*)(void));
   class Texture* fetchTexture(std::string name);
   TTF_Font* fetchFont(std::string name);
   void playSound(std::string soundName, int loops);

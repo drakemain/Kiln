@@ -10,14 +10,14 @@ void EventManager::registerComponent(EventComponent* component) {
   std::cout << "Bound event component." << std::endl;
 }
 
-void EventManager::addEvent(SDL_Event* event) {
+void EventManager::addEvent(const SDL_Event* event) {
   this->events.push(event);
 }
 
 void EventManager::handleEvents() {
   // TODO: needs better runtime solution
   while(!this->events.empty()) {
-    SDL_Event* event = this->events.front();
+    const SDL_Event* event = this->events.front();
     this->events.pop();
 
     for (EventComponent* component : this->components) {

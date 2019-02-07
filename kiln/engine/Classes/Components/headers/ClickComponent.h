@@ -20,7 +20,7 @@ public:
   void tick(float deltaTime) override {}
   void start() override {}
 
-  void handleEvent(SDL_Event& event) override;
+  void handleEvent(const SDL_Event& event) override;
 
 private:
   // Need lambda for click action

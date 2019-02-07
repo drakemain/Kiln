@@ -8,9 +8,9 @@ public:
   EventManager();
 
   void registerComponent(class EventComponent*);
-  void addEvent(union SDL_Event* event);
+  void addEvent(const union SDL_Event* event);
   void handleEvents();
 
-  std::queue<union SDL_Event*> events;
+  std::queue<const union SDL_Event*> events;
   std::vector<class EventComponent*> components;
 };

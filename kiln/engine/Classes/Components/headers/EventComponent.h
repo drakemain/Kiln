@@ -4,5 +4,5 @@
 
 class EventComponent : public Component {
 public:
-  virtual void handleEvent(union SDL_Event&) = 0;
+  virtual void handleEvent(const union SDL_Event&) = 0;
 };

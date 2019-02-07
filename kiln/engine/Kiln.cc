@@ -53,9 +53,10 @@ void Kiln::run(KilnModule& module) {
     deltaTime = tickStartTime - lastTickStartTime;
     
     while(this->coreManagement.inputManager.poll()) {
-      SDL_Event* polledEvent = this->coreManagement.inputManager.getEvent();
+      const SDL_Event* polledEvent = this->coreManagement.inputManager.getLastEvent();
       this->checkEngineEvent(polledEvent);
-      module.handleEvent(polledEvent);
+      // module.handleEvent(polledEvent);
+      this->coreManagement.inputManager.handleEvent();
     }
 
     module.tick(deltaTime);
@@ -94,7 +95,7 @@ void Kiln::cleanup() {
 }
 
 /* Helper Functions */
-void Kiln::checkEngineEvent(SDL_Event* event) {
+void Kiln::checkEngineEvent(const SDL_Event* event) {
   if (event) {
     if (event->type == SDL_QUIT) {
       std::cout << "QUIT EVENT" << std::endl;

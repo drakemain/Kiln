@@ -1,36 +1,38 @@
 #include "../headers/InputManager.h"
+#include <SDL.h>
+#include <iostream>
 
 bool InputManager::poll() {
-  if (SDL_PollEvent(&this->eventBuffer) == 0) {
-    return false;
-  } else {
-    this->updateCursorPosition(&this->eventBuffer);
-    this->updateCursorClickedPosition(&this->eventBuffer);
-    
-    return true;
+  return SDL_PollEvent(&this->buffer) != 0;
+}
+
+const SDL_Event* InputManager::getLastEvent() const {
+  return &this->buffer;
+}
+
+void InputManager::bind(uint32_t keyCode, void(*action)(void)) {
+  std::cout << "Bound " << keyCode << "." << std::endl;
+  this->bindings[keyCode] = action; 
+}
+
+void InputManager::handleEvent() {
+  auto binding = this->bindings.find(this->buffer.key.keysym.sym);
+
+  if (binding != this->bindings.end()) {
+    binding->second();
   }
-}
 
-SDL_Event* InputManager::getEvent() {
-  return &this->eventBuffer;
-}
+  // while (!this->eventQueue.empty()) {
+  //   SDL_Event* event = this->eventQueue.front();
+  //   this->eventQueue.empty();
 
-ICoordinate InputManager::getCursorPosition() const {
-  return this->cursorPosition;
-}
+  //   auto binding = this->bindings.find(event->key.keysym.sym);
 
-ICoordinate InputManager::getCursorClickedPosition() const {
-  return this->clickPosition;
-}
+  //   if (binding != this->bindings.end()) {
+  //     func action = binding->second;
+  //     action();
+  //   }
 
-void InputManager::updateCursorPosition(SDL_Event* event) {
-  if (event->type == SDL_MOUSEMOTION) {
-    SDL_GetMouseState(&this->cursorPosition.x, &this->cursorPosition.y);
-  }
-}
-
-void InputManager::updateCursorClickedPosition(SDL_Event* event) {
-  if (event->type == SDL_MOUSEBUTTONDOWN) {
-    SDL_GetMouseState(&this->clickPosition.x, &this->clickPosition.y);
-  }
+  //   // if (this->bindings.find())
+  // }
 }

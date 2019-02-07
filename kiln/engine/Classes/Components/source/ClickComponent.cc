@@ -13,7 +13,7 @@ bool ClickComponent::wasClicked(ICoordinate mouseLocation, unsigned int bounding
   return insideX && insideY;
 }
 
-void ClickComponent::handleEvent(SDL_Event& event)  {
+void ClickComponent::handleEvent(const SDL_Event& event)  {
   if (event.type == SDL_MOUSEBUTTONDOWN) {
     int x, y;
     SDL_GetMouseState(&x, &y);

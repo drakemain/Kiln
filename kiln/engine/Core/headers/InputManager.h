@@ -1,24 +1,21 @@
 #pragma once
-#include <SDL.h>
-#include "kiln/engine/Utils/headers/Coordinate.h"
+
+#include <unordered_map>
+#include <SDL_events.h>
+
+using func = void(*)(void);
 
 class InputManager {
 public:
-  // check event queue and move the next event into eventBuffer
+  // check event queue adds to queue
   bool poll();
 
-  // TODO: Stop using pointer to member
-  union SDL_Event* getEvent();
+  const union SDL_Event* getLastEvent() const;
 
-  ICoordinate getCursorPosition() const;
-  ICoordinate getCursorClickedPosition() const;
-
+  void bind(uint32_t, func);
+  void handleEvent();
 
 private:
-  void updateCursorPosition(SDL_Event* event);
-  void updateCursorClickedPosition(SDL_Event* event);
-  
-  ICoordinate cursorPosition;
-  ICoordinate clickPosition;
-  SDL_Event eventBuffer;
+  SDL_Event buffer;
+  std::unordered_map<uint32_t, func> bindings; 
 };

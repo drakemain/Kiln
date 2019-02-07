@@ -23,7 +23,7 @@ public:
 
 private:
   /* Helper Functions */
-  void checkEngineEvent(SDL_Event* event);
+  void checkEngineEvent(const SDL_Event* event);
   void tick(float deltaTime);
   void render(SDL_Renderer* renderer);
 

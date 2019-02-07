@@ -22,7 +22,7 @@ bool KilnModule::init() {
 
 void KilnModule::start() {}
 
-void KilnModule::handleEvent(SDL_Event* event) {
+void KilnModule::handleEvent(const SDL_Event* event) {
   this->eventManager->addEvent(event);
   // this->subState->getActiveState()->handleEvent(event);
 }
@@ -62,6 +62,10 @@ void KilnModule::bindEntity(Entity* entity) {
 
 void KilnModule::bindEventComponent(EventComponent* component) {
   this->eventManager->registerComponent(component);
+}
+
+void KilnModule::bindInput(Uint8 keyCode, void(*action)(void)) {
+  this->engine->getManagement()->inputManager.bind(keyCode, action);
 }
 
 Texture* KilnModule::fetchTexture(std::string name) {

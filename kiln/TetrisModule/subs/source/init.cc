@@ -23,6 +23,8 @@ InitSub::InitSub(class KilnModule* mod) : ModuleSub(mod) {
   };
 }
 
+void test();
+
 void InitSub::init() {
   this->module->playSound("win98", 0);
   TTF_Font* buttonFont = this->module->fetchFont("btn");
@@ -47,6 +49,11 @@ void InitSub::init() {
   button->setWorldPosition(0.f, 150.f);
   button->scale(.5);
   button->bindAction([this](){this->module->quit();});
+  this->module->bindInput(SDLK_SPACE, &test);
+}
+
+void test() {
+  std::cout << "WOOT" << std::endl;
 }
 
 void InitSub::cleanup() {}
