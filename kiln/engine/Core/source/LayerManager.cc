@@ -19,8 +19,6 @@ void LayerManager::add(class Entity* entity) {
     if (this->layers->empty()) { this->createLayer(); }
     this->requestedUpdates->push({entity, 0});
   }
-
-  printf("Entity %p was added to LM %p.\n", entity, this);
 }
 
 void LayerManager::moveUpLayer(class Entity* entity) {
@@ -62,13 +60,6 @@ void LayerManager::update() {
     this->removeFromLayer(update.first);
     
     this->insertToLayer(update.first, update.second);
-
-    for (size_t i = 0; i < this->getLayerCount(); ++i) {
-      printf("Layer %d\n", (int)i);
-      for (Entity* ent : *this->getLayer(i)) {
-        printf("\tEntity: %p\n", ent);
-      }
-    }
   }
 }
 

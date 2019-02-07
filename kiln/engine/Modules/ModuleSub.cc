@@ -1,5 +1,7 @@
 #include "ModuleSub.h"
+#include "KilnModule.h"
 #include "kiln/engine/Classes/Entity/headers/Entity.h"
+#include "kiln/engine/Classes/Components/headers/EventComponent.h"
 #include "kiln/engine/Classes/Components/headers/SpriteComponent.h"
 #include "kiln/engine/Core/headers/LayerManager.h"
 
@@ -43,11 +45,20 @@ void ModuleSub::adjustEntityLayer(Entity* entity, int layers) {
 void ModuleSub::registerEntity(Entity* entity) {
   this->entities.push_back(entity);
 
+  bool registeredSprite = false;
+
   // Better solution? If renderable, add to layer manager
   for (Component* comp : entity->getComponents()) {
-    if (dynamic_cast<SpriteComponent*>(comp)) {
-      this->layers->add(entity);
-      break;
+    if (!registeredSprite) {
+      if (dynamic_cast<SpriteComponent*>(comp)) {
+        this->layers->add(entity);
+        registeredSprite = true;
+      }
+    }
+
+    EventComponent* eventComponent = dynamic_cast<EventComponent*>(comp);
+    if (eventComponent) {
+      this->module->bindEventComponent(eventComponent);
     }
   }
 }

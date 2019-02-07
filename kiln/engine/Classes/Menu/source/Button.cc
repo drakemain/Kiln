@@ -5,23 +5,39 @@
 #include <iostream>
 
 Button::Button(class Texture* texture) {
-  this->click = new ClickComponent(this);
-  this->sprite = new SpriteComponent(this, texture);
+  this->click = new ClickComponent();
+  this->sprite = new SpriteComponent(texture);
+
+  this->bindComponent(click);
+  this->bindComponent(sprite);
+
+  this->setClickBounds();
 }
 
 Button::Button(class Texture* texture, std::string text, TTF_Font* font, SDL_Color color, SDL_Renderer* renderer) {
-  this->click = new ClickComponent(this);
-  this->sprite = new SpriteComponent(this, texture);
+  this->click = new ClickComponent();
+  this->sprite = new SpriteComponent(texture);
   this->text = new TextComponent(
-    this,
     text,
     font,
     renderer,
     color
   );
+
+  this->bindComponent(this->click);
+  this->bindComponent(this->sprite);
+  this->bindComponent(this->text);
+
+  this->setClickBounds();
 }
 
 Button::~Button() {}
+
+void Button::scale(float scale) {
+  Entity::scale(scale);
+
+  this->setClickBounds();
+}
 
 TextComponent* Button::getTextComponent() {
   if (!this->text) {
@@ -45,4 +61,9 @@ bool Button::checkWasClicked(ICoordinate clickPos) {
 
 void Button::bindAction(std::function<void()> func) {
   this->click->bindAction(func);
+}
+
+void Button::setClickBounds() {
+  this->click->setWidthBound(this->sprite->getDimensions().w);
+  this->click->setHeightBound(this->sprite->getDimensions().h);
 }

@@ -5,6 +5,11 @@
 #include "kiln/engine/Classes/Entity/headers/Entity.h"
 #include "kiln/engine/Definitions/Colors.h"
 
+TextComponent::TextComponent(std::string text, TTF_Font* font, SDL_Renderer* renderer, SDL_Color color)
+: text(text), font(font), color(color), renderer(renderer) {
+  this->draw(renderer);
+}
+
 TextComponent::TextComponent(Entity* owner, std::string text, TTF_Font* font, SDL_Renderer* renderer, SDL_Color color = KILN_COLOR::DARK_GREY)
 : SpriteComponent(owner), text(text), font(font), color(color), renderer(renderer) {
   this->draw(renderer);

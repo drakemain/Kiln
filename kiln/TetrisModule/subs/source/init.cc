@@ -41,22 +41,12 @@ void InitSub::init() {
 
   this->getLayerManager()->moveToNewTop(sprite);
   this->getLayerManager()->moveToNewTop(button);
-  this->getLayerManager()->moveToTop(sprite3);
-  this->getLayerManager()->moveToBottom(button);
-  // sprite->scale(.4);
   sprite->setWorldPosition({25, 25});
-
   sprite2->setWorldPosition({100, 100});
-
   sprite3->scale(.2);
-  
-  std::cout << "Setting Button Position" << std::endl;
   button->setWorldPosition(0.f, 150.f);
   button->scale(.5);
-
-  button->bindAction([this](){this->module->loadSub(new MainMenu(this->module));});
-
-  button->start();
+  button->bindAction([this](){this->module->quit();});
 }
 
 void InitSub::cleanup() {}

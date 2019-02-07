@@ -3,10 +3,12 @@
 #include "kiln/engine/Kiln.h"
 #include "kiln/engine/States/headers/StateMachine.h"
 #include "kiln/engine/Core/headers/LayerManager.h"
+#include "kiln/engine/Core/headers/EventManager.h"
 
 KilnModule::KilnModule() {
-  this->layerManager = new LayerManager();
   this->subState = new StateMachine();
+  this->layerManager = new LayerManager();
+  this->eventManager = new EventManager();
 }
 
 KilnModule::~KilnModule() {
@@ -21,7 +23,8 @@ bool KilnModule::init() {
 void KilnModule::start() {}
 
 void KilnModule::handleEvent(SDL_Event* event) {
-  this->subState->getActiveState()->handleEvent(event);
+  this->eventManager->addEvent(event);
+  // this->subState->getActiveState()->handleEvent(event);
 }
 
 void KilnModule::tick(float deltaTime) {
@@ -29,6 +32,7 @@ void KilnModule::tick(float deltaTime) {
     this->unloadSub();
   }
 
+  this->eventManager->handleEvents();
   this->subState->getActiveState()->tick(deltaTime);
   this->layerManager->update();
 }
@@ -54,6 +58,10 @@ void KilnModule::bind(Kiln* engine) {
 
 void KilnModule::bindEntity(Entity* entity) {
 
+}
+
+void KilnModule::bindEventComponent(EventComponent* component) {
+  this->eventManager->registerComponent(component);
 }
 
 Texture* KilnModule::fetchTexture(std::string name) {

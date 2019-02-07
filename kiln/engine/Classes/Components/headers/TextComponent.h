@@ -5,6 +5,7 @@
 
 class TextComponent : public SpriteComponent {
 public:
+  TextComponent(std::string text, TTF_Font* font, SDL_Renderer* renderer, SDL_Color color);
   TextComponent(Entity* owner, std::string text, TTF_Font* font, SDL_Renderer* renderer, SDL_Color color);
   virtual ~TextComponent();
 

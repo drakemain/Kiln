@@ -20,7 +20,7 @@ public:
   void setWorldPosition(float x, float y);
   void setWorldPosition(ICoordinate position);
 
-  void scale(float);
+  virtual void scale(float);
 
   void bindComponent(class Component* component);
   void unbindComponent(class Component* component);

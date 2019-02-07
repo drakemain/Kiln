@@ -5,6 +5,7 @@
 
 class SpriteComponent : public Component {
 public:
+  SpriteComponent();
   SpriteComponent(Entity* owner, class Texture* texture);
   SpriteComponent(Entity* owner);
   SpriteComponent(class Texture* texture);

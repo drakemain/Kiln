@@ -21,6 +21,7 @@ public:
 
   /* Assets Interface */
   void bindEntity(class Entity* entity);
+  void bindEventComponent(class EventComponent* component);
   class Texture* fetchTexture(std::string name);
   TTF_Font* fetchFont(std::string name);
   void playSound(std::string soundName, int loops);
@@ -39,6 +40,7 @@ private:
 
   class StateMachine* subState;
   class LayerManager* layerManager;
+  class EventManager* eventManager;
   class Kiln* engine;
 
   bool unwindStack = false;

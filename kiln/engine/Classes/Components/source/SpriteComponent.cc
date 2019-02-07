@@ -3,6 +3,8 @@
 #include "kiln/engine/Core/headers/Texture.h"
 #include <SDL.h>
 
+SpriteComponent::SpriteComponent() {}
+
 SpriteComponent::SpriteComponent(Entity* owner, Texture* texture)
 : Component(owner) {
   this->setTexture(texture);

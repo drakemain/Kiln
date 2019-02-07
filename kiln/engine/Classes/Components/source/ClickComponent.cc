@@ -2,11 +2,6 @@
 #include "kiln/engine/Classes/Entity/headers/Entity.h"
 #include <iostream>
 
-ClickComponent::ClickComponent(Entity* owner)
-: Component(owner) {
-
-}
-
 bool ClickComponent::wasClicked(ICoordinate mouseLocation, unsigned int boundingWidth, unsigned int boundingHeight) {
   ICoordinate ownerLocation = this->getOwner()->getWorldPosition();
 
@@ -16,4 +11,15 @@ bool ClickComponent::wasClicked(ICoordinate mouseLocation, unsigned int bounding
     && (mouseLocation.y < (ownerLocation.y + (int)boundingHeight));
 
   return insideX && insideY;
+}
+
+void ClickComponent::handleEvent(SDL_Event& event)  {
+  if (event.type == SDL_MOUSEBUTTONDOWN) {
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+
+    if (this->wasClicked({x, y}, this->wBound, this->hBound)) {
+      this->onClick();
+    } 
+  }
 }

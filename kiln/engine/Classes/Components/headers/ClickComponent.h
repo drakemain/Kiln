@@ -1,12 +1,18 @@
 #pragma once
-#include "Component.h"
+#include "EventComponent.h"
+#include "kiln/engine/Classes/Entity/headers/Entity.h"
+#include <SDL_events.h>
 #include <functional>
+#include <iostream>
 
-class ClickComponent : public Component {
+class ClickComponent : public EventComponent {
 public:
-  ClickComponent(Entity* owner);
   ~ClickComponent() override {}
   bool wasClicked(ICoordinate mouseLocation, unsigned int boundingWidth, unsigned int boundingHeight);
+
+  void setWidthBound(int w) { this->wBound = w; }
+
+  void setHeightBound(int h) { this->hBound = h; }
 
   void bindAction(std::function<void()> action) { this->action = action; }
   void onClick() { this->action(); }
@@ -14,6 +20,11 @@ public:
   void tick(float deltaTime) override {}
   void start() override {}
 
+  void handleEvent(SDL_Event& event) override;
+
+private:
   // Need lambda for click action
   std::function<void()> action = [](){};
+  int wBound;
+  int hBound;
 };
