@@ -4,7 +4,7 @@
 MovementComponent::MovementComponent(Entity* owner)
 : Component(owner) {}
 
-void MovementComponent::setVelocity(Velocity velocity) {
+void MovementComponent::setVelocity(Vec velocity) {
   this->velocity = velocity;
 }
 
@@ -13,8 +13,17 @@ void MovementComponent::setVelocity(float x, float y) {
   this->velocity.y = y;
 }
 
-Velocity MovementComponent::getVelocity() const {
+void MovementComponent::accelerate(const Vec& vector) {
+  this->velocity.x += vector.x;
+  this->velocity.y += vector.y;
+}
+
+Vec MovementComponent::getVelocity() const {
   return this->velocity;
+}
+
+float MovementComponent::getSpeed() {
+  return this->velocity.magnitude();
 }
 
 void MovementComponent::tick(float deltaTime) {
@@ -24,11 +33,11 @@ void MovementComponent::tick(float deltaTime) {
 }
 
 void MovementComponent::updatePosition(float deltaTime) {
-  ICoordinate currentPosition = this->getOwner()->getWorldPosition();
-  ICoordinate newPosition;
+  FCoordinate currentPosition = this->getOwner()->getWorldPosition();
+  FCoordinate newPosition;
 
-  newPosition.x = (this->velocity.x * (deltaTime/1000.f)) + currentPosition.x;
-  newPosition.y = (this->velocity.y * (deltaTime/1000.f)) + currentPosition.y;
+  newPosition.x = (this->velocity.x * deltaTime / 1000) + currentPosition.x;
+  newPosition.y = (this->velocity.y * deltaTime / 1000) + currentPosition.y;
 
   this->getOwner()->setWorldPosition(newPosition);
 }

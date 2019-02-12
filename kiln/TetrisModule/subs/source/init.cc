@@ -5,6 +5,7 @@
 #include "kiln/TetrisModule/subs/headers/mainmenu.h"
 #include "kiln/engine/Classes/Entity/headers/Sprite.h"
 #include "kiln/engine/Core/headers/LayerManager.h"
+#include "kiln/TetrisModule/classes/InputCompTest.h"
 
 InitSub::InitSub(class KilnModule* mod) : ModuleSub(mod) {
   std::cout << "Loaded init sub" << std::endl;
@@ -35,11 +36,14 @@ void InitSub::init() {
   Sprite* sprite = new Sprite(this->module->fetchTexture("btn"));
   Sprite* sprite2 = new Sprite(this->module->fetchTexture("spr"));
   Sprite* sprite3 = new Sprite(this->module->fetchTexture("dne"));
+
+  InputCompTest* test = new InputCompTest(this->module->fetchTexture("btn"));
   
   this->registerEntity(button);
   this->registerEntity(sprite);
   this->registerEntity(sprite2);
   this->registerEntity(sprite3);
+  this->registerEntity(test);
 
   this->getLayerManager()->moveToNewTop(sprite);
   this->getLayerManager()->moveToNewTop(button);
@@ -49,11 +53,6 @@ void InitSub::init() {
   button->setWorldPosition(0.f, 150.f);
   button->scale(.5);
   button->bindAction([this](){this->module->quit();});
-  this->module->bindInput(SDLK_SPACE, &test);
-}
-
-void test() {
-  std::cout << "WOOT" << std::endl;
 }
 
 void InitSub::cleanup() {}

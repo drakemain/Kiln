@@ -47,7 +47,7 @@ TextComponent* Button::getTextComponent() {
   return this->text;
 }
 
-bool Button::checkWasClicked(ICoordinate clickPos) {
+bool Button::checkWasClicked(FCoordinate clickPos) {
   Dim dimensions = this->sprite->getDimensions();
   bool result = false;
 

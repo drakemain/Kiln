@@ -1,38 +1,81 @@
 #include "../headers/InputManager.h"
+#include "kiln/engine/Classes/Components/headers/InputComponent.h"
 #include <SDL.h>
 #include <iostream>
 
+std::queue<std::pair<SDL_Keycode, std::function<void()>>>* InputComponent::bindings = new std::queue<std::pair<SDL_Keycode, std::function<void()>>>();
+
+InputManager::InputManager() {
+  this->keyStates = SDL_GetKeyboardState(&this->keyCount);
+}
+
+InputManager::~InputManager() {
+  delete InputComponent::bindings;
+}
+
 bool InputManager::poll() {
-  return SDL_PollEvent(&this->buffer) != 0;
+  if (SDL_PollEvent(&this->buffer) == 0) {
+    return false;
+  }
+
+  switch(this->buffer.type) {
+    case SDL_KEYDOWN:
+    this->registerKeyDown();
+    break;
+
+    case SDL_KEYUP:
+    this->registerKeyUp();
+    break;
+  }
+
+  return true;
 }
 
 const SDL_Event* InputManager::getLastEvent() const {
   return &this->buffer;
 }
 
-void InputManager::bind(uint32_t keyCode, void(*action)(void)) {
+void InputManager::bind(Sint32 keyCode, Action action) {
   std::cout << "Bound " << keyCode << "." << std::endl;
   this->bindings[keyCode] = action; 
 }
 
-void InputManager::handleEvent() {
-  auto binding = this->bindings.find(this->buffer.key.keysym.sym);
+void InputManager::bindInputComponents() {
+  std::cout << "Binding components." << std::endl;
+  while(!InputComponent::bindings->empty()) {
+    std::pair<SDL_Keycode, Action> binding = InputComponent::bindings->front();
+    InputComponent::bindings->pop();
 
-  if (binding != this->bindings.end()) {
-    binding->second();
+    std::cout << "Binding " << binding.first << std::endl;
+
+    this->bindings[binding.first] = binding.second;
   }
+}
 
-  // while (!this->eventQueue.empty()) {
-  //   SDL_Event* event = this->eventQueue.front();
-  //   this->eventQueue.empty();
+void InputManager::handleInputs() {
+  this->handleKeys();
+}
 
-  //   auto binding = this->bindings.find(event->key.keysym.sym);
+void InputManager::handleKeys() {
+  for (SDL_Keycode key : this->pressedKeys) {
+    auto binding = this->bindings.find(key);
 
-  //   if (binding != this->bindings.end()) {
-  //     func action = binding->second;
-  //     action();
-  //   }
+    if (binding != this->bindings.end()) {
+      std::cout << "\tEXEC: " << binding->first << std::endl;
+      binding->second();
+    }
+  }
+}
 
-  //   // if (this->bindings.find())
-  // }
+void InputManager::registerKeyDown() {
+  this->pressedKeys.push_back(this->buffer.key.keysym.sym);
+}
+
+void InputManager::registerKeyUp() {
+  for (auto itr = this->pressedKeys.begin(); itr != this->pressedKeys.end(); ++itr) {
+    if (*itr == this->buffer.key.keysym.sym) {
+      this->pressedKeys.erase(itr);
+      break;
+    }
+  }
 }

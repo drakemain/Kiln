@@ -1,5 +1,7 @@
 #pragma once
 
+struct FCoordinate;
+
 struct ICoordinate {
   int x = 0;
   int y = 0;
@@ -23,5 +25,12 @@ struct FCoordinate {
 
   inline FCoordinate operator+(const FCoordinate other) const {
     return this->add(other);
+  }
+
+  static inline FCoordinate fromInt(const ICoordinate& other) {
+    FCoordinate res;
+    res.x = (float)other.x;
+    res.y = (float)other.y;
+    return res;
   }
 };

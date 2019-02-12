@@ -10,24 +10,24 @@ Component::Component() {}
 
 Component::~Component() {}
 
-void Component::setRelativePosition(ICoordinate pos) {
+void Component::setRelativePosition(FCoordinate pos) {
   this->relativePosition = pos;
   this->updatePosition();
 }
 
 void Component::setRelativePosition(int x, int y) {
-  this->setRelativePosition({x, y});
+  this->setRelativePosition(FCoordinate::fromInt({x, y}));
 }
 
 // void Component::setRelativePosition(Position position) {
 
 // }
 
-ICoordinate Component::getRelativePosition() const {
+FCoordinate Component::getRelativePosition() const {
   return this->relativePosition;
 }
 
-ICoordinate Component::getWorldPosition() const {
+FCoordinate Component::getWorldPosition() const {
   return this->worldPosition;
 }
 
@@ -36,8 +36,8 @@ void Component::updatePosition() {
 }
 
 void Component::setWorldPosition() {
-  ICoordinate ownerPosition = this->getOwner()->getWorldPosition();
-  ICoordinate myWorldPosition;
+  FCoordinate ownerPosition = this->getOwner()->getWorldPosition();
+  FCoordinate myWorldPosition;
 
   myWorldPosition.x = ownerPosition.x + this->relativePosition.x;
   myWorldPosition.y = ownerPosition.y + this->relativePosition.y;

@@ -8,7 +8,7 @@
 class ClickComponent : public EventComponent {
 public:
   ~ClickComponent() override {}
-  bool wasClicked(ICoordinate mouseLocation, unsigned int boundingWidth, unsigned int boundingHeight);
+  bool wasClicked(FCoordinate mouseLocation, unsigned int boundingWidth, unsigned int boundingHeight);
 
   void setWidthBound(int w) { this->wBound = w; }
 

@@ -13,7 +13,7 @@ public:
 
   class TextComponent* getTextComponent();
 
-  bool checkWasClicked(ICoordinate clickPos);
+  bool checkWasClicked(FCoordinate clickPos);
 
   void bindAction(std::function<void()> func);
 

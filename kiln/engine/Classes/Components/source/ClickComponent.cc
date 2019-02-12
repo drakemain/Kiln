@@ -2,8 +2,8 @@
 #include "kiln/engine/Classes/Entity/headers/Entity.h"
 #include <iostream>
 
-bool ClickComponent::wasClicked(ICoordinate mouseLocation, unsigned int boundingWidth, unsigned int boundingHeight) {
-  ICoordinate ownerLocation = this->getOwner()->getWorldPosition();
+bool ClickComponent::wasClicked(FCoordinate mouseLocation, unsigned int boundingWidth, unsigned int boundingHeight) {
+  FCoordinate ownerLocation = this->getOwner()->getWorldPosition();
 
   bool insideX = (mouseLocation.x > ownerLocation.x)
     && (mouseLocation.x < (ownerLocation.x + (int)boundingWidth));
@@ -18,7 +18,7 @@ void ClickComponent::handleEvent(const SDL_Event& event)  {
     int x, y;
     SDL_GetMouseState(&x, &y);
 
-    if (this->wasClicked({x, y}, this->wBound, this->hBound)) {
+    if (this->wasClicked(FCoordinate::fromInt({x, y}), this->wBound, this->hBound)) {
       this->onClick();
     } 
   }

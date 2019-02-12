@@ -47,7 +47,7 @@ void SpriteComponent::setTexture(SDL_Texture* texture) {
   this->texture = texture;
 }
 
-ICoordinate SpriteComponent::getWorldPosition() const {
+FCoordinate SpriteComponent::getWorldPosition() const {
   return this->getOwner()->getWorldPosition() + this->getRelativePosition();
 }
 

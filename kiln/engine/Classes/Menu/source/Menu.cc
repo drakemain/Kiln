@@ -31,7 +31,7 @@ void Menu::handleEvent(SDL_Event* event) {
         SDL_GetMouseState(&clickPos.x, &clickPos.y);
 
         for (Button* button : this->buttons) {
-          button->checkWasClicked(clickPos);
+          button->checkWasClicked(FCoordinate::fromInt(clickPos));
         }
       }
     }

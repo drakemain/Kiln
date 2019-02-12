@@ -2,22 +2,27 @@
 
 #include "Component.h"
 #include "kiln/engine/Utils/Math/Vector.h"
+#include "kiln/engine/Utils/Math/Scalar.h"
 
-#define Velocity KMath::Vector<float>
+#define Vec KMath::Vector<float>
 
 class MovementComponent : public Component {
 public:
   MovementComponent(Entity* owner);
 
-  void setVelocity(Velocity velocity);
+  void setVelocity(Vec velocity);
   void setVelocity(float x, float y);
+  void accelerate(const Vec& vector);
 
-  Velocity getVelocity() const;
+  Vec getVelocity() const;
+  float getSpeed();
 
-  void tick(float deltaTime);
+  virtual void start() override {};
+  virtual void tick(float deltaTime) override;
 private:
   void updatePosition(float deltaTime);
 
   // pixels per second
-  Velocity velocity;
+  Vec velocity;
+  float maxVelocity = 5.f;
 };

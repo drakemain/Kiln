@@ -23,7 +23,7 @@ void Entity::tick(float deltaTime) {
   }
 }
 
-ICoordinate Entity::getWorldPosition() const {
+FCoordinate Entity::getWorldPosition() const {
   return this->worldPosition;
 }
 
@@ -34,7 +34,7 @@ void Entity::setWorldPosition(float x, float y) {
   this->updateComponentPositions();
 }
 
-void Entity::setWorldPosition(ICoordinate position) {
+void Entity::setWorldPosition(FCoordinate position) {
   this->worldPosition = position;
   this->updateComponentPositions();
 }

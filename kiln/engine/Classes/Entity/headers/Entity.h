@@ -15,10 +15,10 @@ public:
   virtual void tick(float deltaTime);
   virtual void start();
 
-  ICoordinate getWorldPosition() const;
+  FCoordinate getWorldPosition() const;
 
   void setWorldPosition(float x, float y);
-  void setWorldPosition(ICoordinate position);
+  void setWorldPosition(FCoordinate position);
 
   virtual void scale(float);
 
@@ -34,6 +34,6 @@ public:
 private:
   void updateComponentPositions();
 
-  ICoordinate worldPosition;
+  FCoordinate worldPosition;
   std::vector<class Component*> boundComponents;
 };

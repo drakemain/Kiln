@@ -32,6 +32,7 @@ bool Kiln::init(KilnModule& module) {
     return false;
   }
 
+  this->getManagement()->inputManager.bindInputComponents();
   return true;
 }
 
@@ -55,9 +56,9 @@ void Kiln::run(KilnModule& module) {
     while(this->coreManagement.inputManager.poll()) {
       const SDL_Event* polledEvent = this->coreManagement.inputManager.getLastEvent();
       this->checkEngineEvent(polledEvent);
-      // module.handleEvent(polledEvent);
-      this->coreManagement.inputManager.handleEvent();
     }
+
+    this->coreManagement.inputManager.handleInputs();
 
     module.tick(deltaTime);
     this->stats->tick(deltaTime);

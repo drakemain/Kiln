@@ -22,7 +22,7 @@ public:
   void setTexture(class Texture* texture);
   void setTexture(struct SDL_Texture* texture);
 
-  ICoordinate getWorldPosition() const;
+  FCoordinate getWorldPosition() const;
   Dim getDimensions() const;
   float getRotationDegrees() const;
   struct SDL_Texture* getTexture();

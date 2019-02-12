@@ -19,7 +19,7 @@ void MainMenu::init() {
   Texture* buttonTexture = this->module->fetchTexture("btn");
   TTF_Font* buttonFont = this->module->fetchFont("StatsFont");
   SDL_Renderer* renderer = this->module->getRenderer();
-  ICoordinate textPosition;
+  FCoordinate textPosition;
 
   Button* exitButton = new Button(buttonTexture, "Exit", buttonFont, KILN_COLOR::DARK_GREY, renderer);
   exitButton->centerInWindow(640, 480);

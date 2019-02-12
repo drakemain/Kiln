@@ -21,12 +21,12 @@ public:
   Component();
   virtual ~Component();
 
-  void setRelativePosition(ICoordinate pos);
+  void setRelativePosition(FCoordinate pos);
   void setRelativePosition(int x, int y);
   // void setRelativePosition(Position position);
 
-  ICoordinate getRelativePosition() const;
-  ICoordinate getWorldPosition() const;
+  FCoordinate getRelativePosition() const;
+  FCoordinate getWorldPosition() const;
 
   void updatePosition();
 
@@ -40,6 +40,6 @@ private:
 
   void setWorldPosition();
 
-  class ICoordinate worldPosition;
-  class ICoordinate relativePosition;
+  class FCoordinate worldPosition;
+  class FCoordinate relativePosition;
 };
