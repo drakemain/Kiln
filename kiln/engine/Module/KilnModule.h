@@ -30,14 +30,14 @@ public:
   class SDL_Renderer* getRenderer();
 
   /* Submodule methods */
-  void loadSub(class ModuleSub* sub);
-  void replaceCurrentSub(class ModuleSub* sub);
+  void loadSub(class SubModule* sub);
+  void replaceCurrentSub(class SubModule* sub);
   void unloadSub();
   void quit();
 
 private:
-  void loadSubAssets(class ModuleSub& sub);
-  void unloadSubAssets(class ModuleSub* sub);
+  void loadSubAssets(class SubModule& sub);
+  void unloadSubAssets(class SubModule* sub);
 
   class StateMachine* subState;
   class LayerManager* layerManager;

@@ -1,5 +1,5 @@
-#include "kiln/TetrisModule/subs/headers/mainmenu.h"
-#include "kiln/engine/Modules/KilnModule.h"
+#include "kiln/Game/subs/headers/mainmenu.h"
+#include "kiln/engine/Module/KilnModule.h"
 #include "kiln/engine/Classes/Menu/headers/Button.h"
 #include "kiln/engine/Classes/Components/headers/TextComponent.h"
 #include "kiln/engine/Definitions/Colors.h"

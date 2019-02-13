@@ -1,7 +1,7 @@
-#include "TetrisModule.h"
+#include "GameModule.h"
 #include "subs/headers/init.h"
 
-bool TetrisModule::init() {
+bool GameModule::init() {
   KilnModule::init();
 
   std::cout << "Kiln loaded Tetris!" << std::endl;
@@ -11,18 +11,18 @@ bool TetrisModule::init() {
   return true;
 }
 
-void TetrisModule::start() {
+void GameModule::start() {
   KilnModule::start();
 }
 
-void TetrisModule::handleEvent(const SDL_Event* event) {
+void GameModule::handleEvent(const SDL_Event* event) {
   KilnModule::handleEvent(event);
 }
 
-void TetrisModule::tick(float deltaTime) {
+void GameModule::tick(float deltaTime) {
   KilnModule::tick(deltaTime);
 }
 
-void TetrisModule::render() {
+void GameModule::render() {
   KilnModule::render();
 }

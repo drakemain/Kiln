@@ -1,12 +1,12 @@
 #include "engine/Kiln.h"
-#include "kiln/TetrisModule/TetrisModule.h"
+#include "kiln/Game/GameModule.h"
 
 int main() {
   Kiln kiln;
-  TetrisModule tetris;
+  GameModule game;
   
-  if (kiln.init(tetris)) {
-    kiln.run(tetris);
+  if (kiln.init(game)) {
+    kiln.run(game);
   }
 
   kiln.cleanup();

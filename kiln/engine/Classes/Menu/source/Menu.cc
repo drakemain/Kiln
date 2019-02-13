@@ -1,11 +1,11 @@
 #include "../headers/Menu.h"
 #include "kiln/engine/Definitions/Colors.h"
-#include "kiln/engine/Modules/KilnModule.h"
+#include "kiln/engine/Module/KilnModule.h"
 #include "kiln/engine/Classes/Menu/headers/Button.h"
 #include <iostream>
 
 Menu::Menu(KilnModule* module)
-: ModuleSub(module) {}
+: SubModule(module) {}
 
 // void Menu::cleanup() {
 //   // for (Sprite* elem : this->staticElements) {

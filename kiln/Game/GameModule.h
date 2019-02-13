@@ -1,9 +1,9 @@
 #pragma once
-#include "kiln/engine/Modules/KilnModule.h"
+#include "kiln/engine/Module/KilnModule.h"
 
-class TetrisModule : public KilnModule {
+class GameModule : public KilnModule {
 public:
-  TetrisModule() {}
+  GameModule() {}
   virtual bool init() override;
   virtual void start() override;
   virtual void handleEvent(const SDL_Event* event) override;

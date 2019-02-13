@@ -1,5 +1,5 @@
 #include "KilnModule.h"
-#include "ModuleSub.h"
+#include "SubModule.h"
 #include "kiln/engine/Kiln.h"
 #include "kiln/engine/States/headers/StateMachine.h"
 #include "kiln/engine/Core/headers/LayerManager.h"
@@ -85,7 +85,7 @@ SDL_Renderer* KilnModule::getRenderer() {
   return this->engine->getManagement()->windowManager.getRenderer();
 }
 
-void KilnModule::loadSub(ModuleSub* sub) {
+void KilnModule::loadSub(SubModule* sub) {
   this->loadSubAssets(*sub);
 
   if (this->subState->empty()) {
@@ -96,7 +96,7 @@ void KilnModule::loadSub(ModuleSub* sub) {
 }
 
 void KilnModule::unloadSub() {
-  // ModuleSub* sub = dynamic_cast<ModuleSub*>(this->subState->getActiveState().get());
+  // SubModule* sub = dynamic_cast<SubModule*>(this->subState->getActiveState().get());
 
   // if (sub) {
   //   this->unloadSubAssets(sub);
@@ -109,11 +109,11 @@ void KilnModule::quit() {
   this->unwindStack = true;
 }
 
-void KilnModule::replaceCurrentSub(ModuleSub* sub) {
+void KilnModule::replaceCurrentSub(SubModule* sub) {
   this->subState->replaceState(std::unique_ptr<State>(sub));
 }
 
-void KilnModule::loadSubAssets(ModuleSub& sub) {
+void KilnModule::loadSubAssets(SubModule& sub) {
   AssetManager* assets = &this->engine->getManagement()->assetManager;
   SDL_Renderer* renderer = this->engine->getManagement()->windowManager.getRenderer();
 
@@ -137,6 +137,6 @@ void KilnModule::loadSubAssets(ModuleSub& sub) {
 
 // TODO: This needs to ensure assets that are required by other states
 // in the state machine are not unloaded
-// void KilnModule::unloadSubAssets(ModuleSub* sub) {
+// void KilnModule::unloadSubAssets(SubModule* sub) {
 //   AssetDependencies assets = sub->getRequiredAssets();
 // }

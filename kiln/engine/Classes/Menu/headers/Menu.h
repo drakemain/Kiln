@@ -1,9 +1,9 @@
 #pragma once
-#include "kiln/engine/Modules/ModuleSub.h"
+#include "kiln/engine/Module/SubModule.h"
 #include "kiln/engine/Kiln.h"
 #include <vector>
 
-class Menu : public ModuleSub {
+class Menu : public SubModule {
 public:
   Menu(class KilnModule* module);
   

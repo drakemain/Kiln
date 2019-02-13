@@ -2,12 +2,12 @@
 #include "kiln/engine/Classes/Menu/headers/Button.h"
 #include "kiln/engine/Classes/Components/headers/TextComponent.h"
 #include "kiln/engine/Definitions/Colors.h"
-#include "kiln/TetrisModule/subs/headers/mainmenu.h"
+#include "kiln/Game/subs/headers/mainmenu.h"
 #include "kiln/engine/Classes/Entity/headers/Sprite.h"
 #include "kiln/engine/Core/headers/LayerManager.h"
-#include "kiln/TetrisModule/classes/InputCompTest.h"
+#include "kiln/Game/classes/InputCompTest.h"
 
-InitSub::InitSub(class KilnModule* mod) : ModuleSub(mod) {
+InitSub::InitSub(class KilnModule* mod) : SubModule(mod) {
   std::cout << "Loaded init sub" << std::endl;
 
   this->assetDependencies.textures = {
@@ -70,7 +70,7 @@ void InitSub::handleEvent(SDL_Event* event) {
 }
 
 void InitSub::tick(float deltaTime) {
-  ModuleSub::tick(deltaTime);
+  SubModule::tick(deltaTime);
   this->runtime += deltaTime;
   // if (this->runtime > 3000) {
   //   this->module->unloadSub();
@@ -78,6 +78,6 @@ void InitSub::tick(float deltaTime) {
 }
 
 void InitSub::render(SDL_Renderer* renderer) {
-  ModuleSub::render(renderer);
+  SubModule::render(renderer);
   // this->testSprite->render(renderer);
 }

@@ -1,15 +1,15 @@
-#include "ModuleSub.h"
+#include "SubModule.h"
 #include "KilnModule.h"
 #include "kiln/engine/Classes/Entity/headers/Entity.h"
 #include "kiln/engine/Classes/Components/headers/EventComponent.h"
 #include "kiln/engine/Classes/Components/headers/SpriteComponent.h"
 #include "kiln/engine/Core/headers/LayerManager.h"
 
-ModuleSub::ModuleSub(class KilnModule* mod): module(mod) {
+SubModule::SubModule(class KilnModule* mod): module(mod) {
   this->layers = new LayerManager();
 }
 
-void ModuleSub::render(SDL_Renderer* renderer) {
+void SubModule::render(SDL_Renderer* renderer) {
   for (size_t i = 0; i < this->layers->getLayerCount(); ++i) {
     const std::vector<Entity*>* layer = this->layers->getLayer(i);
 
@@ -19,7 +19,7 @@ void ModuleSub::render(SDL_Renderer* renderer) {
   }
 }
 
-void ModuleSub::tick(float detlaTime) {
+void SubModule::tick(float detlaTime) {
   for (Entity* entity : this->entities) {
     entity->tick(detlaTime);
   }
@@ -27,19 +27,19 @@ void ModuleSub::tick(float detlaTime) {
   this->layers->update();
 }
 
-AssetDependencies ModuleSub::getRequiredAssets() const {
+AssetDependencies SubModule::getRequiredAssets() const {
   return this->assetDependencies;
 }
 
-void ModuleSub::setEntityLayer(Entity* entity, size_t layer) {
+void SubModule::setEntityLayer(Entity* entity, size_t layer) {
   this->layers->moveToLayer(entity, layer);
 }
 
-void ModuleSub::adjustEntityLayer(Entity* entity, int layers) {
+void SubModule::adjustEntityLayer(Entity* entity, int layers) {
   
 }
 
-void ModuleSub::registerEntity(Entity* entity) {
+void SubModule::registerEntity(Entity* entity) {
   this->entities.push_back(entity);
 
   bool registeredSprite = false;
@@ -60,6 +60,6 @@ void ModuleSub::registerEntity(Entity* entity) {
   }
 }
 
-LayerManager* ModuleSub::getLayerManager() {
+LayerManager* SubModule::getLayerManager() {
   return this->layers;
 }

@@ -14,10 +14,10 @@ struct AssetDependencies {
   std::vector<AssetPair> music;
 };
 
-class ModuleSub : public State {
+class SubModule : public State {
   friend class KilnModule;
 public:
-  ModuleSub(class KilnModule* mod);
+  SubModule(class KilnModule* mod);
 
 protected:
   virtual void render(class SDL_Renderer* renderer) override;

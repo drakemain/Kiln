@@ -1,9 +1,9 @@
 #pragma once
-#include "kiln/engine/Modules/ModuleSub.h"
-#include "kiln/engine/Modules/KilnModule.h"
+#include "kiln/engine/Module/SubModule.h"
+#include "kiln/engine/Module/KilnModule.h"
 #include <iostream>
 
-class InitSub : public ModuleSub {
+class InitSub : public SubModule {
 public:
   InitSub(class KilnModule* mod);
   void init() override;
