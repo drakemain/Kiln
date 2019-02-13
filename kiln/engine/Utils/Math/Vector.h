@@ -15,7 +15,7 @@ namespace KMath {
 
     T x, y;
 
-    // Add instance components together with another vectors components.
+    // Add instance components together with another vector's components.
     Vector operator+(const Vector& vec) const { return Vector(this->x + vec.x, this->y + vec.y); }
     Vector operator-(const Vector& vec) const { return Vector(this->x - vec.x, this->y - vec.y); }
 
@@ -45,5 +45,10 @@ namespace KMath {
 
     // Return the magnitude of the vector.
     float magnitude() { return std::sqrt(this->x*this->x + this->y*this->y); }
+
+    Vector<float> normalize() {
+      T mag = this->magnitude();
+      return Vector(this->x / mag, this->y / mag);
+    }
   };
 };

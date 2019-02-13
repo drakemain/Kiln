@@ -6,16 +6,20 @@
 
 #define Vec KMath::Vector<float>
 
+enum Direction {
+  Up,
+  Down,
+  Left,
+  Right
+};
+
 class MovementComponent : public Component {
 public:
   MovementComponent(Entity* owner);
 
-  void setVelocity(Vec velocity);
-  void setVelocity(float x, float y);
-  void accelerate(const Vec& vector);
+  void consumeDirection(Vec vector);
 
   Vec getVelocity() const;
-  float getSpeed();
 
   virtual void start() override {};
   virtual void tick(float deltaTime) override;
@@ -23,6 +27,7 @@ private:
   void updatePosition(float deltaTime);
 
   // pixels per second
-  Vec velocity;
-  float maxVelocity = 5.f;
+  Vec velocity = {0.f, 0.f};
+  Vec accumulation = {0.f, 0.f};
+  float maxVelocity = 50.f;
 };

@@ -1,7 +1,6 @@
 #include "../headers/InputManager.h"
 #include "kiln/engine/Classes/Components/headers/InputComponent.h"
 #include <SDL.h>
-#include <iostream>
 
 std::queue<std::pair<SDL_Keycode, std::function<void()>>>* InputComponent::bindings = new std::queue<std::pair<SDL_Keycode, std::function<void()>>>();
 
@@ -36,17 +35,13 @@ const SDL_Event* InputManager::getLastEvent() const {
 }
 
 void InputManager::bind(Sint32 keyCode, Action action) {
-  std::cout << "Bound " << keyCode << "." << std::endl;
   this->bindings[keyCode] = action; 
 }
 
 void InputManager::bindInputComponents() {
-  std::cout << "Binding components." << std::endl;
   while(!InputComponent::bindings->empty()) {
     std::pair<SDL_Keycode, Action> binding = InputComponent::bindings->front();
     InputComponent::bindings->pop();
-
-    std::cout << "Binding " << binding.first << std::endl;
 
     this->bindings[binding.first] = binding.second;
   }
@@ -57,12 +52,11 @@ void InputManager::handleInputs() {
 }
 
 void InputManager::handleKeys() {
-  for (SDL_Keycode key : this->pressedKeys) {
-    auto binding = this->bindings.find(key);
-
-    if (binding != this->bindings.end()) {
-      std::cout << "\tEXEC: " << binding->first << std::endl;
-      binding->second();
+  // TODO: optimize
+  // potentially slow if there are many bindings
+  for (auto pair : this->bindings) {
+    if (this->keyStates[SDL_GetScancodeFromKey(pair.first)]) {
+      pair.second();
     }
   }
 }

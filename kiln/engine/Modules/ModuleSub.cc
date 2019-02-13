@@ -10,13 +10,10 @@ ModuleSub::ModuleSub(class KilnModule* mod): module(mod) {
 }
 
 void ModuleSub::render(SDL_Renderer* renderer) {
-  // printf("RENDER Layers: %d\n", (int)this->layers->getLayerCount());
   for (size_t i = 0; i < this->layers->getLayerCount(); ++i) {
-    // printf("\tLayer %d\n", (int)i);
     const std::vector<Entity*>* layer = this->layers->getLayer(i);
 
     for (Entity* ent : *layer) {
-      // printf("\t\tRender: %p\n", ent);
       ent->render(renderer);
     }
   }

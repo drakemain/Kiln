@@ -1,34 +1,28 @@
 #include "../headers/MovementComponent.h"
 #include "kiln/engine/Classes/Entity/headers/Entity.h"
 
+#include <stdio.h>
+
 MovementComponent::MovementComponent(Entity* owner)
 : Component(owner) {}
 
-void MovementComponent::setVelocity(Vec velocity) {
-  this->velocity = velocity;
-}
-
-void MovementComponent::setVelocity(float x, float y) {
-  this->velocity.x = x;
-  this->velocity.y = y;
-}
-
-void MovementComponent::accelerate(const Vec& vector) {
-  this->velocity.x += vector.x;
-  this->velocity.y += vector.y;
+void MovementComponent::consumeDirection(Vec direction) {
+  this->accumulation = this->accumulation + direction;
 }
 
 Vec MovementComponent::getVelocity() const {
   return this->velocity;
 }
 
-float MovementComponent::getSpeed() {
-  return this->velocity.magnitude();
-}
-
 void MovementComponent::tick(float deltaTime) {
-  if (!this->velocity.isZero(.01f)) {
+  if (!this->accumulation.isZero(.01f)) {
+    this->accumulation = this->accumulation.normalize();
+    this->velocity = this->accumulation * this->maxVelocity;
+
     this->updatePosition(deltaTime);
+    
+    this->accumulation = Vec(0.f, 0.f);
+    this->velocity = Vec(0.f, 0.f);
   }
 }
 

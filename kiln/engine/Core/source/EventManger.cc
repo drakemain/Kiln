@@ -1,13 +1,11 @@
 #include "../headers/EventManager.h"
 #include "kiln/engine/Classes/Components/headers/EventComponent.h"
 #include <SDL_events.h>
-#include <iostream>
 
 EventManager::EventManager() {}
 
 void EventManager::registerComponent(EventComponent* component) {
   this->components.push_back(component);
-  std::cout << "Bound event component." << std::endl;
 }
 
 void EventManager::addEvent(const SDL_Event* event) {
