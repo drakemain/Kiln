@@ -42,10 +42,7 @@ bool Kiln::init(KilnModule& module) {
 
 void Kiln::run(KilnModule& module) {
   std::cout << "RUN" << std::endl;
-
-  const unsigned int frameLimit = 60;
-  const float minFrameTime = 1000.f / frameLimit;
-  unsigned int frameTime = 0;
+  
   Uint32 tickStartTime;
   Uint32 lastTickStartTime = 0;
   
@@ -72,14 +69,6 @@ void Kiln::run(KilnModule& module) {
 
     module.render();
     this->render(renderer);
-
-    frameTime = SDL_GetTicks() - tickStartTime;
-    
-    if (frameTime < minFrameTime) {
-      // TODO: Don't use delay to limit fps
-      SDL_Delay(minFrameTime - frameTime);
-      frameTime = SDL_GetTicks() - tickStartTime;
-    }
 
     module.updateSubState();
 

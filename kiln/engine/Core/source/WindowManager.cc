@@ -17,7 +17,7 @@ bool WindowManager::init(const WindowConfig& conf) {
     return false;
   }
 
-  this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED);
+  this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
 
   if (this->renderer == NULL) {
     std::cerr << "Failed to init renderer: " << SDL_GetError() << std::endl;
