@@ -20,6 +20,9 @@ const WindowConfig& ConfigLoader::window() const {
 
 void ConfigLoader::configWindow() {
   this->windowConfig.title = this->title();
-  this->windowConfig.w = this->config->get_as<unsigned int>("window_w").value_or(640);
-  this->windowConfig.h = this->config->get_as<unsigned int>("window_h").value_or(480);
+
+  auto windowConf = this->config->get_table("window");
+
+  this->windowConfig.w = windowConf->get_as<unsigned int>("dim_w").value_or(640);
+  this->windowConfig.h = windowConf->get_as<unsigned int>("dim_h").value_or(480);
 }
