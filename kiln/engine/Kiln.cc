@@ -1,6 +1,7 @@
 #include "Kiln.h"
 #include "Module/KilnModule.h"
 #include "Core/headers/Stats.h"
+#include "Core/headers/ConfigLoader/ConfigLoader.h"
 #include "Definitions/Colors.h"
 #include <iostream>
 #include <SDL.h>
@@ -12,12 +13,15 @@ Kiln::~Kiln() {}
 bool Kiln::init(KilnModule& module) {
   std::cout << "INIT" << std::endl;
 
+  ConfigLoader config;
+  config.load("kiln/config.toml");
+
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
     std::cerr << "Failed to init SDL:\n\t" << SDL_GetError() << std::endl;
     return false;
   }
 
-  if (!this->coreManagement.windowManager.init()) {
+  if (!this->coreManagement.windowManager.init(config.window())) {
     return false;
   }
 

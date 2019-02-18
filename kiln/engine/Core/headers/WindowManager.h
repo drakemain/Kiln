@@ -4,7 +4,7 @@
 
 class WindowManager {
 public:
-  bool init();
+  bool init(const struct WindowConfig&);
   void cleanup();
 
   class SDL_Window* getWindow() const;
