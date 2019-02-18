@@ -19,8 +19,10 @@ private:
   class SDL_Window* window;
   class SDL_Renderer* renderer;
 
-  unsigned int WIDTH = 640;
-  unsigned int HEIGHT = 480;
+  const char* title;
+
+  unsigned int WIDTH;
+  unsigned int HEIGHT;
 
   float FRAME_LIMIT = 60.f;
   float MIN_FRAME_TIME;
