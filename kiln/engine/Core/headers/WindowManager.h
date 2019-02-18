@@ -1,6 +1,7 @@
 #pragma once
-// #include <SDL.h>
+
 #include "kiln/engine/Utils/headers/Dim.h"
+#include <string>
 
 class WindowManager {
 public:
@@ -19,7 +20,7 @@ private:
   class SDL_Window* window;
   class SDL_Renderer* renderer;
 
-  const char* title;
+  std::string title;
 
   unsigned int WIDTH;
   unsigned int HEIGHT;

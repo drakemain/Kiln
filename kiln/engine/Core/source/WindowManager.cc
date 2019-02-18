@@ -6,11 +6,11 @@
 bool WindowManager::init(const WindowConfig& conf) {
   std::cout << "\tSetting up window manager." << std::endl;
 
-  this->title = conf.title.c_str();
+  this->title = conf.title;
   this->WIDTH = conf.w;
   this->HEIGHT = conf.h;
 
-  this->window = SDL_CreateWindow(this->title, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->WIDTH, this->HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
+  this->window = SDL_CreateWindow(this->title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->WIDTH, this->HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
 
   if (this->window == NULL) {
     std::cerr << "Failed to init window: " << SDL_GetError() << std::endl;
