@@ -25,7 +25,7 @@ bool Kiln::init(KilnModule& module) {
     return false;
   }
 
-  if (!this->coreManagement.assetManager.init(this->coreManagement.windowManager.getRenderer())) {
+  if (!this->coreManagement.assetManager.init(this->coreManagement.windowManager.getRenderer(), config.asset())) {
     return false;
   }
 

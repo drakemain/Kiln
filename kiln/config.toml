@@ -3,3 +3,12 @@ title = "Kiln"
 [window]
 dim_w = 1024
 dim_h = 768
+
+[assets]
+[assets.imgfmt]
+jpg = true
+png = true
+tif = true
+webp = true
+
+[assets.audio]

@@ -1,4 +1,5 @@
 #include "../headers/AssetManager.h"
+#include "../headers/ConfigLoader/AssetConfig.h"
 #include "kiln/engine/Core/headers/Texture.h"
 #include <iostream>
 
@@ -43,10 +44,10 @@ AssetManager::~AssetManager() {
   std::cout << " Done." << std::endl;
 }
 
-bool AssetManager::init(SDL_Renderer* renderer) {
+bool AssetManager::init(SDL_Renderer* renderer, const AssetConfig& config) {
   std::cout << "\tSetting up asset manager." << std::endl;
 
-  int imgFlags = IMG_INIT_JPG|IMG_INIT_PNG;
+  int imgFlags = config.imgfmt;
 
   if ((IMG_Init(imgFlags) & imgFlags) != imgFlags) {
     std::cerr << "Failed to init SDL_image:\n\t" << IMG_GetError() << "\n\t" << SDL_GetError() << std::endl;

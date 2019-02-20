@@ -12,7 +12,7 @@ public:
   AssetManager();
   ~AssetManager();
 
-  bool init(SDL_Renderer* renderer);
+  bool init(SDL_Renderer* renderer, const struct AssetConfig&);
 
   // load an image as a Texture and instert it into the sprite map
   Texture* loadTexture(std::string path, std::string name, SDL_Renderer* renderer);
