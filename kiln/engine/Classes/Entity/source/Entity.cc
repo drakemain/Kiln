@@ -1,5 +1,4 @@
 #include "../headers/Entity.h"
-#include "../headers/Entity.h"
 #include "../../Components/headers/Component.h"
 #include "../../Components/headers/SpriteComponent.h"
 
@@ -40,7 +39,7 @@ void Entity::setWorldPosition(FCoordinate position) {
 }
 
 void Entity::scale(float scale) {
-  for (Component* comp : this->getComponents()) {
+  for (Component* comp : this->boundComponents) {
     SpriteComponent* sprite = dynamic_cast<SpriteComponent*>(comp);
 
     if (sprite) {
@@ -78,7 +77,6 @@ void Entity::centerInWindow(unsigned int xBoundary, unsigned int yBoundary) {
   this->setWorldPosition(xBoundary / 2, yBoundary / 2);
 }
 
-std::vector<Component*> Entity::getComponents() {
-  return this->boundComponents;
+void Entity::getComponents(std::vector<Component*>& components) const {
+  components = this->boundComponents;
 }
-

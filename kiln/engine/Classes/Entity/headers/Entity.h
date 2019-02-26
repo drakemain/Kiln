@@ -29,11 +29,25 @@ public:
 
   virtual void render(SDL_Renderer* renderer);
 
-  std::vector<class Component*> getComponents();
+  void getComponents(std::vector<class Component*>& components) const;
 
 private:
   void updateComponentPositions();
 
   FCoordinate worldPosition;
   std::vector<class Component*> boundComponents;
+
+public:
+  // Inline so that all possible headers don't 
+  // need to be included in this file
+  template <class T>
+  inline void getComponentsByType(std::vector<T>& components) const {
+    for (Component* comp : this->boundComponents) {
+      T castComp = dynamic_cast<T>(comp);
+
+      if (castComp) {
+        components.push_back(castComp);
+      }
+    }
+  }
 };
