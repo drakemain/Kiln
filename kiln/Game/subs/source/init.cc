@@ -29,31 +29,11 @@ void test();
 void InitSub::init() {
   this->module->playSound("win98", 0);
   TTF_Font* buttonFont = this->module->fetchFont("btn");
-  Texture* buttonTexture = this->module->fetchTexture("btn");
   SDL_Renderer* renderer = this->module->getRenderer();
-
-  Button* button = new Button(buttonTexture, "Button", buttonFont, KILN_COLOR::ORANGE, renderer);
-  Sprite* sprite = new Sprite(this->module->fetchTexture("btn"));
-  Sprite* sprite2 = new Sprite(this->module->fetchTexture("spr"));
-  Sprite* sprite3 = new Sprite(this->module->fetchTexture("dne"));
 
   InputCompTest* test = new InputCompTest(this->module->fetchTexture("btn"), buttonFont, renderer);
   
-  this->registerEntity(button);
-  this->registerEntity(sprite);
-  this->registerEntity(sprite2);
-  this->registerEntity(sprite3);
   this->registerEntity(test);
-
-  this->getLayerManager()->moveToNewTop(sprite);
-  this->getLayerManager()->moveToNewTop(button);
-  this->getLayerManager()->moveToTop(test);
-  sprite->setWorldPosition({25, 25});
-  sprite2->setWorldPosition({100, 100});
-  sprite3->scale(.2);
-  button->setWorldPosition(0.f, 150.f);
-  button->scale(.5);
-  button->bindAction([this](){this->module->quit();});
 }
 
 void InitSub::cleanup() {}
