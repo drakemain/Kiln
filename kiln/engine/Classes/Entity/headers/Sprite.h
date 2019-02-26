@@ -9,6 +9,8 @@ public:
 
   class SpriteComponent* getComponent();
 
+  struct Dim getDimesions() const;
+
 private:
   class SpriteComponent* sprite;
 };

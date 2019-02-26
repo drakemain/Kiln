@@ -12,3 +12,7 @@ Sprite::Sprite(Texture* texture) {
 SpriteComponent* Sprite::getComponent() {
   return this->sprite;
 }
+
+Dim Sprite::getDimesions() const {
+  return this->sprite->getDimensions();
+}
