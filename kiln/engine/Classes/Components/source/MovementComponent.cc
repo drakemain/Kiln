@@ -3,11 +3,13 @@
 
 #include <stdio.h>
 
+MovementComponent::MovementComponent() {}
+
 MovementComponent::MovementComponent(Entity* owner)
 : Component(owner) {}
 
 void MovementComponent::consumeDirection(Vec direction) {
-  this->accumulation = this->accumulation + direction;
+  this->accumulatedDirection = this->accumulatedDirection + direction;
 }
 
 Vec MovementComponent::getVelocity() const {
@@ -15,14 +17,19 @@ Vec MovementComponent::getVelocity() const {
 }
 
 void MovementComponent::tick(float deltaTime) {
-  if (!this->accumulation.isZero(.01f)) {
-    this->accumulation = this->accumulation.normalize();
-    this->velocity = this->accumulation * this->maxVelocity;
+  Vec updatedVelocity;
+  
+  if (!this->accumulatedDirection.isZero(.01f)) {
+    updatedVelocity = KMath::Vector::interpToConst(this->velocity, this->accumulatedDirection.normalize() * this->maxVelocity, deltaTime, this->maxAcceleration);
+  } else {
+    updatedVelocity = KMath::Vector::interpToConst(this->velocity, {0.f, 0.f}, deltaTime, this->maxAcceleration);
+  }
 
+  this->velocity = updatedVelocity;
+  this->accumulatedDirection = {0.f, 0.f};
+
+  if (!this->velocity.isZero(.01f)) {
     this->updatePosition(deltaTime);
-    
-    this->accumulation = Vec(0.f, 0.f);
-    this->velocity = Vec(0.f, 0.f);
   }
 }
 

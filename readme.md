@@ -21,7 +21,7 @@ A 2d game engine built on top of SDL2 using C++. (currently a work in progress).
 ## Building
 Currently only tested in Linux.
 1. Ensure you have SDL2, SDL_image, SDL_ttf, and SDL_mixer. (these libs will be included in the future).
-1. Clone and cd into cloned dir.
+1. Clone and cd into cloned dir, making sure to aquire git submodules.
 1. $ cmake .
 1. $ make
 1. $ ./Kiln

@@ -4,7 +4,7 @@
 #include "kiln/engine/Utils/Math/Vector.h"
 #include "kiln/engine/Utils/Math/Scalar.h"
 
-#define Vec KMath::Vector<float>
+#define Vec KMath::Vector::Vector<float>
 
 enum Direction {
   Up,
@@ -15,6 +15,7 @@ enum Direction {
 
 class MovementComponent : public Component {
 public:
+  MovementComponent();
   MovementComponent(Entity* owner);
 
   void consumeDirection(Vec vector);
@@ -28,6 +29,7 @@ private:
 
   // pixels per second
   Vec velocity = {0.f, 0.f};
-  Vec accumulation = {0.f, 0.f};
-  float maxVelocity = 50.f;
+  Vec accumulatedDirection = {0.f, 0.f};
+  float maxVelocity = 500.f;
+  float maxAcceleration = 500.f;
 };
