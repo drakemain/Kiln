@@ -22,6 +22,7 @@ public:
 protected:
   virtual void render(class SDL_Renderer* renderer) override;
   virtual void tick(float deltaTime) override;
+  virtual void start();
 
 public:
   AssetDependencies getRequiredAssets() const;

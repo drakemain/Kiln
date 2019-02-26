@@ -27,6 +27,12 @@ void SubModule::tick(float detlaTime) {
   this->layers->update();
 }
 
+void SubModule::start() {
+  for (Entity* entity : this->entities) {
+    entity->start();
+  }
+}
+
 AssetDependencies SubModule::getRequiredAssets() const {
   return this->assetDependencies;
 }
@@ -45,7 +51,9 @@ void SubModule::registerEntity(Entity* entity) {
   bool registeredSprite = false;
 
   // Better solution? If renderable, add to layer manager
-  for (Component* comp : entity->getComponents()) {
+  std::vector<Component*> comps;
+  entity->getComponents(comps);
+  for (Component* comp : comps) {
     if (!registeredSprite) {
       if (dynamic_cast<SpriteComponent*>(comp)) {
         this->layers->add(entity);

@@ -20,7 +20,14 @@ bool KilnModule::init() {
   return true;
 }
 
-void KilnModule::start() {}
+void KilnModule::start() {
+  printf("MODULE START\n");
+  SubModule* sub = dynamic_cast<SubModule*>(this->subState->getActiveState().get());
+
+  if (sub) {
+    sub->start();
+  }
+}
 
 void KilnModule::handleEvent(const SDL_Event* event) {
   this->eventManager->addEvent(event);
