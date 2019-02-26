@@ -53,8 +53,8 @@ void MovementComponent::updatePosition(float deltaTime) {
   FCoordinate currentPosition = this->getOwner()->getWorldPosition();
   FCoordinate newPosition;
 
-  newPosition.x = (this->velocity.x * deltaTime / 1000) + currentPosition.x;
-  newPosition.y = (this->velocity.y * deltaTime / 1000) + currentPosition.y;
+  newPosition.x = (this->velocity.x * deltaTime) + currentPosition.x;
+  newPosition.y = (this->velocity.y * deltaTime) + currentPosition.y;
 
   this->getOwner()->setWorldPosition(newPosition);
 }

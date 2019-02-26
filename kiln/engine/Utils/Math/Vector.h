@@ -65,7 +65,7 @@ namespace KMath {
       
       const Vector<T> delta = target - current;
       const float deltaMag = delta.magnitude();
-      const float maxStep = interpToSpeed * deltaTime / 1000;
+      const float maxStep = interpToSpeed * deltaTime;
 
       if(deltaMag > maxStep) {
         if(maxStep > 0.f) {
