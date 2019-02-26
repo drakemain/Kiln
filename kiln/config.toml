@@ -1,8 +1,8 @@
 title = "Kiln"
 
 [window]
-dim_w = 1024
-dim_h = 768
+dim_w = 1920
+dim_h = 1080
 
 [assets]
 [assets.imgfmt]

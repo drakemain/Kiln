@@ -8,7 +8,10 @@ void ConfigLoader::load(const char* filePath) {
     printf("CONFIG ERR: %s\n", e.what());
   }
 
+  printf("\tSuccessfully loaded config from \"%s\".\n", filePath);
+
   this->configWindow();
+  this->configAsset();
 }
 
 std::string ConfigLoader::title() const {
