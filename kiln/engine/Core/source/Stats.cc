@@ -1,22 +1,30 @@
 #include "../headers/Stats.h"
-#include <iostream>
 #include "kiln/engine/Definitions/Colors.h"
 #include "kiln/engine/Classes/Components/headers/TextComponent.h"
+#include "kiln/engine/Utils/headers/Timer.h"
+#include <iostream>
 
 Stats::Stats(unsigned int samples, bool renderText, TTF_Font* font, SDL_Renderer* renderer) 
 : sampleFrames(samples), renderText(renderText), rendererRef(renderer) {
   if (renderText && font && renderer) {
-    this->text = new TextComponent(this, "0.0", font, renderer, KILN_COLOR::ORANGE);
+    this->text = new TextComponent("0.0", font, renderer, KILN_COLOR::ORANGE);
   } else {
     std::cerr << "Stats wanted to render text but was missing a font or renderer." << std::endl;
     this->renderText = false;
   }
+
+  this->bindComponent(text);
+  this->timer = new Timer();
+  timer->start();
 }
 
-Stats::~Stats() {}
+Stats::~Stats() {
+  delete this->timer;
+}
 
 void Stats::tick(float deltaTime) {
   this->text->tick(deltaTime);
+  this->timer->tick(deltaTime);
 }
 
 void Stats::start() {
@@ -38,14 +46,14 @@ TextComponent* Stats::getText() const {
 }
 
 void Stats::update() {
-  Uint32 interval = SDL_GetTicks() - this->lastUpdateTime;
+  float interval = timer->getTime();
+  timer->reset();
 
-  this->fps = (frames * 1000) / interval;
+  this->fps = frames / interval;
 
   if (this->renderText && this->rendererRef) {
-    this->text->setText(std::to_string(this->fps));
+    this->text->setText("FPS: " + std::to_string(this->fps));
   }
 
   this->frames = 0;
-  this->lastUpdateTime = SDL_GetTicks();
 }

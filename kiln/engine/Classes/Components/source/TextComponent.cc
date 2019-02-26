@@ -1,9 +1,8 @@
-#include <SDL_ttf.h>
-#include <SDL.h>
-#include <string>
 #include "kiln/engine/Classes/Components/headers/TextComponent.h"
 #include "kiln/engine/Classes/Entity/headers/Entity.h"
 #include "kiln/engine/Definitions/Colors.h"
+#include <SDL_ttf.h>
+#include <SDL.h>
 
 TextComponent::TextComponent(std::string text, TTF_Font* font, SDL_Renderer* renderer, SDL_Color color)
 : text(text), font(font), color(color), renderer(renderer) {

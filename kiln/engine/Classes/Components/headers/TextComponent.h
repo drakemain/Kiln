@@ -1,7 +1,8 @@
 #pragma once
 
-#include <SDL_ttf.h>
 #include "kiln/engine/Classes/Components/headers/SpriteComponent.h"
+#include <SDL_ttf.h>
+#include <string>
 
 class TextComponent : public SpriteComponent {
 public:

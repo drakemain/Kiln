@@ -22,9 +22,10 @@ private:
   unsigned int fps = 0;
 
   unsigned int sampleFrames = 10;
-  Uint32 lastUpdateTime = 0;
 
   bool renderText;
   class TextComponent* text = nullptr;
   SDL_Renderer* rendererRef;
+
+  class Timer* timer;
 };
