@@ -43,16 +43,19 @@ bool Kiln::init(KilnModule& module) {
 void Kiln::run(KilnModule& module) {
   std::cout << "RUN" << std::endl;
   
+  // time at the start of a frame in ms
   Uint32 tickStartTime;
+  // time at the start of the previous frame in ms
   Uint32 lastTickStartTime = 0;
-  
-  float deltaTime = 0;
+  // amount of time passed since previous frame in seconds
+  float deltaTime = 0.f;
 
   module.start();
 
   while(isRunning && module.hasSub()) {
     tickStartTime = SDL_GetTicks();
-    deltaTime = tickStartTime - lastTickStartTime;
+    deltaTime = (tickStartTime - lastTickStartTime) / 1000;
+    printf("DT: %fs, FT: %dms\n", deltaTime, tickStartTime - lastTickStartTime);
     
     while(this->coreManagement.inputManager.poll()) {
       const SDL_Event* polledEvent = this->coreManagement.inputManager.getLastEvent();
