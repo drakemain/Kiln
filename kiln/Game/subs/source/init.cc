@@ -37,7 +37,7 @@ void InitSub::init() {
   Sprite* sprite2 = new Sprite(this->module->fetchTexture("spr"));
   Sprite* sprite3 = new Sprite(this->module->fetchTexture("dne"));
 
-  InputCompTest* test = new InputCompTest(this->module->fetchTexture("btn"));
+  InputCompTest* test = new InputCompTest(this->module->fetchTexture("btn"), buttonFont, renderer);
   
   this->registerEntity(button);
   this->registerEntity(sprite);
@@ -47,6 +47,7 @@ void InitSub::init() {
 
   this->getLayerManager()->moveToNewTop(sprite);
   this->getLayerManager()->moveToNewTop(button);
+  this->getLayerManager()->moveToTop(test);
   sprite->setWorldPosition({25, 25});
   sprite2->setWorldPosition({100, 100});
   sprite3->scale(.2);
