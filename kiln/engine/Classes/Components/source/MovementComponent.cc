@@ -12,6 +12,22 @@ void MovementComponent::consumeDirection(Vec direction) {
   this->accumulatedDirection = this->accumulatedDirection + direction;
 }
 
+void MovementComponent::consumeDirection(Direction direction) {
+  switch(direction) {
+    case Direction::Up:
+      this->consumeDirection({0.f, -1.f}); break;
+
+    case Direction::Down:
+      this->consumeDirection({0.f, 1.f}); break;
+
+    case Direction::Left:
+      this->consumeDirection({-1.f, 0.f}); break;
+
+    case Direction::Right:
+      this->consumeDirection({1.f, 0.f}); break;
+  }
+}
+
 Vec MovementComponent::getVelocity() const {
   return this->velocity;
 }

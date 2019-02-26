@@ -19,6 +19,7 @@ public:
   MovementComponent(Entity* owner);
 
   void consumeDirection(Vec vector);
+  void consumeDirection(Direction direction);
 
   Vec getVelocity() const;
 
