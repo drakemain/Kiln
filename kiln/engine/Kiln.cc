@@ -55,7 +55,6 @@ void Kiln::run(KilnModule& module) {
   while(isRunning && module.hasSub()) {
     tickStartTime = SDL_GetTicks();
     deltaTime = (float)(tickStartTime - lastTickStartTime) / 1000.f;
-    printf("DT: %fs, FT: %dms\n", deltaTime, tickStartTime - lastTickStartTime);
     
     while(this->coreManagement.inputManager.poll()) {
       const SDL_Event* polledEvent = this->coreManagement.inputManager.getLastEvent();
