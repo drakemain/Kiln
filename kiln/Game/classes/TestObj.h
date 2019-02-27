@@ -24,7 +24,7 @@ public:
     this->input->bind(SDLK_RIGHT, [this](){this->movement->consumeDirection(Direction::Right);});
     this->input->bind(SDLK_LEFT, [this](){this->movement->consumeDirection(Direction::Left);});
 
-    this->velocityText->setScale(.25);
+    this->velocityText->setScale(.35);
     this->accelTime->setScale(.25);
 
     this->bindComponent(input);

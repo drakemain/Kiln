@@ -29,6 +29,7 @@ void TextComponent::tick(float deltaTime) {
 }
 
 void TextComponent::draw(SDL_Renderer* renderer) {
+  if (this->text.size() == 0) { return; }
 
   SDL_Surface* surface = TTF_RenderText_Solid(this->font, this->text.c_str(), this->color);
   if (!surface) {
@@ -48,6 +49,7 @@ void TextComponent::draw(SDL_Renderer* renderer) {
 
     SDL_FreeSurface(surface);
   }
+
   this->wasModified = false;
 }
 
