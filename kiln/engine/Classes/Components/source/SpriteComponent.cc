@@ -22,16 +22,19 @@ void SpriteComponent::start() {}
 void SpriteComponent::tick(float deltaTime) {}
 
 void SpriteComponent::setWidth(unsigned int width) {
+  // printf("W: %d\n", width);
   this->originalDim.w = width;
-  this->renderDim.w = width;
+  this->renderDim.w = width * this->scale;
 }
 
 void SpriteComponent::setHeight(unsigned int height) {
+  // printf("H: %d\n", height);
   this->originalDim.h = height;
-  this->renderDim.h = height;
+  this->renderDim.h = height * this->scale;
 }
 
 void SpriteComponent::setScale(float scale) {
+  this->scale = scale;
   this->renderDim.w = this->originalDim.w * scale;
   this->renderDim.h = this->originalDim.h * scale;
 }

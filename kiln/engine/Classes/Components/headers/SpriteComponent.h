@@ -34,5 +34,6 @@ private:
   Dim originalDim;
   Dim renderDim;
   float rotationDegrees = 0.f;
+  float scale = 1.f;
   struct SDL_Texture* texture = nullptr;
 };
