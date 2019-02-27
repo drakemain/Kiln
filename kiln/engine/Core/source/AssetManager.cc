@@ -45,29 +45,29 @@ AssetManager::~AssetManager() {
 }
 
 bool AssetManager::init(SDL_Renderer* renderer, const AssetConfig& config) {
-  std::cout << "\tSetting up asset manager." << std::endl;
+  std::cout << "\t\tSetting up asset manager." << std::endl;
 
   int imgFlags = config.imgfmt;
 
   if ((IMG_Init(imgFlags) & imgFlags) != imgFlags) {
-    std::cerr << "Failed to init SDL_image:\n\t" << IMG_GetError() << "\n\t" << SDL_GetError() << std::endl;
+    std::cerr << "\t\tFailed to init SDL_image:\n\t" << IMG_GetError() << "\n\t" << SDL_GetError() << std::endl;
     return false;
   }
 
   if (TTF_Init() == -1) {
-    std::cerr << "Failed to init SDL_ttf:\n\t" << TTF_GetError() << std::endl;
+    std::cerr << "\t\tFailed to init SDL_ttf:\n\t" << TTF_GetError() << std::endl;
     return false;
   }
 
   if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-    std::cerr << "Failed to init SDL_mixer:\n\t" << Mix_GetError() << std::endl;
+    std::cerr << "\t\tFailed to init SDL_mixer:\n\t" << Mix_GetError() << std::endl;
     return false;
   }
 
   Texture::placeholder = this->loadTexture("kiln/assets/img/placeholder-texture.jpg", renderer);
-  std::cout << "\t\t |_> Placeholder Texture" << std::endl;
+  std::cout << "\t\t\t|_> Placeholder Texture" << std::endl;
 
-  std::cout << "\tAsset Manager ready!" << std::endl;
+  std::cout << "\t\tAsset Manager ready!" << std::endl;
 
   return true;
 }
@@ -98,7 +98,7 @@ Texture* AssetManager::loadTexture(std::string path, SDL_Renderer* renderer) {
   bool success = texture->create(path, renderer);
 
   if (success) {
-    std::cout << "\tLoaded an unmanaged texture." << std::endl;
+    std::cout << "\t\tLoaded an unmanaged texture." << std::endl;
     return texture;
   }
   
@@ -113,7 +113,6 @@ Texture* AssetManager::loadTexture(std::string path, SDL_Renderer* renderer) {
 
 Texture* AssetManager::fetchTexture(std::string name) {
   auto itr = this->TextureMap.find(name);
-  std::cout << "\tLoaded textures: " << (int)this->TextureMap.size() << std::endl;
 
   if (itr == this->TextureMap.end()) {
     std::cout << "\tFailed to fetch texture: " << name << std::endl;

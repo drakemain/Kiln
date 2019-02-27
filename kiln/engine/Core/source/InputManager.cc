@@ -39,6 +39,8 @@ void InputManager::bind(Sint32 keyCode, Action action) {
 }
 
 void InputManager::bindInputComponents() {
+  printf("\tSetting up input components.\n");
+
   while(!InputComponent::bindings->empty()) {
     std::pair<SDL_Keycode, Action> binding = InputComponent::bindings->front();
     InputComponent::bindings->pop();

@@ -13,20 +13,20 @@ bool WindowManager::init(const WindowConfig& conf) {
   this->window = SDL_CreateWindow(this->title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->WIDTH, this->HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
 
   if (this->window == NULL) {
-    std::cerr << "Failed to init window: " << SDL_GetError() << std::endl;
+    std::cerr << "\t\tFailed to init window: " << SDL_GetError() << std::endl;
     return false;
   }
 
   this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
 
   if (this->renderer == NULL) {
-    std::cerr << "Failed to init renderer: " << SDL_GetError() << std::endl;
+    std::cerr << "\t\tFailed to init renderer: " << SDL_GetError() << std::endl;
     return false;
   }
   
   this->setFrameLimit(this->FRAME_LIMIT);
 
-  std::cout << "\tWindow Manager ready!" << std::endl;
+  std::cout << "\t\tWindow Manager ready!" << std::endl;
 
   return true;
 }

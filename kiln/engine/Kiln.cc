@@ -11,13 +11,14 @@ Kiln::Kiln() {}
 Kiln::~Kiln() {}
 
 bool Kiln::init(KilnModule& module) {
-  std::cout << "INIT" << std::endl;
+  std::cout << "Initializing kiln." << std::endl;
 
   ConfigLoader config;
+  std::cout << "\tFetching config." << std::endl;
   config.load("kiln/config.toml");
 
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-    std::cerr << "Failed to init SDL:\n\t" << SDL_GetError() << std::endl;
+    std::cerr << "Failed to init SDL:\n\t|_> " << SDL_GetError() << std::endl;
     return false;
   }
 
