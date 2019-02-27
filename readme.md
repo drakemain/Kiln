@@ -1,5 +1,5 @@
 # Kiln
-A 2d game engine built on top of SDL2 using C++. (currently a work in progress).
+A 2d game engine built on top of SDL2 using C++.
 
 ## Broad Overview
 ![img](https://i.imgur.com/H0O1yod.png)
@@ -13,10 +13,21 @@ A 2d game engine built on top of SDL2 using C++. (currently a work in progress).
   * Contains renderer and window along with associated metadata.
   * Handles updating the window state at runtime.
 * Input Manager
-  * Polls the event queue. Stores the last event, the last click event, and the cursor position.
-  * Planned: click and drag, multi-click, held keys/buttons, etc reporting.
+  * Detects user input state.
+  * All instantiated input components are registered automatically on init behind the scenes.
+  * Input states are mapped to input component "action" lamdas.
+  * WIP: click and drag, multi-click, and other modified input detection and handling.
 * Module System
-  * Games are written in "KilnModules" which are initialized and run by the engine.
+  * Games are created externally to the engine code using a "KilnModule".
+  * KilnModules can stack multiple submodules, useful for opening an in-game menu while keeping the game state active or paused.
+* TOML config loader
+  * Engine configuration loaded easily using a TOML file.
+* ECS
+  * An entity-component system for easily creating functionality.
+  * Easily bind components with a binding constructor or the "bind" method.
+* Custom math library
+  * Includes a templated Vector class, interpolation, normalization, and various other operations
+  * Still growing as needs arise!
   
 ## Building
 Currently only tested in Linux.
