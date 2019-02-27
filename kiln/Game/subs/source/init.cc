@@ -5,7 +5,7 @@
 #include "kiln/Game/subs/headers/mainmenu.h"
 #include "kiln/engine/Classes/Entity/headers/Sprite.h"
 #include "kiln/engine/Core/headers/LayerManager.h"
-#include "kiln/Game/classes/InputCompTest.h"
+#include "kiln/Game/classes/TestObj.h"
 
 InitSub::InitSub(class KilnModule* mod) : SubModule(mod) {
   std::cout << "Loaded init sub" << std::endl;
@@ -31,7 +31,7 @@ void InitSub::init() {
   TTF_Font* buttonFont = this->module->fetchFont("btn");
   SDL_Renderer* renderer = this->module->getRenderer();
 
-  InputCompTest* test = new InputCompTest(this->module->fetchTexture("btn"), buttonFont, renderer);
+  TestObj* test = new TestObj(this->module->fetchTexture("btn"), buttonFont, renderer);
   
   this->registerEntity(test);
 }
