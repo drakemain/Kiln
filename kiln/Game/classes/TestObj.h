@@ -16,16 +16,13 @@ public:
     this->collision = new CollisionComponent();
     this->velocityText = new TextComponent("", font, renderer, KILN_COLOR::WHITE);
     this->accelTime = new TextComponent("", font, renderer, KILN_COLOR::WHITE);
+
     this->timer = new Timer();
+
     this->input->bind(SDLK_UP, [this](){this->movement->consumeDirection(Direction::Up);});
     this->input->bind(SDLK_DOWN, [this](){this->movement->consumeDirection(Direction::Down);});
     this->input->bind(SDLK_RIGHT, [this](){this->movement->consumeDirection(Direction::Right);});
     this->input->bind(SDLK_LEFT, [this](){this->movement->consumeDirection(Direction::Left);});
-
-    this->collision->boundingBox.w = this->getComponent()->getDimensions().w;
-    this->collision->boundingBox.h = this->getComponent()->getDimensions().h;
-
-    printf("W:%d H:%d\n", this->velocityText->getDimensions().w, this->velocityText->getDimensions().h);
 
     this->velocityText->setScale(.25);
     this->accelTime->setScale(.25);
