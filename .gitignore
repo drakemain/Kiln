@@ -12,3 +12,6 @@ Kiln
 .idea/*
 .vscode/*
 *.sublime-*
+
+# game modules
+kiln/Game/*
