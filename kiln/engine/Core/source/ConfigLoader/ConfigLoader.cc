@@ -3,9 +3,10 @@
 
 void ConfigLoader::load(const char* filePath) {
   try {
+    printf("\tFetching config from %s.\n", filePath);
     this->config = cpptoml::parse_file(filePath);
   } catch(cpptoml::parse_exception& e) {
-    printf("CONFIG ERR: %s\n", e.what());
+    printf("\t\tCONFIG ERR: %s\n", e.what());
   }
 
   printf("\t\tSuccessfully loaded config from \"%s\".\n", filePath);

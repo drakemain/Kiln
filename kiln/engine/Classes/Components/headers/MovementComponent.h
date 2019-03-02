@@ -32,5 +32,5 @@ private:
   Vec velocity = {0.f, 0.f};
   Vec accumulatedDirection = {0.f, 0.f};
   float maxVelocity = 500.f;
-  float maxAcceleration = 500.f;
+  float maxAcceleration = 1500.f;
 };
