@@ -1,5 +1,5 @@
 #include "../headers/StateMachine.h"
-#include <iostream>
+#include "lib/kilnlog/include/KilnLog.h"
 
 StateMachine::StateMachine() {}
 
@@ -8,12 +8,15 @@ StateMachine::~StateMachine() {
 }
 
 void StateMachine::pushState(std::unique_ptr<State> state) {
+  KLog.put(KLOG_DEB, "STATE MACHINE: PUSH");
+  
   this->isAdding = true;
-  std::cout << "PUSH STATE" << std::endl;
   this->stateBuffer = std::move(state);
 }
 
 void StateMachine::pushForce(std::unique_ptr<State> state) {
+  KLog.put(KLOG_DEB, "STATE MACHINE: PUSH FORCE");
+
   if (!this->empty()) {
     this->stateStack.top()->pause();
   }
@@ -23,6 +26,8 @@ void StateMachine::pushForce(std::unique_ptr<State> state) {
 }
 
 void StateMachine::replaceState(std::unique_ptr<State> state) {
+  KLog.put(KLOG_DEB, "STATE MACHINE: REPLACE");
+
   this->isRemoving = true;
   this->isAdding = true;
 
@@ -30,19 +35,13 @@ void StateMachine::replaceState(std::unique_ptr<State> state) {
 }
 
 void StateMachine::popState() {
+  KLog.put(KLOG_DEB, "STATE MACHINE: REMOVE");
   this->isRemoving = true;
 }
 
 void StateMachine::update() {
-  if (this->isRemoving) {
-    std::cout << "Removing state." << std::endl;
-  }
-  if (this->stateStack.empty()) {
-    std::cout << "Empty." << std::endl;
-  }
-
   if (this->isRemoving && !this->stateStack.empty()) {
-    std::cout << "REM" << std::endl;
+    KLog.put(KLOG_DEB, "State machine is removing top.");
     this->stateStack.top()->cleanup();
     this->stateStack.pop();
 
@@ -54,6 +53,7 @@ void StateMachine::update() {
   }
 
   if (this->isAdding && this->stateBuffer != nullptr) {
+    KLog.put(KLOG_DEB, "State machine is adding new state.");
     this->isAdding = false;
 
     if (!this->empty()) {

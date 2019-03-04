@@ -21,7 +21,6 @@ bool KilnModule::init() {
 }
 
 void KilnModule::start() {
-  printf("MODULE START\n");
   SubModule* sub = dynamic_cast<SubModule*>(this->subState->getActiveState().get());
 
   if (sub) {

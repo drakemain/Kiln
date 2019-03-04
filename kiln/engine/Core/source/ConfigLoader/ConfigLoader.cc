@@ -1,18 +1,18 @@
 #include "../../headers/ConfigLoader/ConfigLoader.h"
+#include "lib/kilnlog/include/KilnLog.h"
 #include <SDL_image.h>
 
 void ConfigLoader::load(const char* filePath) {
   try {
-    printf("\tFetching config from %s.\n", filePath);
+    KLog.put(KLOG_INF, "Fetching config from %s", filePath);
     this->config = cpptoml::parse_file(filePath);
   } catch(cpptoml::parse_exception& e) {
-    printf("\t\tCONFIG ERR: %s\n", e.what());
+    KLog.put(KLOG_WAR, "Failed to fetch config. %s. Using default values.", e.what());
   }
-
-  printf("\t\tSuccessfully loaded config from \"%s\".\n", filePath);
 
   this->configWindow();
   this->configAsset();
+  this->configLogs();
 }
 
 std::string ConfigLoader::title() const {
@@ -25,6 +25,10 @@ const WindowConfig& ConfigLoader::window() const {
 
 const AssetConfig& ConfigLoader::asset() const {
   return this->assetConfig;
+}
+
+const LogConfig& ConfigLoader::logs() const {
+  return this->logConfig;
 }
 
 void ConfigLoader::configWindow() {
@@ -56,4 +60,12 @@ void ConfigLoader::configAsset() {
   if (imgfmt->get_as<bool>("webp").value_or(false)) {
     this->assetConfig.imgfmt = this->assetConfig.imgfmt|IMG_INIT_WEBP;
   }
+}
+
+void ConfigLoader::configLogs() {
+  auto table = this->config->get_table("logs");
+  
+  this->logConfig.level = table->get_as<int>("level").value_or(1);
+  this->logConfig.silent = table->get_as<bool>("silent").value_or(false);
+  this->logConfig.flushOnStart = table->get_as<bool>("flushOnStart").value_or(true);
 }

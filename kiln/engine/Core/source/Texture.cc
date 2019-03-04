@@ -1,5 +1,5 @@
 #include "../headers/Texture.h"
-#include <iostream>
+#include "lib/kilnlog/include/KilnLog.h"
 #include <SDL_image.h>
 
 Texture::Texture() {}
@@ -20,7 +20,7 @@ bool Texture::create(std::string filePath, SDL_Renderer* renderer) {
   SDL_Surface* surface = IMG_Load(filePath.c_str());
 
   if (surface == NULL) {
-    std::cerr << "Failed to create Texture:" << "\n\t" << IMG_GetError() << std::endl;
+    KLog.put(KLOG_ERR, "Failed to create texture! \n\t%s", IMG_GetError());
   } else {
     success = this->create(surface, renderer);
     SDL_FreeSurface(surface);
@@ -64,7 +64,7 @@ void Texture::setHeight(unsigned int height) {
 
 SDL_Texture* Texture::getTexture() const {
   if (!this->texture) {
-    std::cout << "MISSING TEXTURE! Using placeholder." << std::endl;
+    KLog.put(KLOG_ERR, "Texture is missing! Using placeholder instead.");
     return Texture::placeholder->getTexture();
   }
 

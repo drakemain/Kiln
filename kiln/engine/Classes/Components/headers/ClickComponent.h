@@ -3,7 +3,6 @@
 #include "kiln/engine/Classes/Entity/headers/Entity.h"
 #include <SDL_events.h>
 #include <functional>
-#include <iostream>
 
 class ClickComponent : public EventComponent {
 public:

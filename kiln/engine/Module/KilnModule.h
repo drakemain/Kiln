@@ -1,6 +1,6 @@
 #pragma once
-#include <iostream>
 #include <SDL_ttf.h>
+#include <string>
 
 class KilnModule {
 public:

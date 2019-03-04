@@ -1,5 +1,6 @@
 #include "../headers/InputManager.h"
 #include "kiln/engine/Classes/Components/headers/InputComponent.h"
+#include "lib/kilnlog/include/KilnLog.h"
 #include <SDL.h>
 
 std::queue<std::pair<SDL_Keycode, std::function<void()>>>* InputComponent::bindings = new std::queue<std::pair<SDL_Keycode, std::function<void()>>>();
@@ -39,7 +40,7 @@ void InputManager::bind(Sint32 keyCode, Action action) {
 }
 
 void InputManager::bindInputComponents() {
-  printf("\tSetting up input components.\n");
+  KLog.put(KLOG_DEB, "Mapping inputs.");
 
   while(!InputComponent::bindings->empty()) {
     std::pair<SDL_Keycode, Action> binding = InputComponent::bindings->front();

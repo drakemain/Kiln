@@ -2,7 +2,6 @@
 #include "kiln/engine/Definitions/Colors.h"
 #include "kiln/engine/Module/KilnModule.h"
 #include "kiln/engine/Classes/Menu/headers/Button.h"
-#include <iostream>
 
 Menu::Menu(KilnModule* module)
 : SubModule(module) {}

@@ -2,14 +2,12 @@
 #include "kiln/engine/Definitions/Colors.h"
 #include "kiln/engine/Classes/Components/headers/TextComponent.h"
 #include "kiln/engine/Utils/headers/Timer.h"
-#include <iostream>
 
 Stats::Stats(unsigned int samples, bool renderText, TTF_Font* font, SDL_Renderer* renderer) 
 : sampleFrames(samples), renderText(renderText), rendererRef(renderer) {
   if (renderText && font && renderer) {
     this->text = new TextComponent("0.0", font, renderer, KILN_COLOR::ORANGE);
   } else {
-    std::cerr << "Stats wanted to render text but was missing a font or renderer." << std::endl;
     this->renderText = false;
   }
 

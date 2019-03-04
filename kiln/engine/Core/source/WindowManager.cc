@@ -1,10 +1,10 @@
 #include "../headers/WindowManager.h"
 #include "../headers/ConfigLoader/WindowConfig.h"
+#include "lib/kilnlog/include/KilnLog.h"
 #include <SDL.h>
-#include <iostream>
 
 bool WindowManager::init(const WindowConfig& conf) {
-  std::cout << "\tSetting up window manager." << std::endl;
+  KLog.put(KLOG_DEB, "Setting up window manager.");
 
   this->title = conf.title;
   this->WIDTH = conf.w;
@@ -13,20 +13,20 @@ bool WindowManager::init(const WindowConfig& conf) {
   this->window = SDL_CreateWindow(this->title.c_str(), SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, this->WIDTH, this->HEIGHT, SDL_WINDOW_ALLOW_HIGHDPI);
 
   if (this->window == NULL) {
-    std::cerr << "\t\tFailed to init window: " << SDL_GetError() << std::endl;
+    KLog.put(KLOG_ERR, "Failed to initialize window! %s", SDL_GetError());
     return false;
   }
 
   this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
 
   if (this->renderer == NULL) {
-    std::cerr << "\t\tFailed to init renderer: " << SDL_GetError() << std::endl;
+    KLog.put(KLOG_ERR, "Failed to initialize renderer! %s", SDL_GetError());
     return false;
   }
   
   this->setFrameLimit(this->FRAME_LIMIT);
 
-  std::cout << "\t\tWindow Manager ready!" << std::endl;
+  KLog.put(KLOG_DEB, "Window manager initialized.");
 
   return true;
 }
@@ -55,7 +55,7 @@ void WindowManager::setResolution(const Dim newRes) {
   if (this->window) {
     SDL_SetWindowSize(this->window, this->WIDTH, this->HEIGHT);
   } else {
-    std::cout << "Attempted to set resolution while there is no window!" << std::endl;
+    KLog.put(KLOG_WAR, "Attempted to set resolution while there is no window!");
   }
 }
 

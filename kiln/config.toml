@@ -12,3 +12,6 @@ tif = true
 webp = true
 
 [assets.audio]
+
+[logs]
+level = 2

@@ -2,7 +2,7 @@
 #include "kiln/engine/Classes/Components/headers/ClickComponent.h"
 #include "kiln/engine/Classes/Components/headers/SpriteComponent.h"
 #include "kiln/engine/Classes/Components/headers/TextComponent.h"
-#include <iostream>
+#include "lib/kilnlog/include/KilnLog.h"
 
 Button::Button(class Texture* texture) {
   this->click = new ClickComponent();
@@ -41,7 +41,7 @@ void Button::scale(float scale) {
 
 TextComponent* Button::getTextComponent() {
   if (!this->text) {
-    std::cout << "BUTTON HAS NOT INITIALIZED TEXT" << std::endl;
+    KLog.put(KLOG_WAR, "Button text not initialized!");
   }
 
   return this->text;

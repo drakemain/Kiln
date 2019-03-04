@@ -1,6 +1,5 @@
 #include "../headers/ClickComponent.h"
 #include "kiln/engine/Classes/Entity/headers/Entity.h"
-#include <iostream>
 
 bool ClickComponent::wasClicked(FCoordinate mouseLocation, unsigned int boundingWidth, unsigned int boundingHeight) {
   FCoordinate ownerLocation = this->getOwner()->getWorldPosition();

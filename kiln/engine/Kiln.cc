@@ -1,9 +1,9 @@
 #include "Kiln.h"
+#include "lib/kilnlog/include/KilnLog.h"
 #include "Module/KilnModule.h"
 #include "Core/headers/Stats.h"
 #include "Core/headers/ConfigLoader/ConfigLoader.h"
 #include "Definitions/Colors.h"
-#include <iostream>
 #include <SDL.h>
 
 Kiln::Kiln() {}
@@ -11,13 +11,21 @@ Kiln::Kiln() {}
 Kiln::~Kiln() {}
 
 bool Kiln::init(KilnModule& module) {
-  std::cout << "Initializing kiln." << std::endl;
-
   ConfigLoader config;
   config.load("kiln/config.toml");
 
+  LogConfig logConfig = config.logs();
+  KLog.setSilent(logConfig.silent);
+  if (logConfig.flushOnStart) {
+    KLog.flush();
+  }
+  KLog.setLevel(logConfig.level);
+
+  KLog.put(KLOG_DEB, "Initializing Kiln.");
+  // std::cout << "Initializing kiln." << std::endl;
+
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
-    std::cerr << "Failed to init SDL:\n\t|_> " << SDL_GetError() << std::endl;
+    KLog.put(KLOG_ERR, "Failed to initialize SDL! %s", SDL_GetError());
     return false;
   }
 
@@ -41,8 +49,6 @@ bool Kiln::init(KilnModule& module) {
 }
 
 void Kiln::run(KilnModule& module) {
-  std::cout << "RUN" << std::endl;
-  
   // time at the start of a frame in ms
   Uint32 tickStartTime;
   // time at the start of the previous frame in ms
@@ -52,6 +58,7 @@ void Kiln::run(KilnModule& module) {
 
   module.start();
 
+  KLog.put(KLOG_DEB, "Entering core loop.");
   while(isRunning && module.hasSub()) {
     tickStartTime = SDL_GetTicks();
     deltaTime = (float)(tickStartTime - lastTickStartTime) / 1000.f;
@@ -81,7 +88,7 @@ void Kiln::run(KilnModule& module) {
 }
 
 void Kiln::cleanup() {
-  std::cout << "CLEANUP" << std::endl;
+  KLog.put(KLOG_DEB, "Cleaning up core.");
 
   delete this->stats;
 
@@ -94,7 +101,6 @@ void Kiln::cleanup() {
 void Kiln::checkEngineEvent(const SDL_Event* event) {
   if (event) {
     if (event->type == SDL_QUIT) {
-      std::cout << "QUIT EVENT" << std::endl;
       this->isRunning = false;
     }
   }

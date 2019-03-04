@@ -15,3 +15,6 @@ Kiln
 
 # game modules
 kiln/Game/*
+
+# generated logs
+*.log
