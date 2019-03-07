@@ -44,7 +44,7 @@ namespace KMath {
 
       // Check if a vector is zero. Non-int vectors should supply a tolerance.
       bool isZero() { return (this->x == 0.f) && (this->y == 0.f); }
-      bool isZero(float tolerance) { return (std::abs(this->x) <= tolerance) && (std::abs(this->y) <= tolerance); }
+      bool isZero(float tolerance) { return this->isZero() || ((std::abs(this->x) <= tolerance) && (std::abs(this->y) <= tolerance)); }
 
       // Return the magnitude of the vector.
       float magnitude() const { return std::sqrt(this->x*this->x + this->y*this->y); }
@@ -56,7 +56,10 @@ namespace KMath {
       }
 
       inline Vector<T> negate() { return {-this->x, -this->y}; }
+
+      inline void zero() { this->x = 0; this->y = 0; }
     };
+
 
     template <typename T>
     inline Vector<T> interpToConst(const Vector<T> current, const Vector<T>& target, float deltaTime, float interpToSpeed) {

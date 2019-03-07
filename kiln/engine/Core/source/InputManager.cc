@@ -46,6 +46,7 @@ void InputManager::bindInputComponents() {
     std::pair<SDL_Keycode, Action> binding = InputComponent::bindings->front();
     InputComponent::bindings->pop();
 
+    KLog.put(KLOG_DEB, "Mapping input key %d", binding.first);
     this->bindings[binding.first] = binding.second;
   }
 }

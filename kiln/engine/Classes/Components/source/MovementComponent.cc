@@ -6,11 +6,11 @@ MovementComponent::MovementComponent() {}
 MovementComponent::MovementComponent(Entity* owner)
 : Component(owner) {}
 
-void MovementComponent::consumeDirection(Vec direction) {
+void MovementComponent::consumeDirection(const Vec& direction) {
   this->accumulatedDirection = this->accumulatedDirection + direction;
 }
 
-void MovementComponent::consumeDirection(Direction direction) {
+void MovementComponent::consumeDirection(const Direction& direction) {
   switch(direction) {
     case Direction::Up:
       this->consumeDirection({0.f, -1.f}); break;
@@ -40,7 +40,7 @@ void MovementComponent::tick(float deltaTime) {
   }
 
   this->velocity = updatedVelocity;
-  this->accumulatedDirection = {0.f, 0.f};
+  this->accumulatedDirection.zero();
 
   if (!this->velocity.isZero(.01f)) {
     this->updatePosition(deltaTime);
