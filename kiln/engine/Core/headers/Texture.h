@@ -24,6 +24,6 @@ public:
   static Texture* placeholder;
 
 private:
-  class SDL_Texture* texture;
+  class SDL_Texture* texture = nullptr;
   Dim dimensions;
 };
