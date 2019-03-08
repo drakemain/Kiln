@@ -4,6 +4,7 @@
 #include "kiln/engine/States/headers/StateMachine.h"
 #include "kiln/engine/Core/headers/LayerManager.h"
 #include "kiln/engine/Core/headers/EventManager.h"
+#include "lib/kilnlog/include/KilnLog.h"
 
 KilnModule::KilnModule() {
   this->subState = new StateMachine();
@@ -18,6 +19,7 @@ KilnModule::~KilnModule() {
 
 bool KilnModule::init() {
   return true;
+  KLog.put(KLOG_DEB, "Initializing module.");
 }
 
 void KilnModule::start() {
@@ -58,7 +60,8 @@ bool KilnModule::hasSub() {
   return !this->subState->empty();
 }
 
-void KilnModule::bind(Kiln* engine) { 
+void KilnModule::bind(Kiln* engine) {
+  KLog.put(KLOG_DEB, "Binding Kiln to module.");
   this->engine = engine; 
 }
 
@@ -92,6 +95,8 @@ SDL_Renderer* KilnModule::getRenderer() {
 }
 
 void KilnModule::loadSub(SubModule* sub) {
+  KLog.put(KLOG_DEB, "Loading a new submodule from Kiln Module.");
+
   this->loadSubAssets(*sub);
 
   if (this->subState->empty()) {
@@ -120,22 +125,27 @@ void KilnModule::replaceCurrentSub(SubModule* sub) {
 }
 
 void KilnModule::loadSubAssets(SubModule& sub) {
+  KLog.put(KLOG_DEB, "Loading assets for submodule.");
   AssetManager* assets = &this->engine->getManagement()->assetManager;
   SDL_Renderer* renderer = this->engine->getManagement()->windowManager.getRenderer();
 
   for (auto texture : sub.getRequiredAssets().textures) {
+    KLog.put(KLOG_DEB, "TEXTURE: %s : %s", texture.first.c_str(), texture.second.c_str());
     assets->loadTexture(texture.first, texture.second, renderer);
   }
 
   for (auto font : sub.getRequiredAssets().fonts) {
+    KLog.put(KLOG_DEB, "FONT: %s : %s", font.first.first.c_str(), font.first.second.c_str());
     assets->loadFont(font.first.first, font.second, font.first.second);
   }
 
   for (auto sound : sub.getRequiredAssets().sounds) {
+    KLog.put(KLOG_DEB, "SOUND: %s : %s", sound.first.c_str(), sound.second.c_str());
     assets->loadSound(sound.first, sound.second);
   }
 
   for (auto music : sub.getRequiredAssets().music) {
+    KLog.put(KLOG_DEB, "MUSIC: %s : %s", music.first.c_str(), music.second.c_str());
     assets->loadMusic(music.first, music.second);
   }
 }

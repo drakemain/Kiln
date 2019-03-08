@@ -41,8 +41,11 @@ bool Kiln::init(KilnModule& module) {
   this->stats = new Stats(10, true, fpsFont, this->coreManagement.windowManager.getRenderer());
   module.bind(this);
   if (!module.init()) {
+    KLog.put(KLOG_ERR, "Failed to load module! %s", SDL_GetError());
     return false;
   }
+
+  KLog.put(KLOG_INF, "Successfully initialized Kiln Module.");
 
   this->getManagement()->inputManager.bindInputComponents();
   return true;

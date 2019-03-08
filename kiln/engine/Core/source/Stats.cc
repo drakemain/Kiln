@@ -2,12 +2,15 @@
 #include "kiln/engine/Definitions/Colors.h"
 #include "kiln/engine/Classes/Components/headers/TextComponent.h"
 #include "kiln/engine/Utils/headers/Timer.h"
+#include "lib/kilnlog/include/KilnLog.h"
 
 Stats::Stats(unsigned int samples, bool renderText, TTF_Font* font, SDL_Renderer* renderer) 
 : sampleFrames(samples), renderText(renderText), rendererRef(renderer) {
+  KLog.put(KLOG_DEB, "Loading Stats");
   if (renderText && font && renderer) {
     this->text = new TextComponent("0.0", font, renderer, KILN_COLOR::ORANGE);
   } else {
+    KLog.put(KLOG_DEB, "Stats will not render.");
     this->renderText = false;
   }
 

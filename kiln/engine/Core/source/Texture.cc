@@ -2,7 +2,9 @@
 #include "lib/kilnlog/include/KilnLog.h"
 #include <SDL_image.h>
 
-Texture::Texture() {}
+Texture::Texture() {
+  KLog.put(KLOG_DEB, "Created an empty texture.");
+}
 
 Texture::Texture(const Texture& other) {
   this->texture = other.getTexture();
@@ -15,6 +17,7 @@ Texture::~Texture() {
 }
 
 bool Texture::create(std::string filePath, SDL_Renderer* renderer) {
+  KLog.put(KLOG_DEB, "Overwriting existing texture.");
   bool success = false;
 
   SDL_Surface* surface = IMG_Load(filePath.c_str());
@@ -77,6 +80,7 @@ Texture* Texture::copy() {
 
 void Texture::destroy() {
   if (this->texture) {
+    KLog.put(KLOG_DEB, "Destroying existing texture.");
     SDL_DestroyTexture(this->texture);
   }
 

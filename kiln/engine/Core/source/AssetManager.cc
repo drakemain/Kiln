@@ -70,7 +70,7 @@ bool AssetManager::init(SDL_Renderer* renderer, const AssetConfig& config) {
 Texture* AssetManager::loadTexture(std::string path, std::string name, SDL_Renderer* renderer) {
   Texture* texture = new Texture();
   bool success = texture->create(path, renderer);
-
+  
   if (success) {
     KLog.put(KLOG_INF, "Loaded texture %s from %s.", name.c_str(), path.c_str());
     this->TextureMap[name] = texture;
