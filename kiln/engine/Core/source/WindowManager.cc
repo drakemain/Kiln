@@ -32,6 +32,7 @@ bool WindowManager::init(const WindowConfig& conf) {
 }
 
 void WindowManager::cleanup() {
+  KLog.put(KLOG_DEB, "Cleaning up window manager.");
   SDL_DestroyRenderer(this->renderer);
   SDL_DestroyWindow(this->window);
 }

@@ -4,6 +4,9 @@
 #include <queue>
 #include <memory>
 
+
+// TODO: Depricate, create renderer class instead. Layering can be handled 
+// by a vector and some helper methods instead
 class LayerManager {
 public:
   LayerManager();

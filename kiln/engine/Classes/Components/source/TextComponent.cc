@@ -32,11 +32,15 @@ void TextComponent::tick(float deltaTime) {
 void TextComponent::draw(SDL_Renderer* renderer) {
   if (this->text.size() == 0) { return; }
 
+  if (!this->font) {
+    this->clear();
+    return;
+  }
+
   SDL_Surface* surface = TTF_RenderText_Solid(this->font, this->text.c_str(), this->color);
   if (!surface) {
     // TODO: handle missing Texture
     KLog.put(KLOG_WAR, "Failed to render text surface! %s", TTF_GetError());
-    // std::cerr << "Failed to render text surface!\n\t" << TTF_GetError() << std::endl;
   } else {
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 

@@ -41,6 +41,7 @@ AssetManager::~AssetManager() {
 
 bool AssetManager::init(SDL_Renderer* renderer, const AssetConfig& config) {
   KLog.put(KLOG_DEB, "Setting up asset manager.");
+  const char* placeholderTextureLocation = "kiln/assets/img/placeholder-texture.jpg";
 
   int imgFlags = config.imgfmt;
 
@@ -59,7 +60,12 @@ bool AssetManager::init(SDL_Renderer* renderer, const AssetConfig& config) {
     return false;
   }
 
-  Texture::placeholder = this->loadTexture("kiln/assets/img/placeholder-texture.jpg", renderer);
+  Texture::placeholder = this->loadTexture(placeholderTextureLocation, renderer);
+
+  if (!Texture::placeholder) {
+    KLog.put(KLOG_ERR, "The placeholder texture could not be loaded. A placeholder is required. Ensure one is supplied at \"%s\".", placeholderTextureLocation);
+    return false;
+  }
 
   KLog.put(KLOG_DEB, "Asset Manager initialized!");
 

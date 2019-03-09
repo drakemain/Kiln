@@ -1,12 +1,15 @@
 #include "../headers/Entity.h"
 #include "../../Components/headers/Component.h"
 #include "../../Components/headers/SpriteComponent.h"
+#include "lib/kilnlog/include/KilnLog.h"
 
 Entity::Entity() {}
 
 Entity::~Entity() {
   for (Component* comp : this->boundComponents) {
-    delete comp;
+    if (comp) {
+      delete comp;
+    }
   }
 }
 
@@ -48,7 +51,12 @@ void Entity::scale(float scale) {
   }
 }
 
-void Entity::bindComponent(Component* component) {  
+void Entity::bindComponent(Component* component) {
+  if (!component) { 
+    KLog.put(KLOG_WAR, "Attempted to bind component to entity, but component was not initialized.");
+    return; 
+  }
+
   if (component->getOwner() == this) {
     return;
   }

@@ -4,6 +4,7 @@
 #include "kiln/engine/Classes/Components/headers/EventComponent.h"
 #include "kiln/engine/Classes/Components/headers/SpriteComponent.h"
 #include "kiln/engine/Core/headers/LayerManager.h"
+#include "lib/kilnlog/include/KilnLog.h"
 
 SubModule::SubModule(class KilnModule* mod): module(mod) {
   this->layers = new LayerManager();
@@ -32,6 +33,8 @@ void SubModule::tick(float detlaTime) {
 }
 
 void SubModule::start() {
+  KLog.put(KLOG_DEB, "Submodule starting.");
+
   for (Entity* entity : this->entities) {
     entity->start();
   }

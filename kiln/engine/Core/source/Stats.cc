@@ -22,6 +22,7 @@ Stats::Stats(unsigned int samples, bool renderText, TTF_Font* font, SDL_Renderer
 }
 
 Stats::~Stats() {
+  KLog.put(KLOG_DEB, "Destroying Stats.");
   delete this->timer;
 }
 
