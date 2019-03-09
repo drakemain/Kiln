@@ -18,6 +18,7 @@ class SubModule : public State {
   friend class KilnModule;
 public:
   SubModule(class KilnModule* mod);
+  ~SubModule();
 
 protected:
   virtual void render(class SDL_Renderer* renderer) override;

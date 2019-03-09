@@ -4,6 +4,10 @@ title = "Kiln"
 dim_w = 1920
 dim_h = 1080
 
+[window.renderer]
+vsync = true
+hwaccel = true
+
 [assets]
 [assets.imgfmt]
 jpg = true

@@ -1,4 +1,5 @@
 #include "../headers/LayerManager.h"
+#include "lib/kilnlog/include/KilnLog.h"
 
 LayerManager::LayerManager() {
   this->layers = new std::vector<std::unique_ptr<std::vector<class Entity*>>>();
@@ -13,6 +14,8 @@ LayerManager::~LayerManager() {
 }
 
 void LayerManager::add(class Entity* entity) {
+  KLog.put(KLOG_DEB, "Added renderable entity to layer manager.");
+
   if (!entity) { return; }
 
   if (this->entityMap->find(entity) == this->entityMap->end()) {
@@ -116,5 +119,14 @@ void LayerManager::removeFromLayer(Entity* entity) {
 
   if (this->layers->at(currentLayer)->empty()) {
     this->layers->erase(this->layers->begin() + currentLayer);
+  }
+
+  int counter = 0;
+  for (auto it = this->layers->begin(); it != this->layers->end(); ++it) {
+    printf("Layer %d:\n", counter);
+
+    for (Entity* entity : *it->get()) {
+      printf("\t%s\n", typeid(entity).name());
+    }
   }
 }

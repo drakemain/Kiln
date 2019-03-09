@@ -65,6 +65,10 @@ void Kiln::run(KilnModule& module) {
   while(isRunning && module.hasSub()) {
     tickStartTime = SDL_GetTicks();
     deltaTime = (float)(tickStartTime - lastTickStartTime) / 1000.f;
+
+    if (this->quit) {
+      module.quit();
+    }
     
     while(this->coreManagement.inputManager.poll()) {
       const SDL_Event* polledEvent = this->coreManagement.inputManager.getLastEvent();
@@ -84,13 +88,24 @@ void Kiln::run(KilnModule& module) {
 
     module.updateSubState();
 
-    this->stats->incrementFrameCount();
+    // Abide by frame limit
+    // Not an ideal solution; temporary
+    float tickTime = SDL_GetTicks() - tickStartTime;
+    Uint32 minFrameTime = (Uint32)(this->coreManagement.windowManager.getMinFrameTimePerMilli());
+    if (tickTime < minFrameTime) {
+      SDL_Delay(minFrameTime - tickTime);
+    }
 
+    this->stats->incrementFrameCount();
     lastTickStartTime = tickStartTime;
   }
 }
 
 void Kiln::cleanup() {
+  if (this->quit) {
+    KLog.put(KLOG_DEB, "All submodules were popped.");
+  }
+
   KLog.put(KLOG_DEB, "Cleaning up core.");
 
   delete this->stats;
@@ -104,7 +119,7 @@ void Kiln::cleanup() {
 void Kiln::checkEngineEvent(const SDL_Event* event) {
   if (event) {
     if (event->type == SDL_QUIT) {
-      this->isRunning = false;
+      this->quit = true;
     }
   }
 }

@@ -9,6 +9,10 @@ SubModule::SubModule(class KilnModule* mod): module(mod) {
   this->layers = new LayerManager();
 }
 
+SubModule::~SubModule() {
+  delete this->layers;
+}
+
 void SubModule::render(SDL_Renderer* renderer) {
   for (size_t i = 0; i < this->layers->getLayerCount(); ++i) {
     const std::vector<Entity*>* layer = this->layers->getLayer(i);

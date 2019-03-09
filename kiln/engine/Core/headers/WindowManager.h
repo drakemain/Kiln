@@ -14,6 +14,10 @@ public:
 
   void setResolution(const Dim newRes);
 
+  float getFrameLimit() const;
+  float getMinFrameTimePerSecond() const;
+  float getMinFrameTimePerMilli() const;
+
 private:
   void setFrameLimit(float frameLimit);
 
@@ -25,6 +29,7 @@ private:
   unsigned int WIDTH;
   unsigned int HEIGHT;
 
-  float FRAME_LIMIT = 60.f;
-  float MIN_FRAME_TIME;
+  float FRAME_LIMIT_PER_SECOND = 120.f;
+  float MIN_FRAME_TIME_S;
+  float MIN_FRAME_TIME_MS;
 };

@@ -30,6 +30,7 @@ private:
   CoreManagement coreManagement;
   
   bool isRunning = true;
+  bool quit = false;
 
   class Stats* stats;
 };

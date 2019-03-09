@@ -35,9 +35,18 @@ void ConfigLoader::configWindow() {
   this->windowConfig.title = this->title();
 
   auto windowConf = this->config->get_table("window");
+  auto rendererConf = windowConf->get_table("renderer");
 
   this->windowConfig.w = windowConf->get_as<unsigned int>("dim_w").value_or(640);
   this->windowConfig.h = windowConf->get_as<unsigned int>("dim_h").value_or(480);
+
+  if (rendererConf->get_as<bool>("vsync").value_or(true)) {
+    this->windowConfig.renderFlags = this->windowConfig.renderFlags | SDL_RENDERER_PRESENTVSYNC;
+  }
+
+  if (rendererConf->get_as<bool>("hwaccel").value_or(false)) {
+    this->windowConfig.renderFlags = this->windowConfig.renderFlags | SDL_RENDERER_ACCELERATED;
+  }
 }
 
 void ConfigLoader::configAsset() {

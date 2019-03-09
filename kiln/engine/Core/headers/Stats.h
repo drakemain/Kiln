@@ -19,9 +19,9 @@ private:
   void update();
 
   unsigned int frames = 0;
-  unsigned int fps = 0;
+  float fps = 0;
 
-  unsigned int sampleFrames = 10;
+  unsigned int sampleFrames = 100;
 
   bool renderText;
   class TextComponent* text = nullptr;

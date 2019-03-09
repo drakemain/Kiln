@@ -3,6 +3,8 @@
 #include "kiln/engine/Classes/Components/headers/TextComponent.h"
 #include "kiln/engine/Utils/headers/Timer.h"
 #include "lib/kilnlog/include/KilnLog.h"
+#include <sstream>
+#include <iomanip>
 
 Stats::Stats(unsigned int samples, bool renderText, TTF_Font* font, SDL_Renderer* renderer) 
 : sampleFrames(samples), renderText(renderText), rendererRef(renderer) {
@@ -51,9 +53,12 @@ void Stats::update() {
   timer->reset();
 
   this->fps = frames / interval;
+  std::ostringstream fpsStr;
+
+  fpsStr << std::fixed << std::setprecision(1) << fps;
 
   if (this->renderText && this->rendererRef) {
-    this->text->setText("FPS: " + std::to_string(this->fps));
+    this->text->setText("FPS: " + fpsStr.str());
   }
 
   this->frames = 0;

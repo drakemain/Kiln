@@ -17,14 +17,14 @@ bool WindowManager::init(const WindowConfig& conf) {
     return false;
   }
 
-  this->renderer = SDL_CreateRenderer(this->window, -1, SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
+  this->renderer = SDL_CreateRenderer(this->window, -1, conf.renderFlags);
 
   if (this->renderer == NULL) {
     KLog.put(KLOG_ERR, "Failed to initialize renderer! %s", SDL_GetError());
     return false;
   }
   
-  this->setFrameLimit(this->FRAME_LIMIT);
+  this->setFrameLimit(this->FRAME_LIMIT_PER_SECOND);
 
   KLog.put(KLOG_DEB, "Window manager initialized.");
 
@@ -59,7 +59,20 @@ void WindowManager::setResolution(const Dim newRes) {
   }
 }
 
+float WindowManager::getFrameLimit() const {
+  return this->FRAME_LIMIT_PER_SECOND;
+}
+
+float WindowManager::getMinFrameTimePerSecond() const {
+  return this->MIN_FRAME_TIME_S;
+}
+
+float WindowManager::getMinFrameTimePerMilli() const {
+  return this->MIN_FRAME_TIME_MS;
+}
+
 void WindowManager::setFrameLimit(float frameLimit) {
-  this->FRAME_LIMIT = frameLimit;
-  this->MIN_FRAME_TIME = 1000.f / frameLimit;
+  this->FRAME_LIMIT_PER_SECOND = frameLimit;
+  this->MIN_FRAME_TIME_S = 1.f / frameLimit;
+  this->MIN_FRAME_TIME_MS = 1000.f / frameLimit;
 }
