@@ -33,7 +33,7 @@ void SubModule::tick(float detlaTime) {
 }
 
 void SubModule::start() {
-  KLog.put(KLOG_DEB, "Submodule starting.");
+  KLog.put(KLOG_INF, "Submodule is starting.");
 
   for (Entity* entity : this->entities) {
     entity->start();

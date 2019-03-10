@@ -47,6 +47,9 @@ private:
   std::map<const char*, Mix_Chunk*> SoundMap;
 
   Texture* placeholderTexture = nullptr;
+  TTF_Font* placeholderFont = nullptr;
+  Mix_Music* placeholderMusic = nullptr;
+  Mix_Chunk* placeholderSound = nullptr;
 
   class SDL_Renderer* renderer;
 };

@@ -10,24 +10,36 @@ AssetManager::~AssetManager() {
 
   for (auto textureItr = this->TextureMap.begin(); textureItr != this->TextureMap.end(); ++textureItr) {
     delete textureItr->second;
+    KLog.put(KLOG_DEB, "Cleanup TEXTURE: %s", textureItr->first);
   }
 
   for (auto fontItr = this->FontMap.begin(); fontItr != this->FontMap.end(); ++fontItr) {
     TTF_CloseFont(fontItr->second);
-    KLog.put(KLOG_INF, "Cleanup FONT: %s", fontItr->first);
+    KLog.put(KLOG_DEB, "Cleanup FONT: %s", fontItr->first);
   }
 
   for (auto musicItr = this->MusicMap.begin(); musicItr != this->MusicMap.end(); ++musicItr) {
     Mix_FreeMusic(musicItr->second);
-    KLog.put(KLOG_INF, "Cleanup MUSIC: %s", musicItr->first);
+    KLog.put(KLOG_DEB, "Cleanup MUSIC: %s", musicItr->first);
   }
 
   for (auto soundIter = this->SoundMap.begin(); soundIter != this->SoundMap.end(); ++soundIter) {
     Mix_FreeChunk(soundIter->second);
-    KLog.put(KLOG_INF, "Cleanup SOUND: %s", soundIter->first);
+    KLog.put(KLOG_DEB, "Cleanup SOUND: %s", soundIter->first);
   }
 
-  delete this->placeholderTexture;
+  if (this->placeholderTexture) {
+    delete this->placeholderTexture;
+  }
+  if (this->placeholderFont) {
+    TTF_CloseFont(this->placeholderFont);
+  }
+  if (this->placeholderMusic) {
+    Mix_FreeMusic(this->placeholderMusic);
+  }
+  if (this->placeholderSound) {
+    Mix_FreeChunk(this->placeholderSound);
+  }
 
   IMG_Quit();
   TTF_Quit();
@@ -62,7 +74,7 @@ bool AssetManager::init(SDL_Renderer* renderer, const AssetConfig& config) {
   }
 
   if (!this->loadPlaceholders()) {
-    KLog.put(KLOG_ERR, "One or more placeholder assets failed to load.");
+    KLog.put(KLOG_ERR, "One or more placeholder assets failed to load. %s", SDL_GetError());
     return false;
   }
 
@@ -79,7 +91,7 @@ Texture* AssetManager::loadTexture(const char* path, const char* identifier) {
     KLog.put(KLOG_INF, "Loaded texture \"%s\" from \"%s\".", identifier, path);
   } else {
     KLog.put(KLOG_WAR, "Failed to load texture \"%s\" from \"%s\"", identifier, path);
-    texture = this->placeholderTexture;
+    return this->placeholderTexture;
   }
 
   this->TextureMap.insert({identifier, texture});
@@ -117,9 +129,9 @@ TTF_Font* AssetManager::loadFont(const char* path, int size, const char* identif
 
   if (!font) {
     KLog.put(KLOG_WAR, "Failed to load font \"%s\" from \"%s\". \"%s\"", identifier, path, TTF_GetError());
-    // TODO: Placeholder font
+    return this->placeholderFont;
   } else {
-    KLog.put(KLOG_INF, "Loaded font %dpt font \"%s\" from \"%s\"", size, identifier, path);
+    KLog.put(KLOG_INF, "Loaded %dpt font \"%s\" from \"%s\"", size, identifier, path);
   }
 
   this->FontMap.insert({identifier, font});
@@ -127,13 +139,11 @@ TTF_Font* AssetManager::loadFont(const char* path, int size, const char* identif
 }
 
 TTF_Font* AssetManager::fetchFont(const char* identifier) {
-  // TODO: handle key DNE
   auto itr = this->FontMap.find(identifier);
 
   if (itr == this->FontMap.end()) {
     KLog.put(KLOG_WAR, "Failed to fetch font \"%s\".", identifier);
-    // TODO: Return placeholder
-    return nullptr;
+    return this->placeholderFont;
   }
 
   return itr->second;
@@ -143,7 +153,7 @@ void AssetManager::unloadFont(const char* identifier) {
   auto itr = this->FontMap.find(identifier);
 
   if (itr == this->FontMap.end()) {
-    KLog.put(KLOG_WAR,  "Attempted to unload font \"%s\", but it wasn't in the texture map.", identifier);
+    KLog.put(KLOG_WAR,  "Attempted to unload font \"%s\", but it wasn't in the font map.", identifier);
     return;
   }
 
@@ -159,7 +169,7 @@ Mix_Music* AssetManager::loadMusic(const char* path, const char* identifier) {
 
   if (!music) {
     KLog.put(KLOG_WAR, "Failed to load music \"%s\" from \"%s\". %s", identifier, path, Mix_GetError());
-    return nullptr;
+    return this->placeholderMusic;
   }
 
   KLog.put(KLOG_INF, "Loaded music \"%s\" from \"%s\"", identifier, path);
@@ -173,8 +183,7 @@ Mix_Music* AssetManager::fetchMusic(const char* identifier) {
 
   if (itr == this->MusicMap.end()) {
    KLog.put(KLOG_WAR, "Failed to fetch music \"%s\".", identifier);
-    // TODO: Return placeholder
-    return nullptr;
+    return this->placeholderMusic;
   }
 
   return itr->second;
@@ -184,7 +193,7 @@ void AssetManager::unloadMusic(const char* identifier) {
   auto itr = this->MusicMap.find(identifier);
 
   if (itr == this->MusicMap.end()) {
-    KLog.put(KLOG_WAR, "Attempted to unload music \"%s\", but it wasn't in the texture map.", identifier);
+    KLog.put(KLOG_WAR, "Attempted to unload music \"%s\", but it wasn't in the music map.", identifier);
     return;
   }
 
@@ -201,7 +210,7 @@ Mix_Chunk* AssetManager::loadSound(const char* path, const char* identifier) {
 
   if (!sound) {
     KLog.put(KLOG_WAR, "Failed to load sound \"%s\" from \"%s\". %s", identifier, path, Mix_GetError());
-    return nullptr;
+    return this->placeholderSound;
   }
 
   KLog.put(KLOG_INF, "Loaded sound \"%s\" from \"%s\"", identifier, path);
@@ -215,8 +224,7 @@ Mix_Chunk* AssetManager::fetchSound(const char* identifier) {
 
   if (itr == this->SoundMap.end()) {
    KLog.put(KLOG_WAR, "Failed to fetch sound \"%s\".", identifier);
-    // TODO: Return placeholder
-    return nullptr;
+    return this->placeholderSound;
   }
 
   return itr->second;
@@ -226,7 +234,7 @@ void AssetManager::unloadSound(const char* identifier) {
   auto itr = this->SoundMap.find(identifier);
 
   if (itr == this->SoundMap.end()) {
-    KLog.put(KLOG_WAR, "Attempted to unload sound \"%s\", but it wasn't in the texture map.", identifier);
+    KLog.put(KLOG_WAR, "Attempted to unload sound \"%s\", but it wasn't in the sound map.", identifier);
     return;
   }
 
@@ -260,9 +268,12 @@ Mix_Chunk* AssetManager::loadSound(const char* path) {
 bool AssetManager::loadPlaceholders() {
   KLog.put(KLOG_INF, "Loading placeholder assets.");
   this->placeholderTexture = loadTexture("kiln/assets/img/placeholder-texture.jpg");
-  // placehoder font
-  // placeholder music
-  // placeholder sound
+  this->placeholderFont = loadFont("kiln/assets/font/RobotoMono-Regular.ttf", 32);
+  this->placeholderMusic = loadMusic("kiln/assets/audio/sounds/win98.wav");
+  this->placeholderSound = loadSound("kiln/assets/audio/sounds/win98.wav");
 
-  return this->placeholderTexture;
+  return this->placeholderTexture
+  && this->placeholderFont
+  && this->placeholderMusic
+  && this->placeholderSound;
 }

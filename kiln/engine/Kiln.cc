@@ -30,10 +30,12 @@ bool Kiln::init(KilnModule& module) {
   }
 
   if (!this->coreManagement.windowManager.init(config.window())) {
+    KLog.put(KLOG_ERR, "The window manager failed to initialize.");
     return false;
   }
 
   if (!this->coreManagement.assetManager.init(this->coreManagement.windowManager.getRenderer(), config.asset())) {
+    KLog.put(KLOG_ERR, "The asset manager failed to initialize.");
     return false;
   }
 
@@ -108,7 +110,9 @@ void Kiln::cleanup() {
 
   KLog.put(KLOG_DEB, "Cleaning up core.");
 
-  delete this->stats;
+  if (this->stats) {
+    delete this->stats;
+  }
 
   this->coreManagement.windowManager.cleanup();
 

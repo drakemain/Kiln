@@ -18,4 +18,4 @@ webp = true
 [assets.audio]
 
 [logs]
-level = 2
+level = 2 # -1<->2

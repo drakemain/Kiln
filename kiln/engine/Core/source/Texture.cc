@@ -14,9 +14,7 @@ Texture* Texture::newTexture(const char* path, SDL_Renderer* renderer) {
   return texture;
 }
 
-Texture::Texture() {
-  KLog.put(KLOG_DEB, "Created an empty texture.");
-}
+Texture::Texture() {}
 
 Texture::Texture(const Texture& other) {
   this->texture = other.getTexture();
@@ -33,7 +31,6 @@ Texture::~Texture() {
 }
 
 bool Texture::create(const char* filePath, SDL_Renderer* renderer) {
-  KLog.put(KLOG_DEB, "Creating new texture.");
   bool success = false;
 
   SDL_Surface* surface = IMG_Load(filePath);

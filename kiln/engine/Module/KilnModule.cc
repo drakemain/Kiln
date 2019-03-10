@@ -23,6 +23,7 @@ bool KilnModule::init() {
 }
 
 void KilnModule::start() {
+  KLog.put(KLOG_INF, "Kiln Module is starting.");
   SubModule* sub = dynamic_cast<SubModule*>(this->subState->getActiveState().get());
 
   if (sub) {
@@ -129,22 +130,22 @@ void KilnModule::loadSubAssets(SubModule& sub) {
   AssetManager* assets = &this->engine->getManagement()->assetManager;
 
   for (auto texture : sub.getRequiredAssets().textures) {
-    KLog.put(KLOG_DEB, "TEXTURE: %s : %s", texture.first, texture.second);
+    KLog.put(KLOG_DEB, "SUB DEP TEXTURE: %s : %s", texture.first, texture.second);
     assets->loadTexture(texture.first, texture.second);
   }
 
   for (auto font : sub.getRequiredAssets().fonts) {
-    KLog.put(KLOG_DEB, "FONT: %s : %s", font.first.first, font.first.second);
+    KLog.put(KLOG_DEB, "SUB DEP FONT: %s : %s", font.first.first, font.first.second);
     assets->loadFont(font.first.first, font.second, font.first.second);
   }
 
   for (auto sound : sub.getRequiredAssets().sounds) {
-    KLog.put(KLOG_DEB, "SOUND: %s : %s", sound.first, sound.second);
+    KLog.put(KLOG_DEB, "SUB DEP SOUND: %s : %s", sound.first, sound.second);
     assets->loadSound(sound.first, sound.second);
   }
 
   for (auto music : sub.getRequiredAssets().music) {
-    KLog.put(KLOG_DEB, "MUSIC: %s : %s", music.first, music.second);
+    KLog.put(KLOG_DEB, "SUB DEP MUSIC: %s : %s", music.first, music.second);
     assets->loadMusic(music.first, music.second);
   }
 }

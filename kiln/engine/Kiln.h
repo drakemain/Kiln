@@ -32,5 +32,5 @@ private:
   bool isRunning = true;
   bool quit = false;
 
-  class Stats* stats;
+  class Stats* stats = nullptr;
 };
