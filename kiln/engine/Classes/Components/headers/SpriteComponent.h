@@ -20,8 +20,11 @@ public:
   void setScale(float scale);
   void setRotation(float degrees);
   void setTexture(class Texture* texture);
+
+protected:
   void setTexture(struct SDL_Texture* texture);
 
+public:
   FCoordinate getWorldPosition() const;
   Dim getDimensions() const;
   float getRotationDegrees() const;
@@ -29,6 +32,8 @@ public:
 
   virtual void render(struct SDL_Renderer*);
   virtual void clear();
+
+  bool shouldRender = true;
 
 private:
   Dim originalDim;

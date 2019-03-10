@@ -23,10 +23,10 @@ public:
   void bindEntity(class Entity* entity);
   void bindEventComponent(class EventComponent* component);
   void bindInput(Uint8, void(*)(void));
-  class Texture* fetchTexture(std::string name);
-  TTF_Font* fetchFont(std::string name);
-  void playSound(std::string soundName, int loops);
-  void playMusic(std::string musicName);
+  class Texture* fetchTexture(const char* name);
+  TTF_Font* fetchFont(const char* name);
+  void playSound(const char* soundName, int loops);
+  void playMusic(const char* musicName);
   class SDL_Renderer* getRenderer();
 
   /* Submodule methods */

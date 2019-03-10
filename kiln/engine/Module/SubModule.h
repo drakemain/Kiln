@@ -4,7 +4,7 @@
 #include <vector>
 
 // filename, reference name
-typedef std::pair<std::string, std::string> AssetPair;
+typedef std::pair<const char*, const char*> AssetPair;
 
 struct AssetDependencies {
   std::vector<AssetPair> textures;

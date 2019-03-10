@@ -2,6 +2,18 @@
 #include "lib/kilnlog/include/KilnLog.h"
 #include <SDL_image.h>
 
+Texture* Texture::newTexture(const char* path, SDL_Renderer* renderer) {
+  Texture* texture = new Texture();
+
+  if (!texture->create(path, renderer)) {
+    KLog.put(KLOG_WAR, "Texture factory failed from \"%s\"", path);
+    delete texture;
+    return nullptr;
+  }
+
+  return texture;
+}
+
 Texture::Texture() {
   KLog.put(KLOG_DEB, "Created an empty texture.");
 }
@@ -12,18 +24,22 @@ Texture::Texture(const Texture& other) {
   this->dimensions.w = other.getWidth();
 }
 
+Texture::Texture(const char* path, SDL_Renderer* renderer) {
+  this->create(path, renderer);
+}
+
 Texture::~Texture() {
   this->destroy();
 }
 
-bool Texture::create(std::string filePath, SDL_Renderer* renderer) {
-  KLog.put(KLOG_DEB, "Overwriting existing texture.");
+bool Texture::create(const char* filePath, SDL_Renderer* renderer) {
+  KLog.put(KLOG_DEB, "Creating new texture.");
   bool success = false;
 
-  SDL_Surface* surface = IMG_Load(filePath.c_str());
+  SDL_Surface* surface = IMG_Load(filePath);
 
   if (surface == NULL) {
-    KLog.put(KLOG_ERR, "Failed to create texture! \n\t%s", IMG_GetError());
+    KLog.put(KLOG_ERR, "Failed to create texture! %s", IMG_GetError());
   } else {
     success = this->create(surface, renderer);
     SDL_FreeSurface(surface);
@@ -67,8 +83,8 @@ void Texture::setHeight(unsigned int height) {
 
 SDL_Texture* Texture::getTexture() const {
   if (!this->texture) {
-    KLog.put(KLOG_ERR, "Texture is missing! Using placeholder instead.");
-    return Texture::placeholder->getTexture();
+    KLog.put(KLOG_WAR, "Attempted to get SDL_Texture from Texture wrapper, but it is null!");
+    return nullptr;
   }
 
   return this->texture;

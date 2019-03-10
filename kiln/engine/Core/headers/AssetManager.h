@@ -2,49 +2,51 @@
 #include <SDL_ttf.h>
 #include <SDL_image.h>
 #include <SDL_mixer.h>
-#include <string>
 #include <map>
-
-class Texture;
 
 class AssetManager {
 public:
   AssetManager();
   ~AssetManager();
 
-  bool init(SDL_Renderer* renderer, const struct AssetConfig&);
+  bool init(class SDL_Renderer*, const struct AssetConfig&);
 
-  // load an image as a Texture and instert it into the sprite map
-  Texture* loadTexture(std::string path, std::string name, SDL_Renderer* renderer);
   // load a texture that won't be managed by the asset manager
-  Texture* loadTexture(std::string path, SDL_Renderer* renderer);
+  class Texture* loadTexture(const char* path, const char* identifier);
   // fetch a texture by name from the map
-  Texture* fetchTexture(std::string name);
+  class Texture* fetchTexture(const char* identifier);
   // destructs the texture and removes it from the map
-  void unloadTexture(std::string name);
+  void unloadTexture(const char* identifier);
 
   // load a font from a file and store it in the font map
-  TTF_Font* loadFont(std::string path, int size, std::string name);
-  // load a font that won't be managed by the asset manager
-  TTF_Font* loadFont(std::string path, int size);
+  TTF_Font* loadFont(const char* path, int size, const char* identifier);
   // fetch a font from the font map
-  TTF_Font* fetchFont(std::string name);
+  TTF_Font* fetchFont(const char* identifier);
   // destruct and remove a font
-  void unloadFont(std::string name);
+  void unloadFont(const char* identifier);
 
-  Mix_Music* loadMusic(std::string path, std::string name);
-  Mix_Music* loadMusic(std::string path);
-  Mix_Music* fetchMusic(std::string name);
-  void unloadMusic(std::string name);
+  Mix_Music* loadMusic(const char* path, const char* identifier);
+  Mix_Music* fetchMusic(const char* identifier);
+  void unloadMusic(const char* identifier);
 
-   Mix_Chunk* loadSound(std::string path, std::string name);
-   Mix_Chunk* loadSound(std::string path);
-   Mix_Chunk* fetchSound(std::string name);
-  void unloadSound(std::string name);
+  Mix_Chunk* loadSound(const char* path, const char* identifier);
+  Mix_Chunk* fetchSound(const char* identifier);
+  void unloadSound(const char* identifier);
 
 private:
-  std::map<std::string, Texture*> TextureMap;
-  std::map<std::string, TTF_Font*> FontMap;
-  std::map<std::string, Mix_Music*> MusicMap;
-  std::map<std::string, Mix_Chunk*> SoundMap;
+  Texture* loadTexture(const char* path);
+  TTF_Font* loadFont(const char* path, int size);
+  Mix_Music* loadMusic(const char* path);
+  Mix_Chunk* loadSound(const char* path);
+
+  bool loadPlaceholders();
+
+  std::map<const char*, Texture*> TextureMap;
+  std::map<const char*, TTF_Font*> FontMap;
+  std::map<const char*, Mix_Music*> MusicMap;
+  std::map<const char*, Mix_Chunk*> SoundMap;
+
+  Texture* placeholderTexture = nullptr;
+
+  class SDL_Renderer* renderer;
 };

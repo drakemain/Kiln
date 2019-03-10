@@ -39,15 +39,13 @@ void SpriteComponent::setScale(float scale) {
 }
 
 void SpriteComponent::setTexture(Texture* texture) {
-  Texture* textureToApply = texture;
-
-  if (!textureToApply) {
-    KLog.put(KLOG_WAR, "Sprite component tried to set null texture. Using placeholder.");
-    textureToApply = Texture::placeholder;
+  if (!texture) {
+    KLog.put(KLOG_WAR, "Sprite component tried to set null texture.");
+    return;
   }
 
-  this->setTexture(textureToApply->getTexture());
-  this->originalDim = {textureToApply->getWidth(), textureToApply->getHeight()};
+  this->setTexture(texture->getTexture());
+  this->originalDim = {texture->getWidth(), texture->getHeight()};
   this->renderDim = originalDim;
 }
 
@@ -73,11 +71,14 @@ SDL_Texture* SpriteComponent::getTexture() {
 }
 
 void SpriteComponent::render(SDL_Renderer* renderer) {
+  if (!this->shouldRender) { return; }
+
   SDL_Texture* texture = this->getTexture();
   
   if (!texture) {
-    KLog.put(KLOG_WAR, "SpriteComponent has null texture.");
-    texture = Texture::placeholder->getTexture();
+    KLog.put(KLOG_WAR, "Cannot render SpriteComponent: null texture.");
+    this->shouldRender = false;
+    return;
   }
 
   SDL_Rect container;

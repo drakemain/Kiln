@@ -42,11 +42,12 @@ void Entity::setWorldPosition(FCoordinate position) {
 }
 
 void Entity::scale(float scale) {
-  for (Component* comp : this->boundComponents) {
-    SpriteComponent* sprite = dynamic_cast<SpriteComponent*>(comp);
+  std::vector<SpriteComponent*> spriteComps;
+  this->getComponentsByType<SpriteComponent*>(spriteComps);
 
-    if (sprite) {
-      sprite->setScale(scale);
+  for (SpriteComponent* spriteComp : spriteComps) {
+    if (spriteComp) {
+      spriteComp->setScale(scale);
     }
   }
 }

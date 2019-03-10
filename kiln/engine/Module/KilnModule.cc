@@ -77,15 +77,15 @@ void KilnModule::bindInput(Uint8 keyCode, void(*action)(void)) {
   this->engine->getManagement()->inputManager.bind(keyCode, action);
 }
 
-Texture* KilnModule::fetchTexture(std::string name) {
+Texture* KilnModule::fetchTexture(const char* name) {
   return this->engine->getManagement()->assetManager.fetchTexture(name);
 }
 
-TTF_Font* KilnModule::fetchFont(std::string name) {
+TTF_Font* KilnModule::fetchFont(const char* name) {
   return this->engine->getManagement()->assetManager.fetchFont(name);
 }
 
-void KilnModule::playSound(std::string soundName, int loops) {
+void KilnModule::playSound(const char* soundName, int loops) {
   Mix_Chunk* sound = this->engine->getManagement()->assetManager.fetchSound(soundName);
   Mix_PlayChannel(-1, sound, loops);
 }
@@ -127,25 +127,24 @@ void KilnModule::replaceCurrentSub(SubModule* sub) {
 void KilnModule::loadSubAssets(SubModule& sub) {
   KLog.put(KLOG_DEB, "Loading assets for submodule.");
   AssetManager* assets = &this->engine->getManagement()->assetManager;
-  SDL_Renderer* renderer = this->engine->getManagement()->windowManager.getRenderer();
 
   for (auto texture : sub.getRequiredAssets().textures) {
-    KLog.put(KLOG_DEB, "TEXTURE: %s : %s", texture.first.c_str(), texture.second.c_str());
-    assets->loadTexture(texture.first, texture.second, renderer);
+    KLog.put(KLOG_DEB, "TEXTURE: %s : %s", texture.first, texture.second);
+    assets->loadTexture(texture.first, texture.second);
   }
 
   for (auto font : sub.getRequiredAssets().fonts) {
-    KLog.put(KLOG_DEB, "FONT: %s : %s", font.first.first.c_str(), font.first.second.c_str());
+    KLog.put(KLOG_DEB, "FONT: %s : %s", font.first.first, font.first.second);
     assets->loadFont(font.first.first, font.second, font.first.second);
   }
 
   for (auto sound : sub.getRequiredAssets().sounds) {
-    KLog.put(KLOG_DEB, "SOUND: %s : %s", sound.first.c_str(), sound.second.c_str());
+    KLog.put(KLOG_DEB, "SOUND: %s : %s", sound.first, sound.second);
     assets->loadSound(sound.first, sound.second);
   }
 
   for (auto music : sub.getRequiredAssets().music) {
-    KLog.put(KLOG_DEB, "MUSIC: %s : %s", music.first.c_str(), music.second.c_str());
+    KLog.put(KLOG_DEB, "MUSIC: %s : %s", music.first, music.second);
     assets->loadMusic(music.first, music.second);
   }
 }

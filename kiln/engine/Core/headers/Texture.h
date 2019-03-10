@@ -6,11 +6,16 @@
 class Texture {
 public:
   Texture();
-  Texture(const class Texture& texture);
   ~Texture();
-  bool create(std::string filePath, class SDL_Renderer* renderer);
+
+private:
+  Texture(const class Texture& texture);
+  Texture(const char* path, class SDL_Renderer* renderer);
+
+  bool create(const char* filePath, class SDL_Renderer* renderer);
   bool create(class SDL_Surface* surface, class SDL_Renderer* renderer);
 
+public:
   unsigned int getWidth() const;
   unsigned int getHeight() const;
   class SDL_Texture* getTexture() const;
@@ -21,7 +26,7 @@ public:
   void setWidth(unsigned int width);
   void setHeight(unsigned int height);
 
-  static Texture* placeholder;
+  static Texture* newTexture(const char* path, class SDL_Renderer* renderer);
 
 private:
   class SDL_Texture* texture = nullptr;

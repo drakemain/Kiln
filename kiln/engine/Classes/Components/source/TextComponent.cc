@@ -7,11 +7,22 @@
 
 TextComponent::TextComponent(std::string text, TTF_Font* font, SDL_Renderer* renderer, SDL_Color color)
 : text(text), font(font), color(color), renderer(renderer) {
+  if (!this->font) {
+    KLog.put(KLOG_WAR, "Supplied a null font to TextComponent.");
+    this->shouldRender = false;
+  }
+
+  if (!this->renderer) {
+    KLog.put(KLOG_WAR, "Supplied a null renderer to TextComponent.");
+    this->shouldRender = false;
+  }
+  
   this->draw(renderer);
 }
 
 TextComponent::TextComponent(Entity* owner, std::string text, TTF_Font* font, SDL_Renderer* renderer, SDL_Color color = KILN_COLOR::DARK_GREY)
-: SpriteComponent(owner), text(text), font(font), color(color), renderer(renderer) {
+: SpriteComponent(owner) {
+  TextComponent(text, font, renderer, color);
   this->draw(renderer);
 }
 
@@ -19,9 +30,7 @@ TextComponent::~TextComponent() {
   SDL_DestroyTexture(this->getTexture());
 }
 
-void TextComponent::start() {
-  
-}
+void TextComponent::start() {}
 
 void TextComponent::tick(float deltaTime) {
   if (this->wasModified) {
@@ -30,12 +39,10 @@ void TextComponent::tick(float deltaTime) {
 }
 
 void TextComponent::draw(SDL_Renderer* renderer) {
+  if (!this->shouldRender) { return; }
   if (this->text.size() == 0) { return; }
 
-  if (!this->font) {
-    this->clear();
-    return;
-  }
+  
 
   SDL_Surface* surface = TTF_RenderText_Solid(this->font, this->text.c_str(), this->color);
   if (!surface) {
@@ -74,5 +81,6 @@ void TextComponent::setColor(SDL_Color color) {
 }
 
 void TextComponent::render(SDL_Renderer* renderer) {
+  if (!this->getTexture()) { return; }
   SpriteComponent::render(renderer);
 }

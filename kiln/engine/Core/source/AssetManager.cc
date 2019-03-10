@@ -3,36 +3,31 @@
 #include "kiln/engine/Core/headers/Texture.h"
 #include "lib/kilnlog/include/KilnLog.h"
 
-Texture* Texture::placeholder = nullptr;
-
 AssetManager::AssetManager() {}
 
 AssetManager::~AssetManager() {
   KLog.put(KLOG_DEB, "Cleaning up managed assets.");
 
-  std::map<std::string, Texture*>::iterator textureItr;
-  std::map<std::string, TTF_Font*>::iterator fontItr;
-  std::map<std::string, Mix_Music*>::iterator musicItr;
-  std::map<std::string, Mix_Chunk*>::iterator soundIter;
-
-  for (textureItr = this->TextureMap.begin(); textureItr != this->TextureMap.end(); ++textureItr) {
+  for (auto textureItr = this->TextureMap.begin(); textureItr != this->TextureMap.end(); ++textureItr) {
     delete textureItr->second;
   }
 
-  for (fontItr = this->FontMap.begin(); fontItr != this->FontMap.end(); ++fontItr) {
+  for (auto fontItr = this->FontMap.begin(); fontItr != this->FontMap.end(); ++fontItr) {
     TTF_CloseFont(fontItr->second);
-    KLog.put(KLOG_INF, "FONT: %s", fontItr->first.c_str());
+    KLog.put(KLOG_INF, "Cleanup FONT: %s", fontItr->first);
   }
 
-  for (musicItr = this->MusicMap.begin(); musicItr != this->MusicMap.end(); ++musicItr) {
+  for (auto musicItr = this->MusicMap.begin(); musicItr != this->MusicMap.end(); ++musicItr) {
     Mix_FreeMusic(musicItr->second);
-    KLog.put(KLOG_INF, "Cleaned up MUSIC: %s", musicItr->first.c_str());
+    KLog.put(KLOG_INF, "Cleanup MUSIC: %s", musicItr->first);
   }
 
-  for (soundIter = this->SoundMap.begin(); soundIter != this->SoundMap.end(); ++soundIter) {
+  for (auto soundIter = this->SoundMap.begin(); soundIter != this->SoundMap.end(); ++soundIter) {
     Mix_FreeChunk(soundIter->second);
-    KLog.put(KLOG_INF, "SOUND: %s", soundIter->first.c_str());
+    KLog.put(KLOG_INF, "Cleanup SOUND: %s", soundIter->first);
   }
+
+  delete this->placeholderTexture;
 
   IMG_Quit();
   TTF_Quit();
@@ -41,29 +36,33 @@ AssetManager::~AssetManager() {
 
 bool AssetManager::init(SDL_Renderer* renderer, const AssetConfig& config) {
   KLog.put(KLOG_DEB, "Setting up asset manager.");
-  const char* placeholderTextureLocation = "kiln/assets/img/placeholder-texture.jpg";
+
+  if (!renderer) {
+    KLog.put(KLOG_ERR, "A renderer was not supplied to the asset manager.");
+    return false;
+  }
+
+  this->renderer = renderer;
 
   int imgFlags = config.imgfmt;
 
   if ((IMG_Init(imgFlags) & imgFlags) != imgFlags) {
-    KLog.put(KLOG_ERR, "Failed to init SDL_image: %s", IMG_GetError());
+    KLog.put(KLOG_ERR, "Failed to init SDL_image: \"%s\"", IMG_GetError());
     return false;
   }
 
   if (TTF_Init() == -1) {
-    KLog.put(KLOG_ERR, "Failed to init SDL_ttf: %s", TTF_GetError());
+    KLog.put(KLOG_ERR, "Failed to init SDL_ttf: \"%s\"", TTF_GetError());
     return false;
   }
 
   if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-    KLog.put(KLOG_ERR, "Failed to init SDL_mixer: %s", Mix_GetError());
+    KLog.put(KLOG_ERR, "Failed to init SDL_mixer: \"%s\"", Mix_GetError());
     return false;
   }
 
-  Texture::placeholder = this->loadTexture(placeholderTextureLocation, renderer);
-
-  if (!Texture::placeholder) {
-    KLog.put(KLOG_ERR, "The placeholder texture could not be loaded. A placeholder is required. Ensure one is supplied at \"%s\".", placeholderTextureLocation);
+  if (!this->loadPlaceholders()) {
+    KLog.put(KLOG_ERR, "One or more placeholder assets failed to load.");
     return false;
   }
 
@@ -73,167 +72,197 @@ bool AssetManager::init(SDL_Renderer* renderer, const AssetConfig& config) {
 }
 
 /* Texture */
-Texture* AssetManager::loadTexture(std::string path, std::string name, SDL_Renderer* renderer) {
-  Texture* texture = new Texture();
-  bool success = texture->create(path, renderer);
-  
-  if (success) {
-    KLog.put(KLOG_INF, "Loaded texture %s from %s.", name.c_str(), path.c_str());
-    this->TextureMap[name] = texture;
-    return texture;
-  }
-  
-  KLog.put(KLOG_ERR, "Failed to create texture! %s", SDL_GetError());
-  
-  if (Texture::placeholder) {
-    this->TextureMap[name] = Texture::placeholder;
-    return Texture::placeholder;
+Texture* AssetManager::loadTexture(const char* path, const char* identifier) {
+  Texture* texture = loadTexture(path);
+
+  if (texture) {
+    KLog.put(KLOG_INF, "Loaded texture \"%s\" from \"%s\".", identifier, path);
   } else {
-    return nullptr;
+    KLog.put(KLOG_WAR, "Failed to load texture \"%s\" from \"%s\"", identifier, path);
+    texture = this->placeholderTexture;
   }
+
+  this->TextureMap.insert({identifier, texture});
+  return texture;
 }
 
-Texture* AssetManager::loadTexture(std::string path, SDL_Renderer* renderer) {
-  Texture* texture = new Texture();
-  bool success = texture->create(path, renderer);
-
-  if (success) {
-    KLog.put(KLOG_INF, "Loaded an unmanaged texture from %s.", path.c_str());
-    return texture;
-  }
-  
-  KLog.put(KLOG_ERR, "Failed to create texture from %s! %s", path.c_str(), SDL_GetError());
-  
-  if (Texture::placeholder) {
-    return Texture::placeholder;
-  } else {
-    return nullptr;
-  }
-}
-
-Texture* AssetManager::fetchTexture(std::string name) {
-  auto itr = this->TextureMap.find(name);
+Texture* AssetManager::fetchTexture(const char* identifier) {
+  auto itr = this->TextureMap.find(identifier);
 
   if (itr == this->TextureMap.end()) {
-    KLog.put(KLOG_INF, "Failed to fetch texture: %s", name.c_str());
-    return Texture::placeholder;
+    KLog.put(KLOG_WAR, "Failed to fetch texture: \"%s\".", identifier);
+    return this->placeholderTexture;
   } else {
-    return this->TextureMap[name];
+    return itr->second;
   }
 }
 
-void AssetManager::unloadTexture(std::string name) {
-  delete this->TextureMap[name];
-  this->TextureMap.erase(name);
+void AssetManager::unloadTexture(const char* identifier) {
+  auto itr = this->TextureMap.find(identifier);
+
+  if (itr == this->TextureMap.end()) {
+    KLog.put(KLOG_WAR, "Attempted to unload texture \"%s\", but it wasn't in the texture map.", identifier);
+    return;
+  }
+
+  KLog.put(KLOG_INF, "Unloaded texture %s.", identifier);
+
+  delete itr->second;
+  this->TextureMap.erase(itr);
 }
 
 /* Font */
-TTF_Font* AssetManager::loadFont(std::string path, int size, std::string name) {
-  TTF_Font* font = TTF_OpenFont(path.c_str(), size);
+TTF_Font* AssetManager::loadFont(const char* path, int size, const char* identifier) {
+  TTF_Font* font = this->loadFont(path, size);
 
-  if (font == NULL) {
-    KLog.put(KLOG_ERR, "Failed to load font %s from %s. %s", name.c_str(), path.c_str(), TTF_GetError());
-    return nullptr;
+  if (!font) {
+    KLog.put(KLOG_WAR, "Failed to load font \"%s\" from \"%s\". \"%s\"", identifier, path, TTF_GetError());
+    // TODO: Placeholder font
+  } else {
+    KLog.put(KLOG_INF, "Loaded font %dpt font \"%s\" from \"%s\"", size, identifier, path);
   }
 
-  KLog.put(KLOG_INF, "Loaded font %s from %s.", name.c_str(), path.c_str());
-  this->FontMap[name] = font;
-
+  this->FontMap.insert({identifier, font});
   return font;
 }
 
-TTF_Font* AssetManager::loadFont(std::string path, int size) {
-  TTF_Font* font = TTF_OpenFont(path.c_str(), size);
-
-  if (font == NULL) {
-    KLog.put(KLOG_ERR, "Failed to load font from %s. %s", path.c_str(), TTF_GetError());
-    return nullptr;
-  }
-
-  KLog.put(KLOG_INF, "Loaded an unmanaged font from %s.", path.c_str());
-
-  return font;
-}
-
-TTF_Font* AssetManager::fetchFont(std::string name) {
+TTF_Font* AssetManager::fetchFont(const char* identifier) {
   // TODO: handle key DNE
-  return this->FontMap[name];
+  auto itr = this->FontMap.find(identifier);
+
+  if (itr == this->FontMap.end()) {
+    KLog.put(KLOG_WAR, "Failed to fetch font \"%s\".", identifier);
+    // TODO: Return placeholder
+    return nullptr;
+  }
+
+  return itr->second;
 }
 
-void AssetManager::unloadFont(std::string name) {
-  TTF_CloseFont(this->FontMap[name]);
-  this->FontMap.erase(name);
+void AssetManager::unloadFont(const char* identifier) {
+  auto itr = this->FontMap.find(identifier);
+
+  if (itr == this->FontMap.end()) {
+    KLog.put(KLOG_WAR,  "Attempted to unload font \"%s\", but it wasn't in the texture map.", identifier);
+    return;
+  }
+
+  KLog.put(KLOG_INF, "Unloaded font \"%s\"", identifier);
+  
+  TTF_CloseFont(itr->second);
+  this->FontMap.erase(identifier);
 }
 
 /* Music */
-Mix_Music* AssetManager::loadMusic(std::string path, std::string name) {
-  Mix_Music* music = Mix_LoadMUS(path.c_str());
+Mix_Music* AssetManager::loadMusic(const char* path, const char* identifier) {
+  Mix_Music* music = this->loadMusic(path);
 
   if (!music) {
-    KLog.put(KLOG_ERR, "Failed to load music from %s", path.c_str(), Mix_GetError());
+    KLog.put(KLOG_WAR, "Failed to load music \"%s\" from \"%s\". %s", identifier, path, Mix_GetError());
     return nullptr;
   }
 
-  KLog.put(KLOG_INF, "Loaded music %s from %s", name.c_str(), path.c_str());
-  this->MusicMap[name] = music;
+  KLog.put(KLOG_INF, "Loaded music \"%s\" from \"%s\"", identifier, path);
+  
+  this->MusicMap.insert({identifier, music});
   return music;
 }
 
-Mix_Music* AssetManager::loadMusic(std::string path) {
-  Mix_Music* music = Mix_LoadMUS(path.c_str());
+Mix_Music* AssetManager::fetchMusic(const char* identifier) {
+  auto itr = this->MusicMap.find(identifier);
 
-  if (!music) {
-    KLog.put(KLOG_ERR, "Failed to load unamanged music: %s", Mix_GetError());
+  if (itr == this->MusicMap.end()) {
+   KLog.put(KLOG_WAR, "Failed to fetch music \"%s\".", identifier);
+    // TODO: Return placeholder
     return nullptr;
   }
 
-  KLog.put(KLOG_INF, "Loaded unmanaged music from %s.", path.c_str());
-  return music;
+  return itr->second;
 }
 
-Mix_Music* AssetManager::fetchMusic(std::string name) {
-  // TODO: handle key DNE
-  return this->MusicMap[name];
-}
+void AssetManager::unloadMusic(const char* identifier) {
+  auto itr = this->MusicMap.find(identifier);
 
-void AssetManager::unloadMusic(std::string name) {
-  Mix_FreeMusic(this->MusicMap[name]);
-  this->MusicMap.erase(name);
+  if (itr == this->MusicMap.end()) {
+    KLog.put(KLOG_WAR, "Attempted to unload music \"%s\", but it wasn't in the texture map.", identifier);
+    return;
+  }
+
+  KLog.put(KLOG_INF, "Unloaded music %s.", identifier);
+
+  Mix_FreeMusic(itr->second);
+  this->MusicMap.erase(itr);
 }
 
 
 /* Sound */
-Mix_Chunk* AssetManager::loadSound(std::string path, std::string name) {
-  Mix_Chunk* sound = Mix_LoadWAV(path.c_str());
+Mix_Chunk* AssetManager::loadSound(const char* path, const char* identifier) {
+  Mix_Chunk* sound = this->loadSound(path);
 
   if (!sound) {
-    KLog.put(KLOG_ERR, "Failed to load sound: %s", Mix_GetError());
+    KLog.put(KLOG_WAR, "Failed to load sound \"%s\" from \"%s\". %s", identifier, path, Mix_GetError());
     return nullptr;
   }
 
-  KLog.put(KLOG_INF, "Loaded sound %s from %s.", name.c_str(), path.c_str());
-  this->SoundMap[name] = sound;
+  KLog.put(KLOG_INF, "Loaded sound \"%s\" from \"%s\"", identifier, path);
+  
+  this->SoundMap.insert({identifier, sound});
   return sound;
 }
 
-Mix_Chunk* AssetManager::loadSound(std::string path) {
-  Mix_Chunk* sound = Mix_LoadWAV(path.c_str());
+Mix_Chunk* AssetManager::fetchSound(const char* identifier) {
+  auto itr = this->SoundMap.find(identifier);
 
-  if (!sound) {
-    KLog.put(KLOG_ERR, "Failed to load sound: %s", Mix_GetError());
+  if (itr == this->SoundMap.end()) {
+   KLog.put(KLOG_WAR, "Failed to fetch sound \"%s\".", identifier);
+    // TODO: Return placeholder
     return nullptr;
   }
 
-  KLog.put(KLOG_INF, "Loaded unmanaged sound from %s.", path.c_str());
-  return sound;
+  return itr->second;
 }
 
-Mix_Chunk* AssetManager::fetchSound(std::string name) {
-  // TODO: handle key DNE
-  return this->SoundMap[name];
+void AssetManager::unloadSound(const char* identifier) {
+  auto itr = this->SoundMap.find(identifier);
+
+  if (itr == this->SoundMap.end()) {
+    KLog.put(KLOG_WAR, "Attempted to unload sound \"%s\", but it wasn't in the texture map.", identifier);
+    return;
+  }
+
+  KLog.put(KLOG_INF, "Unloaded sound %s.", identifier);
+
+  Mix_FreeChunk(itr->second);
+  this->SoundMap.erase(itr);
 }
 
-void AssetManager::unloadSound(std::string name) {
-  Mix_FreeChunk(this->SoundMap[name]);
-  this->SoundMap.erase(name);
+Texture* AssetManager::loadTexture(const char* path) {
+  Texture* texture = Texture::newTexture(path, renderer);
+
+  return texture;
+}
+
+TTF_Font* AssetManager::loadFont(const char* path, int size) {
+  TTF_Font* font = TTF_OpenFont(path, size);
+  return font;
+}
+
+Mix_Music* AssetManager::loadMusic(const char* path) {
+  Mix_Music* music = Mix_LoadMUS(path);
+  return music;
+}
+
+Mix_Chunk* AssetManager::loadSound(const char* path) {
+  Mix_Chunk* chunk = Mix_LoadWAV(path);
+  return chunk;
+}
+
+bool AssetManager::loadPlaceholders() {
+  KLog.put(KLOG_INF, "Loading placeholder assets.");
+  this->placeholderTexture = loadTexture("kiln/assets/img/placeholder-texture.jpg");
+  // placehoder font
+  // placeholder music
+  // placeholder sound
+
+  return this->placeholderTexture;
 }
