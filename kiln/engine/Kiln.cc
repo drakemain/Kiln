@@ -22,7 +22,6 @@ bool Kiln::init(KilnModule& module) {
   KLog.setLevel(logConfig.level);
 
   KLog.put(KLOG_DEB, "Initializing Kiln.");
-  // std::cout << "Initializing kiln." << std::endl;
 
   if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
     KLog.put(KLOG_ERR, "Failed to initialize SDL! %s", SDL_GetError());
