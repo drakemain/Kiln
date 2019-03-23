@@ -47,7 +47,7 @@ void Entity::scale(float scale) {
 
   for (SpriteComponent* spriteComp : spriteComps) {
     if (spriteComp) {
-      spriteComp->setScale(scale);
+      spriteComp->setScale(spriteComp->getScale() * scale);
     }
   }
 }

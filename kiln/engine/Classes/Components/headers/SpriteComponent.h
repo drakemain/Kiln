@@ -27,6 +27,7 @@ protected:
 public:
   FCoordinate getWorldPosition() const;
   Dim getDimensions() const;
+  float getScale() const;
   float getRotationDegrees() const;
   struct SDL_Texture* getTexture();
 

@@ -62,6 +62,10 @@ Dim SpriteComponent::getDimensions() const {
   return this->renderDim;
 }
 
+float SpriteComponent::getScale() const {
+  return this->scale;
+}
+
 float SpriteComponent::getRotationDegrees() const {
   return this->rotationDegrees;
 }
