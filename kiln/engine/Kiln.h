@@ -3,6 +3,7 @@
 #include "Core/headers/WindowManager.h"
 #include "Core/headers/InputManager.h"
 #include "Core/headers/AssetManager.h"
+#include "Core/headers/SpriteManager.h"
 
 struct CoreManagement {
   WindowManager windowManager;
@@ -25,7 +26,7 @@ private:
   /* Helper Functions */
   void checkEngineEvent(const SDL_Event* event);
   void tick(float deltaTime);
-  void render(SDL_Renderer* renderer);
+  void render(KilnModule& module);
 
   CoreManagement coreManagement;
   

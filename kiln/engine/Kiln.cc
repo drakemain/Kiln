@@ -84,13 +84,12 @@ void Kiln::run(KilnModule& module) {
     SDL_Renderer* renderer = this->coreManagement.windowManager.getRenderer();
     SDL_RenderClear(renderer);
 
-    module.render();
-    this->render(renderer);
+    this->render(module);
 
     module.updateSubState();
 
     // Abide by frame limit
-    // Not an ideal solution; temporary
+    // SDL_GetTicks() isn't accurate enough for this. A better solution is needed.
     float tickTime = SDL_GetTicks() - tickStartTime;
     Uint32 minFrameTime = (Uint32)(this->coreManagement.windowManager.getMinFrameTimePerMilli());
     if (tickTime < minFrameTime) {
@@ -127,7 +126,9 @@ void Kiln::checkEngineEvent(const SDL_Event* event) {
   }
 }
 
-void Kiln::render(SDL_Renderer* renderer) {
+void Kiln::render(KilnModule& module) {
+  SDL_Renderer* renderer = this->getManagement()->windowManager.getRenderer();
+  module.render(renderer);
   this->stats->render(renderer);
   
   SDL_RenderPresent(renderer);

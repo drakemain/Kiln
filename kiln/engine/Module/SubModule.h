@@ -33,12 +33,10 @@ protected:
   void adjustEntityLayer(class Entity*, int layer);
   void registerEntity(class Entity* entity);
 
-  class LayerManager* getLayerManager();
-
   class KilnModule* module;
   AssetDependencies assetDependencies;
 
 private:
   std::vector<class Entity*> entities;
-  class LayerManager* layers;
+  class SpriteManager* spriteManager;
 };

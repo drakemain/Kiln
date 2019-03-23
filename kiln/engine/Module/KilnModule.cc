@@ -2,18 +2,16 @@
 #include "SubModule.h"
 #include "kiln/engine/Kiln.h"
 #include "kiln/engine/States/headers/StateMachine.h"
-#include "kiln/engine/Core/headers/LayerManager.h"
 #include "kiln/engine/Core/headers/EventManager.h"
 #include "lib/kilnlog/include/KilnLog.h"
+#include "kiln/engine/Classes/Entity/headers/Entity.h"
 
 KilnModule::KilnModule() {
   this->subState = new StateMachine();
-  this->layerManager = new LayerManager();
   this->eventManager = new EventManager();
 }
 
 KilnModule::~KilnModule() {
-  delete this->layerManager;
   delete this->subState;
 }
 
@@ -43,13 +41,11 @@ void KilnModule::tick(float deltaTime) {
 
   this->eventManager->handleEvents();
   this->subState->getActiveState()->tick(deltaTime);
-  this->layerManager->update();
 }
 
-void KilnModule::render() {
+void KilnModule::render(SDL_Renderer* renderer) {
   if (this->unwindStack) {return;}
 
-  SDL_Renderer* renderer = this->engine->getManagement()->windowManager.getRenderer();
   this->subState->getActiveState()->render(renderer);
 }
 
