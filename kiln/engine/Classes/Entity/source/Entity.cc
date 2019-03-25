@@ -76,6 +76,17 @@ void Entity::render(SDL_Renderer *renderer) {
   }
 }
 
+void Entity::setShouldRender(const bool shouldRender) {
+  KLog.put(KLOG_DEB, "TOGGLE RENDER %d", shouldRender);
+  
+  std::vector<SpriteComponent*> sprites;
+  this->getComponentsByType<SpriteComponent*>(sprites);
+
+  for (SpriteComponent* sprite : sprites) {
+    sprite->setShouldRender(shouldRender);
+  }
+}
+
 void Entity::updateComponentPositions() {
   for (Component* comp : this->boundComponents) {
     comp->updatePosition();

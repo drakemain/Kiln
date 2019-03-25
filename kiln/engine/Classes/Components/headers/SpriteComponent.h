@@ -15,6 +15,8 @@ public:
   virtual void start() override;
   virtual void tick(float deltaTime) override;
 
+  void setShouldRender(const bool shouldRender);
+  bool checkShouldRender() const;
   void setWidth(unsigned int width);
   void setHeight(unsigned int height);
   void setScale(float scale);
@@ -34,9 +36,8 @@ public:
   virtual void render(struct SDL_Renderer*);
   virtual void clear();
 
-  bool shouldRender = true;
-
 private:
+  bool shouldRender = true;
   Dim originalDim;
   Dim renderDim;
   float rotationDegrees = 0.f;

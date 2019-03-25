@@ -9,12 +9,12 @@ TextComponent::TextComponent(std::string text, TTF_Font* font, SDL_Renderer* ren
 : text(text), font(font), color(color), renderer(renderer) {
   if (!this->font) {
     KLog.put(KLOG_WAR, "Supplied a null font to TextComponent.");
-    this->shouldRender = false;
+    this->setShouldRender(false);
   }
 
   if (!this->renderer) {
     KLog.put(KLOG_WAR, "Supplied a null renderer to TextComponent.");
-    this->shouldRender = false;
+    this->setShouldRender(false);
   }
   
   this->draw(renderer);
@@ -39,7 +39,7 @@ void TextComponent::tick(float deltaTime) {
 }
 
 void TextComponent::draw(SDL_Renderer* renderer) {
-  if (!this->shouldRender) { return; }
+  if (!this->checkShouldRender()) { return; }
   if (this->text.size() == 0) { return; }
 
   

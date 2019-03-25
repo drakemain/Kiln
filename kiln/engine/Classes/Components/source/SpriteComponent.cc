@@ -22,6 +22,14 @@ void SpriteComponent::start() {}
 
 void SpriteComponent::tick(float deltaTime) {}
 
+void SpriteComponent::setShouldRender(const bool shouldRender) {
+  this->shouldRender = shouldRender;
+}
+
+bool SpriteComponent::checkShouldRender() const {
+  return this->shouldRender;
+}
+
 void SpriteComponent::setWidth(unsigned int width) {
   this->originalDim.w = width;
   this->renderDim.w = width * this->scale;

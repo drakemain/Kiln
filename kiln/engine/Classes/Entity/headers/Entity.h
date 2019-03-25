@@ -29,6 +29,8 @@ public:
 
   virtual void render(SDL_Renderer* renderer);
 
+  void setShouldRender(const bool shouldRender);
+
   void getComponents(std::vector<class Component*>& components) const;
 
 private:
@@ -36,6 +38,8 @@ private:
 
   FCoordinate worldPosition;
   std::vector<class Component*> boundComponents;
+
+  bool shouldRender = true;
 
 public:
   // Inline so that all possible headers don't 
